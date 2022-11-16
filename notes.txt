@@ -1,0 +1,39 @@
+Database:
+1. Username/email
+    A. Has to be unique
+        I. Check the email if it's an actual email
+    B. Hash the password
+    C. First name
+    D. Last name
+2. Friend's List
+    A. Array of other users, have to have each friend 'confirm'
+        I. Maybe a friend request btn that is pending, and when other friend accepts, the addition is made?
+    B. Allow for addition and deletion
+    C. Allow Users to rank their top friends for the drama
+3. Posts
+    A. Text that has a maximum character limit
+    B. Tied to the user ID, shows the First/Last name
+    C. Have to get all of the posts from you and your friend's list
+4. Profile Picture(?)
+    A. Allow people to upload and update their Profile Picture?
+5. Prof Description 
+    A. Text that has max character limit
+    B. Short Description of a user on their profile page
+6. Relationship(?)
+    A. Easy to toggle. Default is single but user can toggle between set options
+7. Work(?)
+    A. Short text that is a job title
+8. Comments
+    A. Tied to posts and user that created it
+    B. Shows up on posts w/ the f/L name of user
+    C. certain number of characters allowed
+9. Reactions(?)
+    A. Tied to posts and user that created it
+    B. Set options that we have (like, dislike, love, angry, etc) user can select to add
+        I. how does a user remove or edit their reaction? What would that look like on the front end?
+
+MVP:
+Have a fully functional application with login/sign up. Dashboard that shows all of your and your friend's posts. Ability to search for people, which will allow you to see their profiles. User should be able to send a friend request once viewing their profile, and if the other user accepts, then they are both added to each other's friend's list. Users should be able to make posts, which they and others can comment and react to. A single view should exist for a a post to see all of the comments. A user's profile should give them the option to edit their name, picture(?), relationship status, work status, and edit their top 10 friends.
+
+PWA:
+Allow users to view their profile as it has been saved and a certain number of posts on dashboard, make posts that will later be sent to the server(?), edit their profile 

@@ -6,27 +6,30 @@ const typeDefs = gql`
     firstName: String!
     lastName: String!
     email: String!
-    Password: String!
-    Posts: [Post]!
-    Profile_Posts: [ProPagePosts]!
-    Comments: [Post_Comment]!
+    password: String!
+    posts: [Post]!
+    profile_Posts: [ProPagePosts]!
+    comments: [Post_Comment]!
   }
 
   type Post {
     _id: ID!
-    UserId: User! 
-    Body: String!
-    Comments: [Post_Comment]!
+    userId: String! 
+    postText: String!
+    comments: [Post_Comment]!
+  }
+
+  type Comment {
+    _id: ID!
+    userId: String! 
+    postText: String!
   }
 
   type ProPagePost {
     _id: ID!
-    Body: String!
-  }
-
-  type Post_Comment {
-    _id: ID!
-    Body: String!
+    postingUser: String!
+    receivingUser: String!
+    postText: String!
   }
 
   type Friends {

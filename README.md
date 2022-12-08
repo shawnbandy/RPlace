@@ -28,7 +28,7 @@
 
     1. Welcome Tutorial
     2. Game Section
-    3.
+    3. Spotify
 
 ### Main Components
 

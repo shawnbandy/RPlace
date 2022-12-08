@@ -52,14 +52,14 @@ const userSchema = new Schema({
   friends: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Friends',
+      ref: 'Friend',
     },
   ],
 
   pendingFriends: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'PendingFriends',
+      ref: 'PendingFriend',
     },
   ],
 
@@ -67,6 +67,13 @@ const userSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: 'Profile',
+    },
+  ],
+
+  conversations: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Conversation',
     },
   ],
 });

@@ -23,4 +23,4 @@ const pendingFriendSchema = new Schema({
 
 const PendingFriend = model('pendingFriendSchema', pendingFriendSchema);
 
-module.exports = Friend;
+module.exports = PendingFriend;

@@ -21,6 +21,6 @@ const proPagePostSchema = new Schema({
   },
 });
 
-const proPagePost = model('proPagePostSchema', proPagePostSchema);
+const ProPagePost = model('proPagePostSchema', proPagePostSchema);
 
-module.exports = proPagePost;
+module.exports = ProPagePost;

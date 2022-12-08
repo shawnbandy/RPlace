@@ -15,6 +15,12 @@
     5. Ability to make posts and see friend's posts/comments on the home page and profile page
     6. Ability to customize your profile page
 
+## COT
+
+    1. Welcome Tutorial
+    2. Game Section
+    3.
+
 ### Main Components
 
     1. NavBar, static, top
@@ -22,7 +28,7 @@
         B. Profile
         C. Messages
         D. Search Bar
-        E. TBC
+        E. TBD
     2. Main page display
         A. Profile, Messenger, Home/Landing page displayed here
     3. ???
@@ -63,17 +69,31 @@
         B. Email
         C. Password
             i. Hashed
+        D. [Message IDs]
+        E. [Posts]
+        Ei. [Page_Posts]
+        F. [Comments]
+        G. [Friends]
+        Gi. [PendingFriends]
+        H. Profile
     2. Posts
         A. Tied to User account
         B. Basically just text
+        Ba. Could be images in future
+        C. [Post_Comments]
+    2a. Page_Posts
+        A. Tied to User account
+        B. Text, maybe images
     3. Post_Comments
         A. Tied to posts
         B. Tied to User who made the comment
         C. Text
     4. Friends
         A. Array of other User accounts
-        B. Pending_Friend_Requests **********
-            i. need to discuss this
+            i. Accepted friend's ID
+    4a. PendingFriends
+        A. Array of pending friends
+        B. Array of sent to friends
     5. Profile
         A. Tied to User account
         B. Music_Choice
@@ -85,4 +105,9 @@
             i. Tied to Posts
             ii. Tied to Post_Comments
         E. Customization **********
-            i. Will have to talk this one thru with the gang
+            i. Dark Mode true false?
+            ii. Save as JSON then parse on page load to set HTML
+    6. Messages
+        A. Sender
+        B. Recipient
+        C. List of messages

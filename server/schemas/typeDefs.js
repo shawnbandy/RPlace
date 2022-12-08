@@ -19,15 +19,17 @@ const typeDefs = gql`
     comments: [Post_Comment]!
   }
 
-  type ProPagePost {
+  type Comment {
     _id: ID!
     userId: String! 
     postText: String!
   }
 
-  type Post_Comment {
+  type ProPagePost {
     _id: ID!
-    body: String!
+    postingUser: String!
+    receivingUser: String!
+    postText: String!
   }
 
   type Friends {

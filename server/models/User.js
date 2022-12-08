@@ -41,6 +41,7 @@ const userSchema = new Schema({
     },
   ],
 
+  //*comments the user makes
   comments: [
     {
       type: Schema.Types.ObjectId,

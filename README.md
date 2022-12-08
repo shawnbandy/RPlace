@@ -14,8 +14,8 @@
     4. Ability to message your friends via the messenger page
     5. Ability to make posts and see friend's posts/comments on the home page and profile page
     6. Ability to customize your profile page
-    
-### Technologies 
+
+### Technologies
 
     Frontend: React
     Styling:  Material UI

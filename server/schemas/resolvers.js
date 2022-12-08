@@ -1,4 +1,13 @@
-const { Tech, Matchup } = require('../models');
+const {
+  Comment,
+  Conversation,
+  Friend,
+  Message,
+  PendingFriend,
+  Post,
+  ProPagePost,
+  User,
+} = require('../models');
 
 const resolvers = {
   //   Query: {

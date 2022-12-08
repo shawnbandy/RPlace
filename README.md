@@ -74,35 +74,36 @@
 
     1. User Account(?)
         A. Name
-            i. First, last
-        B. Email
-        C. Password
-            i. Hashed
+            i. First, last ✅
+        B. Email ✅
+        C. Password ✅
+            i. Hashed ✅
         D. [Message IDs]
-        E. [Posts]
-        Ei. [Page_Posts]
-        F. [Comments]
-        G. [Friends]
-        Gi. [PendingFriends]
+        E. [Posts] ✅
+        Ei. [Page_Posts] ✅
+        F. [Comments] ✅
+        G. [Friends] ✅
+        Gi. [PendingFriends] ✅
         H. Profile
     2. Posts
-        A. Tied to User account
-        B. Basically just text
+        A. Tied to User account ✅
+        B. Basically just text ✅
         Ba. Could be images in future
-        C. [Post_Comments]
+        C. [Post_Comments] ✅
     2a. Page_Posts
-        A. Tied to User account
-        B. Text, maybe images
+        A. Tied to User account ✅
+        Aa. Tied to User poster ✅
+        B. Text, maybe images ✅
     3. Post_Comments
-        A. Tied to posts
-        B. Tied to User who made the comment
-        C. Text
+        A. Tied to posts ✅
+        B. Tied to User who made the comment ✅
+        C. Text ✅
     4. Friends
-        A. Array of other User accounts
+        A. Array of other User accounts ✅
             i. Accepted friend's ID
     4a. PendingFriends
-        A. Array of pending friends
-        B. Array of sent to friends
+        A. Array of pending friends ✅
+        B. Array of sent to friends ✅
     5. Profile
         A. Tied to User account
         B. Music_Choice
@@ -116,8 +117,11 @@
         E. Customization **********
             i. Dark Mode true false?
             ii. Save as JSON then parse on page load to set HTML
-    6. Messages
-        A. Sender
-        B. Recipient
-        C. List of messages
-        D. Testing
+    6. Conversation
+        A. [Message] ✅
+        B. First messenger/user ✅
+        C. Second messenger/user ✅
+    7. Message
+        A. Text body
+        B. Sender of the message
+        C. Recipient of the message

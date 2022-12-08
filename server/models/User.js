@@ -33,6 +33,7 @@ const userSchema = new Schema({
     },
   ],
 
+  //*these will be posts directly made on the user profile, like to graffiti the page
   profile_Posts: [
     {
       type: Schema.Types.ObjectId,

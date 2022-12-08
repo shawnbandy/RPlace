@@ -14,14 +14,15 @@ const typeDefs = gql`
 
   type Post {
     _id: ID!
-    userId: User! 
-    body: String!
+    userId: String! 
+    postText: String!
     comments: [Post_Comment]!
   }
 
   type ProPagePost {
     _id: ID!
-    body: String!
+    userId: String! 
+    postText: String!
   }
 
   type Post_Comment {

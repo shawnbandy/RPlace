@@ -14,14 +14,14 @@ const typeDefs = gql`
 
   type Post {
     _id: ID!
-    userId: String! 
+    userId: String!
     postText: String!
     comments: [Post_Comment]!
   }
 
   type Comment {
     _id: ID!
-    userId: String! 
+    userId: String!
     postText: String!
   }
 
@@ -32,16 +32,9 @@ const typeDefs = gql`
     postText: String!
   }
 
-  type Friends {
-
-  }
-
-  type Matchup {
+  type Friend {
     _id: ID!
-    tech1: String!
-    tech2: String!
-    tech1_votes: Int
-    tech2_votes: Int
+    friendId: String!
   }
 
   type Query {

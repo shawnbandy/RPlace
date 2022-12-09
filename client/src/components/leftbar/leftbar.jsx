@@ -2,9 +2,9 @@ import "leftbar.css";
 import {
     RssFeed,
     Chat,
-    PlayCircleFilledOutlined,
+    PlayCircleFilled,
     Group,
-  } from "@material-ui/icons";
+  } from "@mui/icons-material";
 
 
 export default function Sidebar() {
@@ -21,7 +21,7 @@ export default function Sidebar() {
               <span className="sidebarListItemText">Chat</span>
             </li>
             <li className="sidebarListItem">
-              <PlayCircleFilledOutlined className="sidebarIcon" />
+              <PlayCircleFilled className="sidebarIcon" />
               <span className="sidebarListItemText">Video</span>
             </li>
             <li className="sidebarListItem">

@@ -8,31 +8,59 @@ const {
   ProPagePost,
   User,
 } = require('../models');
+const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
-  //   Query: {
-  //     tech: async () => {
-  //       return Tech.find({});
-  //     },
-  //     matchups: async (parent, { _id }) => {
-  //       const params = _id ? { _id } : {};
-  //       return Matchup.find(params);
-  //     },
-  //   },
-  //   Mutation: {
-  //     createMatchup: async (parent, args) => {
-  //       const matchup = await Matchup.create(args);
-  //       return matchup;
-  //     },
-  //     createVote: async (parent, { _id, techNum }) => {
-  //       const vote = await Matchup.findOneAndUpdate(
-  //         { _id },
-  //         { $inc: { [`tech${techNum}_votes`]: 1 } },
-  //         { new: true }
-  //       );
-  //       return vote;
-  //     },
-  //   },
+  //TODO User
+  //*user: find your user, populate all the posts from you
+  //*post: find your user, get your friends, populate all their posts/comments on your home page
+  Query: {
+    //*user will get all of the user's friends, which will hold all of their data. Only need the posts from it
+    user: async (parent, { userId }) => {
+      return User.findOne({ userId }).populate('friends');
+    },
+    //*gets all of the user's posts/comments
+    userPost: async (parent, { userId }) => {
+      return User.findOne({ userId }).populate('posts');
+    },
+    //*gets all of the user's graffiti
+    userGraffitiPost: async (parent, { userId }) => {
+      return User.findOne({ userId }).populate('graffitiPosts');
+    },
+    //*returns all the messages the user is a part of
+    userMessage: async (parent, { userId }) => {
+      return User.findOne({ userId }).populate('messages');
+    },
+    userPendingFriend: async (parent, { userId }) => {
+      return User.findOne({ userId }).populate('pendingFriends');
+    },
+    //*gets the logged in user's posts
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate('posts');
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+  },
+
+  Mutation: {
+    //!add the sign token right after
+
+    addPost: async (parent, { postText }, context) => {
+      if (context.user) {
+        const newPost = await Post.create({
+          postText: postText,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { posts: newPost._id } }
+        );
+
+        return context.user;
+      }
+    },
+  },
 };
 
 module.exports = resolvers;

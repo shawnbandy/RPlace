@@ -2,32 +2,30 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type User {
-    _id: ID!
     firstName: String!
     lastName: String!
     email: String!
     password: String!
+    friends: [Friend]!
     posts: [Post]!
-    profile_Posts: [ProPagePosts]!
-    comments: [Comment]!
-    conversations: [Conversation]!
+    graffitiPosts: [GraffitiPost]!
+    messages: [Message]!
+    pendingFriends: [PendingFriend]!
+  }
+
+  input MakeUserInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
   }
 
   type Post {
-    _id: ID!
-    userId: String!
     postText: String!
-    comments: [Comment]!
+    comments: [Comment]
   }
 
-  type Comment {
-    _id: ID!
-    userId: String!
-    postId: String!
-    postText: String!
-  }
-
-  type ProPagePost {
+  type GraffitiPost {
     _id: ID!
     postingUser: String!
     receivingUser: String!
@@ -44,18 +42,10 @@ const typeDefs = gql`
     sentRequest: String
   }
 
-  type Conversation {
-    _id: ID!
-    messages: [Message]!
-    userOne: String!
-    userTwo: String!
-  }
-
   type Message {
     _id: ID!
     textBody: String!
-    sender: String!
-    recipient: String!
+    postingUser: String!
   }
 
   type Query {

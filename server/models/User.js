@@ -26,6 +26,7 @@ const userSchema = new Schema({
     minlength: 5,
   },
 
+  //*post/comment individual user has
   posts: [
     {
       type: Schema.Types.ObjectId,
@@ -34,21 +35,14 @@ const userSchema = new Schema({
   ],
 
   //*these will be posts directly made on the user profile, like to graffiti the page
-  profile_Posts: [
+  graffitiPosts: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'ProPagePosts',
+      ref: 'GraffitiPost',
     },
   ],
 
-  //*comments the user makes
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Post_Comment',
-    },
-  ],
-
+  //*this includes all your friends posts and comments
   friends: [
     {
       type: Schema.Types.ObjectId,
@@ -70,10 +64,10 @@ const userSchema = new Schema({
     },
   ],
 
-  conversations: [
+  messages: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Conversation',
+      ref: 'Message',
     },
   ],
 });

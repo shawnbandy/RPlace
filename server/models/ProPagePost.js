@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const proPagePostSchema = new Schema({
+const graffitiPostSchema = new Schema({
   postingUser: {
     type: String,
     required: true,
@@ -21,6 +21,6 @@ const proPagePostSchema = new Schema({
   },
 });
 
-const ProPagePost = model('proPagePostSchema', proPagePostSchema);
+const GraffitiPost = model('graffitiPostSchema', graffitiPostSchema);
 
-module.exports = ProPagePost;
+module.exports = GraffitiPost;

@@ -9,14 +9,9 @@ The trick is that request 1 will be tied to Friend ID 1's User
 Request 2 will be tied to Friend ID 2
 */
 const pendingFriendSchema = new Schema({
-  receivedRequest: {
+  userId: {
     type: String,
-    required: false,
-    trim: true,
-  },
-  sentRequest: {
-    type: String,
-    required: false,
+    required: true,
     trim: true,
   },
 });

@@ -20,9 +20,10 @@ const typeDefs = gql`
     password: String!
   }
 
+  ##is this right with the comments?
   type Post {
     postText: String!
-    comments: [Comment]
+    comments: [String]
   }
 
   type GraffitiPost {
@@ -38,8 +39,7 @@ const typeDefs = gql`
   }
 
   type PendingFriend {
-    receivedRequest: String
-    sentRequest: String
+    userId: String!
   }
 
   type Message {

@@ -54,10 +54,44 @@ const resolvers = {
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { posts: newPost._id } }
+          { $addToSet: { posts: newPost._id } },
+          { new: true }
         );
 
         return context.user;
+      }
+    },
+
+    //*finds a post and updates it with the comment by adding it to the array
+    addComment: async (parent, { postId, commentText }, context) => {
+      if (context.user) {
+        const post = await Post.findOneAndUpdate(
+          { _id: postId },
+          {
+            $addToSet: {
+              comments: {
+                commentText: commentText,
+                commentAuthor: context.user._id,
+              },
+            },
+          },
+          { new: true }
+        );
+
+        return post;
+      }
+    },
+
+    //*adds a user to another user's pending friend list
+    sendPendingFriend: async (parent, { receiverId }, context) => {
+      if (context.user && receiverId) {
+        const newFriendRqst = await PendingFriend.create({
+          userId: context.user._id,
+        });
+        const addedToListOfPendingFriends = await User.findOneAndUpdate(
+          { _id: receiverId },
+          { $addToSet: { pendingFriends: newFriendRqst } }
+        );
       }
     },
   },

@@ -1,0 +1,10 @@
+[
+    {    
+    "userId": 1,
+    "postText": "My First Post!"
+    },
+    {    
+        "userId": 2,
+        "postText": "My First Post, 2!"
+    }
+]

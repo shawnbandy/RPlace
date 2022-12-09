@@ -1,0 +1,32 @@
+[
+    {
+      "firstName": "Mac",
+      "lastName": "Greene",
+      "email": "mac@rplace.com",
+      "password": "123456789",
+    },
+    {
+      "firstName": "Terry",
+      "lastName": "Kim",
+      "email": "terry@rplace.com",
+      "password": "123456789"
+    },
+    {
+        "firstName": "Hunter",
+        "lastName": "O'niel",
+        "email": "hunter@rplace.com",
+        "password": "123456789"
+    },
+    {
+        "firstName": "Shawn",
+        "lastName": "Canavan",
+        "email": "shawn@rplace.com",
+        "password": "123456789"
+    },
+    {
+        "firstName": "Corey Bennett",
+        "lastName": "Corey Bennett",
+        "email": "corey@rplace.com",
+        "password": "123456789"
+    }
+]

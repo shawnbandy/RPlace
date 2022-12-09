@@ -6,11 +6,8 @@ const messageSchema = new Schema({
     required: true,
     minlength: 1,
   },
-  sender: {
-    type: String,
-    required: true,
-  },
-  recipient: {
+
+  postingUser: {
     type: String,
     required: true,
   },

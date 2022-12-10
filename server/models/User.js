@@ -52,8 +52,8 @@ const userSchema = new Schema({
 
   pendingFriends: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'PendingFriend',
+      type: String,
+      required: true,
     },
   ],
 

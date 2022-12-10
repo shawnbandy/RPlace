@@ -10,7 +10,7 @@ const typeDefs = gql`
     posts: [Post]!
     graffitiPosts: [GraffitiPost]!
     messages: [Message]!
-    pendingFriends: [PendingFriend]!
+    pendingFriends: [String]
   }
 
   input MakeUserInput {
@@ -36,10 +36,6 @@ const typeDefs = gql`
   type Friend {
     _id: ID!
     friendId: String!
-  }
-
-  type PendingFriend {
-    userId: String!
   }
 
   type Message {

@@ -83,14 +83,12 @@ const resolvers = {
     },
 
     //*adds a user to another user's pending friend list
+    //*later, we can just check to see if the context.user.id is on any other pending lists to populate those
     sendPendingFriend: async (parent, { receiverId }, context) => {
       if (context.user && receiverId) {
-        const newFriendRqst = await PendingFriend.create({
-          userId: context.user._id,
-        });
-        const addedToListOfPendingFriends = await User.findOneAndUpdate(
+        const user = User.findOneAndUpdate(
           { _id: receiverId },
-          { $addToSet: { pendingFriends: newFriendRqst } }
+          { $addToSet: { pendingFriends: context.user._id } }
         );
       }
     },

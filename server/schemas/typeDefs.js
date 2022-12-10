@@ -6,7 +6,7 @@ const typeDefs = gql`
     lastName: String!
     email: String!
     password: String!
-    friends: [Friend]!
+    friends: [String]
     posts: [Post]!
     graffitiPosts: [GraffitiPost]!
     messages: [Message]!
@@ -27,12 +27,12 @@ const typeDefs = gql`
   }
 
   type GraffitiPost {
-    _id: ID!
     postingUser: String!
     receivingUser: String!
     postText: String!
   }
 
+  ##may delete
   type Friend {
     _id: ID!
     friendId: String!

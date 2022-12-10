@@ -5,10 +5,11 @@ const {
   Message,
   PendingFriend,
   Post,
-  ProPagePost,
+  GraffitiPost,
   User,
 } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
+const GraffitiPost = require('../models/GraffitiPost');
 
 const resolvers = {
   //TODO User
@@ -83,13 +84,49 @@ const resolvers = {
     },
 
     //*adds a user to another user's pending friend list
-    //*later, we can just check to see if the context.user.id is on any other pending lists to populate those
+    //?later, we can just check to see if the context.user.id is on any other pending lists to populate those
     sendPendingFriend: async (parent, { receiverId }, context) => {
+      //*context user is the sender of the request
       if (context.user && receiverId) {
         const user = User.findOneAndUpdate(
           { _id: receiverId },
           { $addToSet: { pendingFriends: context.user._id } }
         );
+        return user;
+      }
+    },
+
+    //*accept a friend= add them to the friend array, remove them from the pending friend request
+    addFriend: async (parent, { requesterId }, context) => {
+      if (context.user) {
+        const user = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { friends: requesterId } },
+          { $pull: { pendingFriends: requesterId } },
+          { new: true }
+        );
+
+        return user;
+      }
+    },
+
+    //*posts directly to someone's profile
+    addGraffiti: async (parent, { receivingUser, postText }, context) => {
+      //*context.user is the poster
+      if (context.user) {
+        const newGraffiti = await GraffitiPost.create({
+          postingUser: context.user._id,
+          receivingUser: receivingUser,
+          postText: postText,
+        });
+
+        const user = await User.findOneAndUpdate(
+          { _id: receivingUser },
+          { $addToSet: { graffitiPosts: newGraffiti } },
+          { new: true }
+        );
+
+        return { newGraffiti, user };
       }
     },
   },

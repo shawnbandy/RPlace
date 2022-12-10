@@ -1,16 +1,28 @@
 const { Schema, model } = require('mongoose');
 
 const messageSchema = new Schema({
-  textBody: {
-    type: String,
-    required: true,
-    minlength: 1,
-  },
+  chatters: [
+    {
+      user: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 
-  postingUser: {
-    type: String,
-    required: true,
-  },
+  dm: [
+    {
+      message: {
+        type: String,
+        required: true,
+        minlength: 1,
+      },
+      messageAuthor: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
 const Message = model('messageSchema', messageSchema);

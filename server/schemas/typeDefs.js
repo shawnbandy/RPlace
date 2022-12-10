@@ -39,7 +39,6 @@ const typeDefs = gql`
   }
 
   type Message {
-    _id: ID!
     textBody: String!
     postingUser: String!
   }

@@ -120,6 +120,7 @@ const resolvers = {
           postText: postText,
         });
 
+        //*putting this on the receiver's model
         const user = await User.findOneAndUpdate(
           { _id: receivingUser },
           { $addToSet: { graffitiPosts: newGraffiti } },
@@ -127,6 +128,15 @@ const resolvers = {
         );
 
         return { newGraffiti, user };
+      }
+    },
+
+    //*creates a messaging thread with someone
+    createMessageThread: async (parent, { recipientId }, context) => {
+      //?how to add the users to this
+      //?update it
+      if (context.user) {
+        const newMessageThread = await Message.create({});
       }
     },
   },

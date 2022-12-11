@@ -1,13 +1,4 @@
-const {
-  Comment,
-  Conversation,
-  Friend,
-  Message,
-  PendingFriend,
-  Post,
-  GraffitiPost,
-  User,
-} = require('../models');
+const { Message, Post, GraffitiPost, User } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const GraffitiPost = require('../models/GraffitiPost');
 
@@ -136,7 +127,40 @@ const resolvers = {
       //?how to add the users to this
       //?update it
       if (context.user) {
-        const newMessageThread = await Message.create({});
+        const newMessageThread = await Message.create({
+          chatters: [context.user._id, recipientId],
+        });
+
+        const contexUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { messages: newMessageThread._id } }
+        );
+
+        const recipientUser = await User.findByIdAndUpdate(
+          { _id: recipientId },
+          { $addToSet: { messages: newMessageThread._id } }
+        );
+
+        return newMessageThread;
+      }
+    },
+
+    sendMessage: async (parent, { threadId, messageContent }, context) => {
+      if (context.user) {
+        const sendMessage = await Message.findOneAndUpdate(
+          { _id: threadId },
+          {
+            $addToSet: {
+              dm: {
+                messageContent: messageContent,
+                messageAuthor: context.user._id,
+              },
+            },
+          },
+          { new: true }
+        );
+
+        return sendMessage;
       }
     },
   },

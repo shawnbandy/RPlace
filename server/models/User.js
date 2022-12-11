@@ -45,11 +45,12 @@ const userSchema = new Schema({
   //*this includes all your friends posts and comments
   friends: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'Friend',
+      type: String,
+      required: false,
     },
   ],
 
+  //*people you have yet to accept
   pendingFriends: [
     {
       type: String,
@@ -64,6 +65,7 @@ const userSchema = new Schema({
     },
   ],
 
+  //*maybe make this a string instead since user is only supposed to have the ID of the message thread?
   messages: [
     {
       type: Schema.Types.ObjectId,

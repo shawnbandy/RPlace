@@ -32,15 +32,9 @@ const typeDefs = gql`
     postText: String!
   }
 
-  ##may delete
-  type Friend {
-    _id: ID!
-    friendId: String!
-  }
-
   type Message {
-    textBody: String!
-    postingUser: String!
+    chatters: [String]
+    dm: [String]
   }
 
   type Query {

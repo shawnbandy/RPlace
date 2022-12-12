@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 
 const userSchema = new Schema({
   firstName: {
@@ -45,15 +45,16 @@ const userSchema = new Schema({
   //*this includes all your friends posts and comments
   friends: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'Friend',
+      type: String,
+      required: false,
     },
   ],
 
+  //*people you have yet to accept
   pendingFriends: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'PendingFriend',
+      type: String,
+      required: true,
     },
   ],
 
@@ -64,6 +65,7 @@ const userSchema = new Schema({
     },
   ],
 
+  //*maybe make this a string instead since user is only supposed to have the ID of the message thread?
   messages: [
     {
       type: Schema.Types.ObjectId,

@@ -2,70 +2,58 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type User {
-    _id: ID!
     firstName: String!
     lastName: String!
     email: String!
     password: String!
+    friends: [String]
     posts: [Post]!
-    profile_Posts: [ProPagePosts]!
-    comments: [Comment]!
-    conversations: [Conversation]!
+    graffitiPosts: [GraffitiPost]!
+    messages: [Message]!
+    pendingFriends: [String]
   }
 
+  input MakeUserInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+  }
+
+  ##is this right with the comments?
   type Post {
-    _id: ID!
-    userId: String!
     postText: String!
-    comments: [Comment]!
+    comments: [String]
   }
 
-  type Comment {
-    _id: ID!
-    userId: String!
-    postId: String!
-    postText: String!
-  }
-
-  type ProPagePost {
-    _id: ID!
+  type GraffitiPost {
     postingUser: String!
     receivingUser: String!
     postText: String!
   }
 
-  type Friend {
-    _id: ID!
-    friendId: String!
-  }
-
-  type PendingFriend {
-    receivedRequest: String
-    sentRequest: String
-  }
-
-  type Conversation {
-    _id: ID!
-    messages: [Message]!
-    userOne: String!
-    userTwo: String!
-  }
-
   type Message {
-    _id: ID!
-    textBody: String!
-    sender: String!
-    recipient: String!
+    chatters: [String]
+    dm: [String]
   }
 
   type Query {
-    tech: [Tech]
-    matchups(_id: String): [Matchup]
+    user(userId: ID!): User
+    userPost(userId: ID!): User
+    userGraffitiPost(userId: ID!): User
+    userMessage(userId: ID!): User
+    userPendingFriend(userId: ID!): User
+    me: User
   }
 
   type Mutation {
-    createMatchup(tech1: String!, tech2: String!): Matchup
-    createVote(_id: String!, techNum: Int!): Matchup
+    addPost(postText: String!): Post
+    addComment(postId: String!, commentText: String!): Post
+    sendPendingFriend(receiverId: String!): User
+    addFriend(requesterId: String!): User
+    addGraffiti(receivingUser: String!, postText: String!): GraffitiPost
+    createMessageThread(recipientId: String!): Message
+    sendMessage(threadId: String!, messageContent: String!): Message
   }
 `;
 

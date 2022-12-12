@@ -1,6 +1,5 @@
 const { Message, Post, GraffitiPost, User } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
-const GraffitiPost = require('../models/GraffitiPost');
 
 const resolvers = {
   //TODO User
@@ -50,7 +49,7 @@ const resolvers = {
           { new: true }
         );
 
-        return context.user;
+        return newPost;
       }
     },
 
@@ -81,7 +80,8 @@ const resolvers = {
       if (context.user && receiverId) {
         const user = User.findOneAndUpdate(
           { _id: receiverId },
-          { $addToSet: { pendingFriends: context.user._id } }
+          { $addToSet: { pendingFriends: context.user._id } },
+          { new: true }
         );
         return user;
       }
@@ -118,7 +118,7 @@ const resolvers = {
           { new: true }
         );
 
-        return { newGraffiti, user };
+        return newGraffiti;
       }
     },
 

@@ -12,7 +12,7 @@ const messageSchema = new Schema({
 
   dm: [
     {
-      message: {
+      messageContent: {
         type: String,
         required: true,
         minlength: 1,

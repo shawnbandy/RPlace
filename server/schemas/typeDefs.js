@@ -38,13 +38,22 @@ const typeDefs = gql`
   }
 
   type Query {
-    tech: [Tech]
-    matchups(_id: String): [Matchup]
+    user(userId: ID!): User
+    userPost(userId: ID!): User
+    userGraffitiPost(userId: ID!): User
+    userMessage(userId: ID!): User
+    userPendingFriend(userId: ID!): User
+    me: User
   }
 
   type Mutation {
-    createMatchup(tech1: String!, tech2: String!): Matchup
-    createVote(_id: String!, techNum: Int!): Matchup
+    addPost(postText: String!): Post
+    addComment(postId: String!, commentText: String!): Post
+    sendPendingFriend(receiverId: String!): User
+    addFriend(requesterId: String!): User
+    addGraffiti(receivingUser: String!, postText: String!): GraffitiPost
+    createMessageThread(recipientId: String!): Message
+    sendMessage(threadId: String!, messageContent: String!): Message
   }
 `;
 

@@ -14,7 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = ['Home', 'Friends', 'Games'];
-// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings_loggedin = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Sign in', 'Sign up'];
 
 // Sets styling for the search bar inside of the Navbar (the example given by Material UI documentation)
 const Search = styled('div')(({ theme }) => ({
@@ -98,7 +99,7 @@ function Navbar_Component() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            ЯPlace
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

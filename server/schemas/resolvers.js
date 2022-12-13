@@ -46,9 +46,6 @@ const resolvers = {
     },
   },
 
-  //TODO: DELETE: User, post, comment, graffiti, friend, pending friend, MessageThread
-  //TODO: EDIT: User
-  //!: Remove from above list AFTER you do the typeDefs!!
   Mutation: {
     addUser: async (parent, { firstName, lastName, email, password }) => {
       const user = await User.create({ firstName, lastName, email, password });
@@ -63,7 +60,20 @@ const resolvers = {
       }
     },
 
-    updateUser: async (parent, { firstName, lastName, email, password }) => {
+    //*may have to figure out how to not update null objects
+    updateUser: async (
+      parent,
+      { firstName, lastName, email, password },
+      context
+    ) => {
+      const { currentFirst, currentLast, currentEmail, currentPW } =
+        await User.findOne({ _id: context.user._id });
+
+      firstName ? firstName : currentFirst;
+      lastName ? lastName : currentLast;
+      email ? email : currentEmail;
+      password ? password : currentPW;
+
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -92,6 +102,7 @@ const resolvers = {
 
       return { token, user };
     },
+
     addPost: async (parent, { postText }, context) => {
       if (context.user) {
         const newPost = await Post.create({
@@ -105,6 +116,20 @@ const resolvers = {
         );
 
         return newPost;
+      }
+    },
+
+    deletePost: async (parent, { postId }, context) => {
+      if (context.user) {
+        const updateUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $pull: { posts: postId } },
+          { new: true }
+        );
+
+        const deletedPost = await Post.findByIdAndDelete({ _id: postId });
+
+        return updateUser;
       }
     },
 
@@ -128,6 +153,18 @@ const resolvers = {
       }
     },
 
+    deleteComment: async (parent, { postId, commentId }, context) => {
+      if (context.user) {
+        const updatePost = await Post.findByIdAndUpdate(
+          { _id: postId },
+          { $pull: { comments: commentId } },
+          { new: true }
+        );
+
+        return updatePost;
+      }
+    },
+
     //*adds a user to another user's pending friend list
     //?later, we can just check to see if the context.user.id is on any other pending lists to populate those
     sendPendingFriend: async (parent, { receiverId }, context) => {
@@ -136,6 +173,18 @@ const resolvers = {
         const user = User.findOneAndUpdate(
           { _id: receiverId },
           { $addToSet: { pendingFriends: context.user._id } },
+          { new: true }
+        );
+        return user;
+      }
+    },
+
+    deletePendingFriend: async (parent, { requestId }, context) => {
+      if (context.user._id) {
+        //*removes the sent friend request from your pending friends
+        const user = User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { pendingFriends: requestId } },
           { new: true }
         );
         return user;
@@ -153,6 +202,23 @@ const resolvers = {
         );
 
         return user;
+      }
+    },
+
+    deleteFriend: async (parent, { friendId }, context) => {
+      if (context.user) {
+        const userOne = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $pull: { friends: friendId } },
+          { new: true }
+        );
+        const userTwo = await User.findByIdAndUpdate(
+          { _id: friendId },
+          { $pull: { friends: context.user._id } },
+          { new: true }
+        );
+
+        return userOne;
       }
     },
 
@@ -174,6 +240,22 @@ const resolvers = {
         );
 
         return newGraffiti;
+      }
+    },
+
+    deleteGraffiti: async (parent, { graffitiId }, context) => {
+      //*gets the graffiti
+      const graffiti = await GraffitiPost.findOne({ id_: graffitiId });
+
+      //*checks to see if the context user is either the original poster of the graffiti, or the person that received the graffiti
+      if (
+        context.user._id == graffiti.postingUser ||
+        context.user._id == graffiti.receivingUser
+      ) {
+        const deleteGraffiti = await GraffitiPost.findByIdAndDelete({
+          _id: graffitiId,
+        });
+        return deleteGraffiti;
       }
     },
 

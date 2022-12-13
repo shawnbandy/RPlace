@@ -12,10 +12,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { styled, alpha } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
 
-const pages = ['Home', 'Friends', 'Games'];
-const settings_loggedin = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const settings = ['Sign in', 'Sign up'];
+
 
 // Sets styling for the search bar inside of the Navbar (the example given by Material UI documentation)
 const Search = styled('div')(({ theme }) => ({
@@ -60,7 +61,21 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-function Navbar_Component() {
+const searchBar = (<Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>);
+
+const pages = ['Home', 'Friends', 'Games', searchBar];
+// const settings_loggedin = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Sign in', 'Sign up'];
+
+function NavbarComponent() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -155,8 +170,9 @@ function Navbar_Component() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            ЯPlace
           </Typography>
+          
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -168,7 +184,7 @@ function Navbar_Component() {
               </Button>
             ))}
           </Box>
-
+          
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -194,8 +210,12 @@ function Navbar_Component() {
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
+                  
                 </MenuItem>
               ))}
+              
+                
+              
             </Menu>
           </Box>
         </Toolbar>
@@ -203,4 +223,4 @@ function Navbar_Component() {
     </AppBar>
   );
 }
-export default Navbar_Component;
+export default NavbarComponent;

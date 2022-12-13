@@ -10,24 +10,34 @@ const resolvers = {
   Query: {
     //*user will get all of the user's friends, which will hold all of their data. Only need the posts from it
     //TODO find each friend's post
+    allUser: async () => {
+      return User.find({});
+    },
     user: async (parent, { userId }) => {
-      return User.findOne({ userId }).populate('friends');
+      return User.findOne({ _id: userId }).populate('friends');
     },
     //*gets all of the user's posts/comments
-    userPost: async (parent, { userId }) => {
-      return User.findOne({ userId }).populate('posts');
+    userPost: async (parent, { postId }) => {
+      return Post.findOne({ _id: postId });
     },
     //*gets all of the user's graffiti
     userGraffitiPost: async (parent, { userId }) => {
-      return User.findOne({ userId }).populate('graffitiPosts');
+      return User.findOne({ _id: userId }).populate('graffitiPosts');
     },
     //*returns all the messages the user is a part of
     userMessage: async (parent, { userId }) => {
-      return User.findOne({ userId }).populate('messages');
+      return User.findOne({ _id: userId }).populate('messages');
     },
     userPendingFriend: async (parent, { userId }) => {
-      return User.findOne({ userId }).populate('pendingFriends');
+      return User.findOne({ _id: userId }).populate('pendingFriends');
     },
+
+    userHomePage: async (parent, { userId }) => {
+      const user = await User.findOne({ userId }).populate('friends');
+      const postArr = [];
+      return user;
+    },
+
     //*gets the logged in user's posts
     me: async (parent, args, context) => {
       if (context.user) {
@@ -39,6 +49,11 @@ const resolvers = {
 
   Mutation: {
     //!add the sign token right after
+
+    addUser: async (parent, { firstName, lastName, email, password }) => {
+      const user = await User.create({ firstName, lastName, email, password });
+      return user;
+    },
 
     addPost: async (parent, { postText }, context) => {
       if (context.user) {

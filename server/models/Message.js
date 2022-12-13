@@ -4,6 +4,7 @@ const messageSchema = new Schema({
   //*ID
   chatters: [
     {
+      //*Shawn, Mac
       user: {
         type: String,
         required: true,
@@ -29,6 +30,3 @@ const messageSchema = new Schema({
 const Message = model('messageSchema', messageSchema);
 
 module.exports = Message;
-
-//!list of all my message w/ friends
-//!pull all the dms from that message model

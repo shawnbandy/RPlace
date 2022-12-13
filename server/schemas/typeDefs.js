@@ -2,14 +2,15 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type User {
+    _id: ID!
     firstName: String!
     lastName: String!
     email: String!
     password: String!
     friends: [String]
-    posts: [Post]!
-    graffitiPosts: [GraffitiPost]!
-    messages: [Message]!
+    posts: [Post]
+    graffitiPosts: [GraffitiPost]
+    messages: [Message]
     pendingFriends: [String]
   }
 
@@ -20,10 +21,14 @@ const typeDefs = gql`
     password: String!
   }
 
-  ##is this right with the comments?
   type Post {
-    postText: String!
-    comments: [String]
+    postText: String
+    comments: [Comment]
+  }
+
+  type Comment {
+    commentText: String!
+    commentAuthor: String!
   }
 
   type GraffitiPost {
@@ -33,20 +38,37 @@ const typeDefs = gql`
   }
 
   type Message {
-    chatters: [String]
-    dm: [String]
+    chatters: [Chatter]
+    dm: [DM]
+  }
+
+  type Chatter {
+    user: String!
+  }
+
+  type DM {
+    messageContent: String!
+    messageAuthor: String!
   }
 
   type Query {
+    allUser: [User]
     user(userId: ID!): User
-    userPost(userId: ID!): User
+    userPost(postId: ID!): Post
     userGraffitiPost(userId: ID!): User
     userMessage(userId: ID!): User
     userPendingFriend(userId: ID!): User
+    userHomePage(userId: ID!): User
     me: User
   }
 
   type Mutation {
+    addUser(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
+    ): User
     addPost(postText: String!): Post
     addComment(postId: String!, commentText: String!): Post
     sendPendingFriend(receiverId: String!): User

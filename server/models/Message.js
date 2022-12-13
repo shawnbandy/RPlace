@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const messageSchema = new Schema({
+  //*ID
   chatters: [
     {
       user: {
@@ -28,3 +29,6 @@ const messageSchema = new Schema({
 const Message = model('messageSchema', messageSchema);
 
 module.exports = Message;
+
+//!list of all my message w/ friends
+//!pull all the dms from that message model

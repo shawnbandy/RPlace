@@ -1,12 +1,15 @@
 const { Message, Post, GraffitiPost, User } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 
+//*template literals
+
 const resolvers = {
   //TODO User
   //*user: find your user, populate all the posts from you
   //*post: find your user, get your friends, populate all their posts/comments on your home page
   Query: {
     //*user will get all of the user's friends, which will hold all of their data. Only need the posts from it
+    //TODO find each friend's post
     user: async (parent, { userId }) => {
       return User.findOne({ userId }).populate('friends');
     },

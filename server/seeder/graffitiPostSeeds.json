@@ -1,0 +1,17 @@
+[
+    {
+        "postingUser": "shawn@rplace.com",
+        "receivingUser": "shawn@rplace.com",
+        "postText": "Tag up some graffiti on my wall!"
+    },
+    {
+        "postingUser": "mac@rplace.com",
+        "receivingUser": "shawn@rplace.com",
+        "postText": "Yo Shawn, this profile page is off the chain mane"
+    },
+    {
+        "postingUser": "mac@rplace.com",
+        "receivingUser": "terry@rplace.com",
+        "postText": "LEEERROOOYYY JEEEENKINSSSSS"
+    }
+]

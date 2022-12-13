@@ -82,6 +82,8 @@ const resolvers = {
           { email: email },
           { password: { password } }
         );
+
+        return updatedUser;
       }
     },
 

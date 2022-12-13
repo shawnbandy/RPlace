@@ -74,10 +74,12 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): Auth
-    updateUser(firstName: String!
+    updateUser(
+      firstName: String!
       lastName: String!
       email: String!
-      password: String!,)
+      password: String!
+    ): User
     login(email: String!, password: String!): Auth
     addPost(postText: String!): Post
     addComment(postId: String!, commentText: String!): Post
@@ -90,6 +92,8 @@ const typeDefs = gql`
     deletePost(postId: String!): User
     deleteComment(postId: String!, commentId: String!): Post
     deletePendingFriend(requestId: String!): User
+    deleteFriend(friendId: String!): User
+    deleteGraffiti(graffitiId: String!): GraffitiPost
   }
 `;
 

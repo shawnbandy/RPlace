@@ -1,7 +1,6 @@
 const { Message, Post, GraffitiPost, User } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
-
-//*template literals
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   //TODO User
@@ -47,14 +46,52 @@ const resolvers = {
     },
   },
 
+  //TODO: DELETE: User, post, comment, graffiti, friend, pending friend, MessageThread
+  //TODO: EDIT: User
+  //!: Remove from above list AFTER you do the typeDefs!!
   Mutation: {
-    //!add the sign token right after
-
     addUser: async (parent, { firstName, lastName, email, password }) => {
       const user = await User.create({ firstName, lastName, email, password });
-      return user;
+      const token = signToken(user);
+      return { token, user };
     },
 
+    deleteUser: async (parent, args, context) => {
+      if (context.user) {
+        const user = await User.findByIdAndDelete({ _id: context.user._id });
+        return user;
+      }
+    },
+
+    updateUser: async (parent, { firstName, lastName, email, password }) => {
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { firstName: firstName },
+          { lastName: lastName },
+          { email: email },
+          { password: { password } }
+        );
+      }
+    },
+
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError('Email address not found');
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect email/password');
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
     addPost: async (parent, { postText }, context) => {
       if (context.user) {
         const newPost = await Post.create({
@@ -149,7 +186,7 @@ const resolvers = {
           chatters: [context.user._id, recipientId],
         });
 
-        const contexUser = await User.findByIdAndUpdate(
+        const contextUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $addToSet: { messages: newMessageThread._id } }
         );

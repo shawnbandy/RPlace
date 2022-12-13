@@ -1,5 +1,6 @@
 const { Message, Post, GraffitiPost, User } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   //TODO User
@@ -35,8 +36,28 @@ const resolvers = {
   },
 
   Mutation: {
-    //!add the sign token right after
+    addUser: async (parent, { firstName, lastName, email, password }) => {
+      const user = await User.create({ firstName, lastName, email, password });
+      const token = signToken(user);
+      return { token, user };
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
 
+      if (!user) {
+        throw new AuthenticationError('Email address not found');
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect email/password');
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
     addPost: async (parent, { postText }, context) => {
       if (context.user) {
         const newPost = await Post.create({
@@ -131,7 +152,7 @@ const resolvers = {
           chatters: [context.user._id, recipientId],
         });
 
-        const contexUser = await User.findByIdAndUpdate(
+        const contextUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $addToSet: { messages: newMessageThread._id } }
         );

@@ -1,32 +1,62 @@
-[
-    {
-      "firstName": "Mac",
-      "lastName": "Greene",
-      "email": "mac@rplace.com",
-      "password": "123456789",
-    },
-    {
-      "firstName": "Terry",
-      "lastName": "Kim",
-      "email": "terry@rplace.com",
-      "password": "123456789"
-    },
-    {
-        "firstName": "Hunter",
-        "lastName": "O'niel",
-        "email": "hunter@rplace.com",
-        "password": "123456789"
-    },
-    {
-        "firstName": "Shawn",
-        "lastName": "Canavan",
-        "email": "shawn@rplace.com",
-        "password": "123456789"
-    },
-    {
-        "firstName": "Corey Bennett",
-        "lastName": "Corey Bennett",
-        "email": "corey@rplace.com",
-        "password": "123456789"
-    }
+[   
+  {
+    "firstName": "Corey",
+    "lastName": "Bennett",
+    "email": "corey@rplace.com",
+    "password": "123456789",
+    "posts": [], 
+    "graffitiPosts": [],
+    "friends": ["hunter@rplace.com", "mac@rplace.com"],
+    "pendingFriends": [],
+    "profile": [],
+    "messages": []
+  }, 
+  {
+    "firstName": "Hunter",
+    "lastName": "O'niel",
+    "email": "hunter@rplace.com",
+    "password": "123456789",
+    "posts": [], 
+    "graffitiPosts": [],
+    "friends": ["corey@rplace.com"],
+    "pendingFriends": [],
+    "profile": [],
+    "messages": []
+  },
+  {
+    "firstName": "Mac",
+    "lastName": "Greene",
+    "email": "mac@rplace.com",
+    "password": "123456789",
+    "posts": [], 
+    "graffitiPosts": [],
+    "friends": ["corey@rplace.com"],
+    "pendingFriends": [],
+    "profile": [],
+    "messages": []
+  },
+  {
+    "firstName": "Shawn",
+    "lastName": "Canavan",
+    "email": "shawn@rplace.com",
+    "password": "123456789",
+    "posts": [], 
+    "graffitiPosts": [],
+    "friends": ["terry@rplace.com"],
+    "pendingFriends": [],
+    "profile": [],
+    "messages": []
+  },
+  {
+    "firstName": "Terry",
+    "lastName": "Kim",
+    "email": "terry@rplace.com",
+    "password": "123456789",
+    "posts": [], 
+    "graffitiPosts": [],
+    "friends": ["shawn@rplace.com"],
+    "pendingFriends": [],
+    "profile": [],
+    "messages": []
+  }
 ]

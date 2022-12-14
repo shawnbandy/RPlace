@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt-nodejs");
+const profileSchema = require("./Profile.js");
 
 const userSchema = new Schema({
   firstName: {
@@ -34,14 +35,6 @@ const userSchema = new Schema({
     },
   ],
 
-  //*these will be posts directly made on the user profile, like to graffiti the page
-  graffitiPosts: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "GraffitiPost",
-    },
-  ],
-
   //*this includes all your friends posts and comments
   friends: [
     {
@@ -58,10 +51,14 @@ const userSchema = new Schema({
     },
   ],
 
-  profile: [
+  // profile contains content to populate and style user profile page
+  profile: profileSchema,
+
+  //*these will be posts directly made on the user profile, like to graffiti the page
+  graffitiPosts: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Profile",
+      ref: "graffitiPost",
     },
   ],
 

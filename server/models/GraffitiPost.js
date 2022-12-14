@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const graffitiPostSchema = new Schema({
   postingUser: {
@@ -21,6 +21,6 @@ const graffitiPostSchema = new Schema({
   },
 });
 
-const GraffitiPost = model('graffitiPostSchema', graffitiPostSchema);
+const GraffitiPost = model("graffitiPost", graffitiPostSchema);
 
 module.exports = GraffitiPost;

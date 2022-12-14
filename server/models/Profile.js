@@ -1,19 +1,5 @@
 const { Schema, model } = require("mongoose");
 
-//*these will be posts directly made on the user profile, like to graffiti the page
-const graffitiPost = new Schema({
-  postTest: {
-    type: String,
-    unique: false,
-    trim: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    //get: (timestamp) => dateFormat(timestamp),
-  },
-});
-
 const profileSchema = new Schema({
   // background styling, to be applied to parent component
   backgroundStyling: {
@@ -63,10 +49,6 @@ const profileSchema = new Schema({
     unique: false,
     trim: true,
   },
-
-  graffitiPosts: [graffitiPost], // array of graffiti posts
 });
 
-const Profile = model("profile", profileSchema);
-
-module.exports = Profile;
+module.exports = profileSchema;

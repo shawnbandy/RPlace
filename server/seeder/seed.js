@@ -33,16 +33,16 @@ db.once("open", async () => {
     // seed User with GraffitiPost as subdoc
     for (let i = 0; i < graffitiPostSeeds.length; i++) {
       // create post
-      let { _id, postingUser } = await GraffitiPost.create(
+      let { _id, receivingUser } = await GraffitiPost.create(
         graffitiPostSeeds[i]
       );
 
       // locate user, add post as subdocument
       await User.findOneAndUpdate(
-        { email: postingUser },
+        { email: receivingUser },
         {
           $addToSet: {
-            posts: _id,
+            graffitiPosts: _id,
           },
         }
       );

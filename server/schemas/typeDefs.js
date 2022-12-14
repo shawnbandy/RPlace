@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type User {
@@ -9,9 +9,24 @@ const typeDefs = gql`
     password: String!
     friends: [String]
     posts: [Post]
+    profile: Profile
     graffitiPosts: [GraffitiPost]
     messages: [Message]
     pendingFriends: [String]
+  }
+
+  type Profile {
+    backgroundStyling: String!
+    profilePicture: String!
+    aboutMe: String!
+    details: Details
+    mediaContainer: String!
+    widgetContainer: String!
+  }
+
+  type Details {
+    age: String!
+    status: String!
   }
 
   input MakeUserInput {

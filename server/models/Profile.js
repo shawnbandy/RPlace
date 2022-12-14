@@ -44,7 +44,7 @@ const profileSchema = new Schema({
   },
 
   // container for iframe of website
-  portfolioContainer: {
+  widgetContainer: {
     type: String,
     unique: false,
     trim: true,

@@ -1,8 +1,10 @@
 const { Schema, model } = require('mongoose');
 
 const messageSchema = new Schema({
+  //*ID
   chatters: [
     {
+      //*Shawn, Mac
       user: {
         type: String,
         required: true,

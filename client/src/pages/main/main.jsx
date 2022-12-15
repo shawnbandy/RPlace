@@ -4,7 +4,7 @@ import { useContext, useRef } from 'react';
 // import { loginCall } from "../../" //apicall
 import AuthService from '../../context/auth'; //authcontext
 import React, { useState } from 'react';
-import { ADD_USER } from '../../context/mutations';
+import { ADD_USER, LOGIN } from '../../context/mutations';
 import { useMutation } from '@apollo/client';
 
 export default function Login() {
@@ -13,6 +13,7 @@ export default function Login() {
   const firstName = useRef();
   const lastName = useRef();
   const [addUser, { error, data }] = useMutation(ADD_USER);
+  const [loginUser, { err, dat }] = useMutation(LOGIN);
 
   //const { isFetching, dispatch } = useContext(AuthContext);
   const [formState, setFormState] = useState({
@@ -27,18 +28,37 @@ export default function Login() {
     console.log(formState);
 
     try {
-      console.log('hello0');
+      console.log('signUp');
       const { data } = await addUser({
         variables: { ...formState },
       });
       console.log(data);
       AuthService.Login(data.addUser.token);
     } catch (err) {
-      console.error(e);
+      console.error(err);
     }
 
     // loginCall({
     //     email: email.current.value, password: password.current.value}, dispatch)
+  };
+
+  const loginClick = async (e) => {
+    e.preventDefault();
+    console.log(formState);
+
+    try {
+      console.log('login');
+      const { data } = await loginUser({
+        variables: {
+          email: formState.email,
+          password: formState.password,
+        },
+      });
+      console.log('data', data);
+      AuthService.Login(data.login.token);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleChange = (e) => {
@@ -101,7 +121,9 @@ export default function Login() {
               value={formState.password}
               onChange={handleChange}
             />
-            <button className="loginButton">Log into Account</button>
+            <button className="loginButton" type="button" onClick={loginClick}>
+              Log into Account
+            </button>
             <button className="loginRegisterButton" type="submit">
               Sign Up
             </button>

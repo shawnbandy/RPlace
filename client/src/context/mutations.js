@@ -37,17 +37,26 @@ export const ADD_POST = gql`
   }
 `;
 
-
 export const ADD_USER = gql`
-mutation AddUser($email: String!, $firstName: String!, $lastName: String!, $password: String!) {
-  addUser(email: $email, firstName: $firstName, lastName: $lastName, password: $password) {
-    token
-    user {
-      _id
+  mutation AddUser(
+    $email: String!
+    $firstName: String!
+    $lastName: String!
+    $password: String!
+  ) {
+    addUser(
+      email: $email
+      firstName: $firstName
+      lastName: $lastName
+      password: $password
+    ) {
+      token
+      user {
+        _id
+      }
     }
   }
-}
-`
+`;
 
 export const CREATE_MESSAGE_THREAD = gql`
   mutation CreateMessageThread($recipientId: String!) {

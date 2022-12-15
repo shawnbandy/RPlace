@@ -4,8 +4,6 @@ import './register.css';
 import { useHistory } from 'react-router';
 
 export default function Register() {
-  const firstName = useRef();
-  const lastName = useRef();
   const username = useRef();
   const email = useRef();
   const password = useRef();

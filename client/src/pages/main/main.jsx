@@ -23,15 +23,16 @@ export default function Login() {
   const handleClick = async (e) => {
     e.preventDefault();
     const mutationResponse = '';
-    /*
-    await addUser({variables: {
-      email: formstate.email,
-      password: formstate.password,
-      firstName: formState.firstName,
-      lastName: formState.lastName
-    },
-  })
-    */
+
+    await addUser({
+      variables: {
+        email: formState.email,
+        password: formState.password,
+        firstName: formState.firstName,
+        lastName: formState.lastName,
+      },
+    });
+
     // loginCall({
     //     email: email.current.value, password: password.current.value}, dispatch)
   };

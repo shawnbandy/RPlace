@@ -40,14 +40,15 @@ const resolvers = {
     //*gets the logged in user's posts
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('posts');
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('You need to be logged in!');
     },
   },
 
   Mutation: {
-    addUser: async (parent, { firstName, lastName, email, password }) => {
+    addUser: async (parent, { email, firstName, lastName, password }) => {
+      console.log('backend user')
       const user = await User.create({ firstName, lastName, email, password });
       const token = signToken(user);
       return { token, user };

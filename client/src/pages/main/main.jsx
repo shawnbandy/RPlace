@@ -16,26 +16,26 @@ export default function Login() {
 
   //const { isFetching, dispatch } = useContext(AuthContext);
   const [formState, setFormState] = useState({
-    email: '',
-    password: '',
     firstName: '',
     lastName: '',
+    email: '',
+    password: '',
   });
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log('test1');
-    const mutationResponse = await addUser({
-      variables: {
-        email: formState.email,
-        password: formState.password,
-        firstName: formState.firstName,
-        lastName: formState.lastName,
-      },
-    });
+    console.log(formState);
 
-    const token = mutationResponse.data.addUser.token;
-    AuthService.Login(token);
+    try {
+      console.log('hello0');
+      const { data } = await addUser({
+        variables: { ...formState },
+      });
+      console.log(data);
+      AuthService.Login(data.addUser.token);
+    } catch (err) {
+      console.error(e);
+    }
 
     // loginCall({
     //     email: email.current.value, password: password.current.value}, dispatch)
@@ -47,6 +47,7 @@ export default function Login() {
       ...formState,
       [name]: value,
     });
+    console.log(formState);
   };
 
   return (
@@ -63,9 +64,10 @@ export default function Login() {
             <input
               placeholder="First Name"
               required
-              ref={firstName}
               className="loginInput"
-              type="firstName"
+              type="text"
+              name="firstName"
+              value={formState.firstName}
               onChange={handleChange}
             />
             <input
@@ -73,7 +75,9 @@ export default function Login() {
               required
               ref={lastName}
               className="loginInput"
-              type="lastName"
+              type="text"
+              name="lastName"
+              value={formState.lastName}
               onChange={handleChange}
             />
             <input
@@ -81,7 +85,9 @@ export default function Login() {
               required
               ref={email}
               className="loginInput"
-              type="email"
+              type="text"
+              name="email"
+              value={formState.email}
               onChange={handleChange}
             />
             <input
@@ -91,6 +97,8 @@ export default function Login() {
               className="loginInput"
               type="password"
               minLength="6"
+              name="password"
+              value={formState.password}
               onChange={handleChange}
             />
             <button className="loginButton">Log into Account</button>

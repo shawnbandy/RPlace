@@ -1,22 +1,50 @@
-import "./main.css";
-import { useContext, useRef } from "react";
+import './main.css';
+import { useContext, useRef } from 'react';
 
 // import { loginCall } from "../../" //apicall
-import { AuthContext } from "../../context/AuthContext" //authcontext
+import { AuthContext } from '../../context/AuthContext'; //authcontext
+import { useState } from 'react';
 
-export default function Login(){
-    const email = useRef();
-    const password = useRef();
-    const { isFetching, dispatch } = useContext(AuthContext); 
+export default function Login() {
+  const email = useRef();
+  const password = useRef();
+  const firstName = useRef();
+  const lastName = useRef();
+  //!import addUser Mutation here
 
+  const { isFetching, dispatch } = useContext(AuthContext);
+  const [formState, setFormState] = useState({
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+  });
 
-const handleClick = async (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
+    const mutationResponse = '';
+    /*
+    await addUser({variables: {
+      email: formstate.email,
+      password: formstate.password,
+      firstName: formState.firstName,
+      lastName: formState.lastName
+    },
+  })
+    */
     // loginCall({
     //     email: email.current.value, password: password.current.value}, dispatch)
-}
+  };
 
-return (
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  return (
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
@@ -27,6 +55,20 @@ return (
         </div>
         <div className="loginRight">
           <form className="loginBox" onSubmit={handleClick}>
+            <input
+              placeholder="First Name"
+              required
+              ref={firstName}
+              className="loginInput"
+              type="firstName"
+            />
+            <input
+              placeholder="Last Name"
+              required
+              ref={lastName}
+              className="loginInput"
+              type="lastName"
+            />
             <input
               placeholder="Email"
               required

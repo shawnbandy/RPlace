@@ -6,7 +6,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import Login from "./pages/main/main";
 // import Register from "./pages/register/register";
 // import Home from "./pages/home/home";
-// import Profile from "./pages/profile/profile";
+import Profile from "./pages/profile/profile";
 
 const client = new ApolloClient({
   uri: "/graphql",
@@ -33,7 +33,7 @@ function App() {
           {/* <Route path="/home/:id" element={<Home />} /> */}
 
           {/* user profile */}
-          {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route path="/profile" element={<Profile />} />
 
           {/* user messages */}
           {/* <Route path="/messages" element={<Messages />} /> */}

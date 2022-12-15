@@ -1,14 +1,14 @@
-
-import { useContext, useRef } from "react";
 import "./main.css";
-import { loginCall } from "../../" //apicall
-import { AuthContext } from "../../" //authcontext
+import { useContext, useRef } from "react";
+
+// import { loginCall } from "../../" //apicall
+import { AuthContext } from "../../context/AuthContext" //authcontext
 
 export default function Login(){
     const email = useRef();
     const password = useRef();
     const { isFetching, dispatch } = useContext(AuthContext); 
-}
+
 
 const handleClick = async (e) => {
     e.preventDefault();
@@ -51,3 +51,4 @@ return (
       </div>
     </div>
   );
+}

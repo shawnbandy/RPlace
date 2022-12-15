@@ -2,17 +2,19 @@ import './main.css';
 import { useContext, useRef } from 'react';
 
 // import { loginCall } from "../../" //apicall
-import { AuthContext } from '../../context/AuthContext'; //authcontext
-import { useState } from 'react';
+import AuthService from '../../context/auth'; //authcontext
+import React, { useState } from 'react';
+import { ADD_USER } from '../../context/mutations';
+import { useMutation } from '@apollo/client';
 
 export default function Login() {
   const email = useRef();
   const password = useRef();
   const firstName = useRef();
   const lastName = useRef();
-  //!import addUser Mutation here
+  const [addUser, { error, data }] = useMutation(ADD_USER);
 
-  const { isFetching, dispatch } = useContext(AuthContext);
+  //const { isFetching, dispatch } = useContext(AuthContext);
   const [formState, setFormState] = useState({
     email: '',
     password: '',
@@ -22,9 +24,8 @@ export default function Login() {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const mutationResponse = '';
-
-    await addUser({
+    console.log('test1');
+    const mutationResponse = await addUser({
       variables: {
         email: formState.email,
         password: formState.password,
@@ -32,6 +33,9 @@ export default function Login() {
         lastName: formState.lastName,
       },
     });
+
+    const token = mutationResponse.data.addUser.token;
+    AuthService.Login(token);
 
     // loginCall({
     //     email: email.current.value, password: password.current.value}, dispatch)
@@ -62,6 +66,7 @@ export default function Login() {
               ref={firstName}
               className="loginInput"
               type="firstName"
+              onChange={handleChange}
             />
             <input
               placeholder="Last Name"
@@ -69,6 +74,7 @@ export default function Login() {
               ref={lastName}
               className="loginInput"
               type="lastName"
+              onChange={handleChange}
             />
             <input
               placeholder="Email"
@@ -76,6 +82,7 @@ export default function Login() {
               ref={email}
               className="loginInput"
               type="email"
+              onChange={handleChange}
             />
             <input
               placeholder="Password"
@@ -84,9 +91,10 @@ export default function Login() {
               className="loginInput"
               type="password"
               minLength="6"
+              onChange={handleChange}
             />
-            <button className="loginRegisterButton">Log into Account</button>
-            <button className="loginButton" type="submit">
+            <button className="loginButton">Log into Account</button>
+            <button className="loginRegisterButton" type="submit">
               Sign Up
             </button>
           </form>

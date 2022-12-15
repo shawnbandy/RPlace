@@ -82,5 +82,3 @@ export default function ProfilePage() {
         </>
     )
 }
-
-//Hello bitches

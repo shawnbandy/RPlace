@@ -10,14 +10,14 @@ import { useMutation } from '@apollo/client';
 export default function Login() {
   const email = useRef();
   const password = useRef();
-  const firstName = useRef();
-  const lastName = useRef();
+  // const firstName = useRef();
+  // const lastName = useRef();
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
   //const { isFetching, dispatch } = useContext(AuthContext);
   const [formState, setFormState] = useState({
-    firstName: '',
-    lastName: '',
+    // firstName: '',
+    // lastName: '',
     email: '',
     password: '',
   });

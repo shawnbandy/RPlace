@@ -4,7 +4,8 @@ import './register.css';
 import { useHistory } from 'react-router';
 
 export default function Register() {
-  const username = useRef();
+  const firstName = useRef();
+  const lastName = useRef();
   const email = useRef();
   const password = useRef();
   const passwordAgain = useRef();
@@ -43,10 +44,24 @@ return (
       <div className="loginRight">
         <form className="loginBox" onSubmit={handleClick}>
           <input
-            placeholder="Username"
+            placeholder="First Name"
             required
-            ref={username}
+            ref={firstName}
             className="loginInput"
+            type="text"
+            name="firstName"
+            value={formState.firstName}
+            onChange={handleChange}
+          />
+          <input
+            placeholder="Last Name"
+            required
+            ref={lastName}
+            className="loginInput"
+            type="text"
+            name="lastName"
+            value={formState.lastName}
+            onChange={handleChange}
           />
           <input
             placeholder="Email"

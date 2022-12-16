@@ -8,26 +8,25 @@ export default function Register(){
     const email = useRef();
     const password = useRef();
     const passwordAgain = useRef();
-    const history = useHistory();
-}
+
 
 const handleClick = async (e) => {
     e.preventDefault();
-    if(passwordAgain.current.value !== password.current.value){
-        passwordAgain.current.setCustomValidity("Passwords do not match! Please Retype the password!");
-    }
-    else{
-        const user ={
-            username: username.current.value,
-            email: email.current.value,
-            password: password.current.value,
-        };
-        try{
-            await axios.post("/")  //leaving this until corey finishes auth related work
-        } catch(err){
-            console.log(err);
-        }
-    }
+    // if(passwordAgain.current.value !== password.current.value){
+    //     passwordAgain.current.setCustomValidity("Passwords do not match! Please Retype the password!");
+    // }
+    // else{
+    //     const user ={
+    //         username: username.current.value,
+    //         email: email.current.value,
+    //         password: password.current.value,
+    //     };
+    //     try{
+    //         await axios.post("/")  //leaving this until corey finishes auth related work
+    //     } catch(err){
+    //         console.log(err);
+    //     }
+    // }
 }
 
 return (
@@ -36,7 +35,7 @@ return (
         <div className="loginLeft">
           <h3 className="loginLogo">ЯPlace</h3>
           <span className="loginDesc">
-            In ЯPlace, we are all connected as one.
+            Join us in... ЯPlace.
           </span>
         </div>
         <div className="loginRight">
@@ -78,3 +77,4 @@ return (
       </div>
     </div>
   );
+}

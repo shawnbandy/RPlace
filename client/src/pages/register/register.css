@@ -58,8 +58,8 @@ body {
   margin-bottom: 200px;
 }
 
-.loginBox {
-  height: 375px;
+.registerBox {
+  height: 420px;
   width: 300px;
   padding: 20px;
   background-color: white;
@@ -87,16 +87,24 @@ body {
   height: 50px;
   border-radius: 10px;
   border: none;
-  background-color: #1775ee;
+  background-color: #1a9e00;
   color: white;
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
 }
 
-.loginForgot {
-  text-align: center;
-  color: #1775ee;
+.backButton {
+  width: 60%;
+  align-self: center;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1775ee;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

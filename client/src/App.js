@@ -1,15 +1,35 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 // import NavbarComponent from "./components/navbar/navbar";
-import Login from "./pages/main/main";
-// import Register from "./pages/register/register";
+import Login from './pages/main/main';
+import Register from './pages/register/register';
 // import Home from "./pages/home/home";
-import Profile from "./pages/profile/profile";
+import Profile from './pages/profile/profile';
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
 
 const client = new ApolloClient({
-  uri: "/graphql",
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
@@ -24,7 +44,7 @@ function App() {
           {/* dedicated login route */}
           <Route path="/login" element={<Login />} />
 
-          {/* <Route path="/register" element={<Register />} /> */}
+          {<Route path="/register" element={<Register />} />}
 
           {/* where all posts are rendered */}
           {/* <Route path="/home" element={<Home />} /> */}

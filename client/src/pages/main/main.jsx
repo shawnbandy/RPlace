@@ -4,16 +4,18 @@ import { useContext, useRef } from 'react';
 // import { loginCall } from "../../" //apicall
 import AuthService from '../../context/auth'; //authcontext
 import React, { useState } from 'react';
-import { ADD_USER, LOGIN } from '../../context/mutations';
+import { LOGIN } from '../../context/mutations';
 import { useMutation } from '@apollo/client';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const email = useRef();
   const password = useRef();
   const firstName = useRef();
   const lastName = useRef();
-  const [addUser, { error, data }] = useMutation(ADD_USER);
-  const [loginUser, { err, dat }] = useMutation(LOGIN);
+
+  const [loginUser, { err, data }] = useMutation(LOGIN);
+  const navigate = useNavigate();
 
   //const { isFetching, dispatch } = useContext(AuthContext);
   const [formState, setFormState] = useState({
@@ -22,25 +24,6 @@ export default function Login() {
     email: '',
     password: '',
   });
-
-  const handleClick = async (e) => {
-    e.preventDefault();
-    console.log(formState);
-
-    try {
-      console.log('signUp');
-      const { data } = await addUser({
-        variables: { ...formState },
-      });
-      console.log(data);
-      AuthService.Login(data.addUser.token);
-    } catch (err) {
-      console.error(err);
-    }
-
-    // loginCall({
-    //     email: email.current.value, password: password.current.value}, dispatch)
-  };
 
   const loginClick = async (e) => {
     e.preventDefault();
@@ -54,11 +37,16 @@ export default function Login() {
           password: formState.password,
         },
       });
-      console.log('data', data);
-      AuthService.Login(data.login.token);
+      console.log('data', data.login.id);
+      AuthService.login(data.login.token);
+      navigate('/profile');
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const goRegister = async (e) => {
+    navigate('/register');
   };
 
   const handleChange = (e) => {
@@ -79,55 +67,69 @@ export default function Login() {
             In ЯPlace, we are all connected as one.
           </span>
         </div>
+
         <div className="loginRight">
-          <form className="loginBox" onSubmit={handleClick}>
-            <input
-              placeholder="First Name"
-              required
-              className="loginInput"
-              type="text"
-              name="firstName"
-              value={formState.firstName}
-              onChange={handleChange}
-            />
-            <input
-              placeholder="Last Name"
-              required
-              ref={lastName}
-              className="loginInput"
-              type="text"
-              name="lastName"
-              value={formState.lastName}
-              onChange={handleChange}
-            />
-            <input
-              placeholder="Email"
-              required
-              ref={email}
-              className="loginInput"
-              type="text"
-              name="email"
-              value={formState.email}
-              onChange={handleChange}
-            />
-            <input
-              placeholder="Password"
-              required
-              ref={password}
-              className="loginInput"
-              type="password"
-              minLength="6"
-              name="password"
-              value={formState.password}
-              onChange={handleChange}
-            />
-            <button className="loginButton" type="button" onClick={loginClick}>
-              Log into Account
-            </button>
-            <button className="loginRegisterButton" type="submit">
-              Sign Up
-            </button>
-          </form>
+          {data ? (
+            <p>
+              Success! You may now head{' '}
+              <Link to="/profile">back to the homepage.</Link>
+            </p>
+          ) : (
+            <form className="loginBox" onSubmit={loginClick}>
+              <input
+                placeholder="First Name"
+                required
+                className="loginInput"
+                type="text"
+                name="firstName"
+                value={formState.firstName}
+                onChange={handleChange}
+              />
+              <input
+                placeholder="Last Name"
+                required
+                ref={lastName}
+                className="loginInput"
+                type="text"
+                name="lastName"
+                value={formState.lastName}
+                onChange={handleChange}
+              />
+              <input
+                placeholder="Email"
+                required
+                ref={email}
+                className="loginInput"
+                type="text"
+                name="email"
+                value={formState.email}
+                onChange={handleChange}
+              />
+              <input
+                placeholder="Password"
+                required
+                ref={password}
+                className="loginInput"
+                type="password"
+                minLength="6"
+                name="password"
+                value={formState.password}
+                onChange={handleChange}
+              />
+              <button
+                className="loginButton"
+                type="submit"
+                onClick={loginClick}>
+                Log into Account
+              </button>
+              <button
+                className="loginRegisterButton"
+                type="button"
+                onClick={goRegister}>
+                Sign Up
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>

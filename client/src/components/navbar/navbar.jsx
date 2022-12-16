@@ -16,7 +16,9 @@ import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 
-
+import {
+  NavLink
+} from "react-router-dom"; 
 
 // Sets styling for the search bar inside of the Navbar (the example given by Material UI documentation)
 const Search = styled('div')(({ theme }) => ({
@@ -71,9 +73,9 @@ const searchBar = (<Search>
             />
           </Search>);
 
-const pages = ['Home', 'Friends', 'Games', searchBar];
+const pages = ['Home', 'Friends', 'Games', 'Profile', searchBar];
 // const settings_loggedin = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const settings = ['Sign in', 'Sign up'];
+const settings = ['Login', 'SignUp'];
 
 function NavbarComponent() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -85,7 +87,6 @@ function NavbarComponent() {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -94,8 +95,13 @@ function NavbarComponent() {
     setAnchorElUser(null);
   };
 
+  const redirectPage = (page) => {
+    window.location.replace(page)
+  }
+
+
   return (
-    <AppBar position="static">
+    <AppBar style={{"position":"fixed"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -147,7 +153,7 @@ function NavbarComponent() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={()=>{handleCloseNavMenu();redirectPage(page);}}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -177,7 +183,7 @@ function NavbarComponent() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={()=>{handleCloseNavMenu();redirectPage(page);}}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -208,7 +214,7 @@ function NavbarComponent() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={()=>{handleCloseUserMenu();redirectPage(setting);}}>
                   <Typography textAlign="center">{setting}</Typography>
                   
                 </MenuItem>

@@ -1,14 +1,12 @@
-import axios from 'axios';
-import { useRef } from 'react';
-import './register.css';
-import { useHistory } from 'react-router';
+import { useRef } from "react";
+import "./register.css";
 
 export default function Register(){
-    const username = useRef();
+    const firstName = useRef();
+    const lastName = useRef();
     const email = useRef();
     const password = useRef();
     const passwordAgain = useRef();
-
 
 const handleClick = async (e) => {
     e.preventDefault();
@@ -35,16 +33,26 @@ return (
         <div className="loginLeft">
           <h3 className="loginLogo">ЯPlace</h3>
           <span className="loginDesc">
-            Join us in... ЯPlace.
+            In ЯPlace, we are all connected as one.
           </span>
         </div>
         <div className="loginRight">
           <form className="loginBox" onSubmit={handleClick}>
             <input
-              placeholder="Username"
+              placeholder="First Name"
               required
-              ref={username}
+              ref={firstName}
               className="loginInput"
+              type="text"
+              name="firstName"
+            />
+            <input
+              placeholder="Last Name"
+              required
+              ref={lastName}
+              className="loginInput"
+              type="text"
+              name="lastName"
             />
             <input
               placeholder="Email"
@@ -52,6 +60,7 @@ return (
               ref={email}
               className="loginInput"
               type="email"
+              name="email"
             />
             <input
               placeholder="Password"
@@ -60,18 +69,19 @@ return (
               className="loginInput"
               type="password"
               minLength="6"
+              name="password"
             />
             <input
-              placeholder="Password Again"
+              placeholder="Retype Password"
               required
               ref={passwordAgain}
               className="loginInput"
               type="password"
+              name="passwordAgain"
             />
-            <button className="loginButton" type="submit">
+            <button className="signupButton" type="submit">
               Sign Up
             </button>
-            <button className="loginRegisterButton">Log into Account</button>
           </form>
         </div>
       </div>

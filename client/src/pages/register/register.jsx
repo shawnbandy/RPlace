@@ -19,7 +19,8 @@ export default function Register() {
       );
     } else {
       const user = {
-        username: username.current.value,
+        firstName: firstName.current.value,
+        lastName: lastName.current.value,
         email: email.current.value,
         password: password.current.value,
       };
@@ -49,8 +50,6 @@ export default function Register() {
               className="loginInput"
               type="text"
               name="firstName"
-              value={formState.firstName}
-              onChange={handleChange}
             />
             <input
               placeholder="Last Name"
@@ -59,8 +58,6 @@ export default function Register() {
               className="loginInput"
               type="text"
               name="lastName"
-              value={formState.lastName}
-              onChange={handleChange}
             />
             <input
               placeholder="Email"
@@ -69,8 +66,6 @@ export default function Register() {
               className="loginInput"
               type="email"
               name="email"
-              value={formState.email}
-              onChange={handleChange}
             />
             <input
               placeholder="Password"
@@ -80,8 +75,6 @@ export default function Register() {
               type="password"
               minLength="6"
               name="password"
-              value={formState.password}
-              onChange={handleChange}
             />
             <input
               placeholder="Retype Password"
@@ -90,8 +83,6 @@ export default function Register() {
               className="loginInput"
               type="password"
               name="passwordAgain"
-              value={formState.passwordAgain}
-              onChange={handleChange}
             />
             <button className="signupButton" type="submit">
               Sign Up

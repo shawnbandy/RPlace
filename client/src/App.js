@@ -5,7 +5,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 // import NavbarComponent from "./components/navbar/navbar";
 import Login from "./pages/main/main";
 // import Register from "./pages/register/register";
-// import Home from "./pages/home/home";
+import Home from "./pages/home/home";
 import Profile from "./pages/profile/profile";
 
 const client = new ApolloClient({
@@ -23,6 +23,7 @@ function App() {
 
           {/* dedicated login route */}
           <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
 
           {/* <Route path="/register" element={<Register />} /> */}
 

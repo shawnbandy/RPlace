@@ -72,7 +72,7 @@ export default function Register() {
           {data ? (
             navigate('/profile')
           ) : (
-            <form className="loginBox" onSubmit={signUpUser}>
+            <form className="registerBox" onSubmit={signUpUser}>
               <input
                 placeholder="First Name"
                 required
@@ -123,14 +123,14 @@ export default function Register() {
                 value={formState.passwordAgain}
                 onChange={handleChange}
               />
-              <button className="loginButton" type="button" onClick={goLogin}>
-                Log into Account
-              </button>
               <button
-                className="loginRegisterButton"
+                className="signupButton"
                 type="submit"
                 onClick={signUpUser}>
                 Sign Up
+              </button>
+              <button className="backButton" type="button" onClick={goLogin}>
+                Back
               </button>
             </form>
           )}

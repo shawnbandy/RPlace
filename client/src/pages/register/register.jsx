@@ -1,38 +1,34 @@
-import axios from "axios";
 import { useRef } from "react";
 import "./register.css";
-import { useHistory } from "react-router";
 
-export default function Register() {
-  const firstName = useRef();
-  const lastName = useRef();
-  const email = useRef();
-  const password = useRef();
-  const passwordAgain = useRef();
-  // const history = useHistory();
+export default function Register(){
+    const firstName = useRef();
+    const lastName = useRef();
+    const email = useRef();
+    const password = useRef();
+    const passwordAgain = useRef();
 
-  const handleClick = async (e) => {
+
+const handleClick = async (e) => {
     e.preventDefault();
-    if (passwordAgain.current.value !== password.current.value) {
-      passwordAgain.current.setCustomValidity(
-        "Passwords do not match! Please Retype the password!"
-      );
-    } else {
-      const user = {
-        firstName: firstName.current.value,
-        lastName: lastName.current.value,
-        email: email.current.value,
-        password: password.current.value,
-      };
-      try {
-        await axios.post("/"); //leaving this until corey finishes auth related work
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
+    // if(passwordAgain.current.value !== password.current.value){
+    //     passwordAgain.current.setCustomValidity("Passwords do not match! Please Retype the password!");
+    // }
+    // else{
+    //     const user ={
+    //         username: username.current.value,
+    //         email: email.current.value,
+    //         password: password.current.value,
+    //     };
+    //     try{
+    //         await axios.post("/")  //leaving this until corey finishes auth related work
+    //     } catch(err){
+    //         console.log(err);
+    //     }
+    // }
+}
 
-  return (
+return (
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">

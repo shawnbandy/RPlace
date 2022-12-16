@@ -37,8 +37,8 @@ export default function Login() {
           password: formState.password,
         },
       });
-      console.log('data', data.login.id);
-      AuthService.login(data.login.token);
+      console.log('data', data.loginUser);
+      AuthService.login(data.loginUser.token);
       navigate('/profile');
     } catch (err) {
       console.log(err);
@@ -70,10 +70,7 @@ export default function Login() {
 
         <div className="loginRight">
           {data ? (
-            <p>
-              Success! You may now head{' '}
-              <Link to="/profile">back to the homepage.</Link>
-            </p>
+            navigate('/profile')
           ) : (
             <form className="loginBox" onSubmit={loginClick}>
               <input
@@ -129,6 +126,9 @@ export default function Login() {
                 Sign Up
               </button>
             </form>
+          )}
+          {err && (
+            <div className="my-3 p-3 bg-danger text-white">{err.message}</div>
           )}
         </div>
       </div>

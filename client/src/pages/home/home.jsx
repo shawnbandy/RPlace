@@ -1,5 +1,5 @@
 import Navbar from "../../components/navbar/navbar";
-import Feed from "../../components/feed/Feed";
+import Feed from "../../components/feed/feed";
 import Rightbar from "../../components/rightbar/rightbar";
 import Leftbar from "../../components/leftbar/leftbar";
 import "./home.css"
@@ -9,8 +9,8 @@ export default function Home() {
     <>
       <Navbar />
       <div className="homeContainer">
-        <Rightbar />
-        <Feed/>
+      <Rightbar />
+        <Feed />
         <Leftbar />
       </div>
     </>

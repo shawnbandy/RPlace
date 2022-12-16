@@ -19,8 +19,6 @@ export default function Login() {
 
   //const { isFetching, dispatch } = useContext(AuthContext);
   const [formState, setFormState] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
     password: '',
   });
@@ -67,31 +65,11 @@ export default function Login() {
             In ЯPlace, we are all connected as one.
           </span>
         </div>
-
         <div className="loginRight">
           {data ? (
             navigate('/profile')
           ) : (
             <form className="loginBox" onSubmit={loginClick}>
-              <input
-                placeholder="First Name"
-                required
-                className="loginInput"
-                type="text"
-                name="firstName"
-                value={formState.firstName}
-                onChange={handleChange}
-              />
-              <input
-                placeholder="Last Name"
-                required
-                ref={lastName}
-                className="loginInput"
-                type="text"
-                name="lastName"
-                value={formState.lastName}
-                onChange={handleChange}
-              />
               <input
                 placeholder="Email"
                 required
@@ -117,7 +95,7 @@ export default function Login() {
                 className="loginButton"
                 type="submit"
                 onClick={loginClick}>
-                Log into Account
+                Login
               </button>
               <button
                 className="loginRegisterButton"

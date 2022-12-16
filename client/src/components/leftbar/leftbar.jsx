@@ -1,35 +1,23 @@
-import "leftbar.css";
-import {
-    RssFeed,
-    Chat,
-    PlayCircleFilled,
-    Group,
-  } from "@mui/icons-material";
+import "./leftbar.css";
 
 
-export default function Sidebar() {
+
+export default function Leftbar() {
     return (
       <div className="sidebar">
-        <div className="sidebarWrapper">
+        {/* <div className="sidebarWrapper">
           <ul className="sidebarList">
             <li className="sidebarListItem">
-              <RssFeed className="sidebarIcon" />
-              <span className="sidebarListItemText">Feed</span>
+              <img className="Advertise" src="assets/advertisement.jpg"></img>
             </li>
             <li className="sidebarListItem">
-              <Chat className="sidebarIcon" />
-              <span className="sidebarListItemText">Chat</span>
+              <img className="Advertise" src="assets/advertisement2.jpg"></img>
             </li>
             <li className="sidebarListItem">
-              <PlayCircleFilled className="sidebarIcon" />
-              <span className="sidebarListItemText">Video</span>
-            </li>
-            <li className="sidebarListItem">
-              <Group className="sidebarIcon" />
-              <span className="sidebarListItemText">Group</span>
+              <img className="Advertise" src="assets/advertisement3.jpg"></img>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     );
   }

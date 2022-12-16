@@ -8,8 +8,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import { useMutation, useQuery } from '@apollo/client';
 import { ME } from '../../context/queries';
+import { colors } from '@mui/material';
 // import { ME } from '../src/context/mutations';
-//client/src/context/queries.js
 
 function LeftProfile(props) {
 
@@ -17,7 +17,7 @@ function LeftProfile(props) {
         <>
         <Grid container spacing={2}>
             <Grid xs={12} md={4}>
-                <img alt="User" src={props.profilePic} />
+                <img alt="User" src={props.props.me.profile.profilePicture} />
             </Grid>
             <br />
             <Grid xs={12} md={8}>
@@ -25,13 +25,13 @@ function LeftProfile(props) {
                     <h3>{props.userName}</h3>
                     <List>
                         <ListItem>
-                            <ListItemText primary="Age" secondary={props.userAge} />
+                            <ListItemText primary="Age" secondary={props.props.me.profile.details.age} />
                         </ListItem>
+                        {/* <ListItem>
+                            <ListItemText primary="Height" secondary={props.props.me.profile.details.height} />
+                        </ListItem> */}
                         <ListItem>
-                            <ListItemText primary="Height" secondary={props.userHeight} />
-                        </ListItem>
-                        <ListItem>
-                            <ListItemText primary="Status" secondary={props.userRelationship} />
+                            <ListItemText primary="Status" secondary={props.props.me.profile.details.status} />
                         </ListItem>
                     </List>
                 </Paper>
@@ -55,7 +55,7 @@ function LeftProfile(props) {
                 <br/>
                 <Paper>
                     <h6>About Me:</h6>
-                    <p>{props.userAbout}</p>
+                    <p>{props.props.me.profile.aboutMe}</p>
                 </Paper>
             </Grid>
         </Grid>
@@ -87,10 +87,11 @@ export default function ProfilePage() {
     const { loading, error, data } = useQuery(ME);
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
-
+    console.log(data)
+    console.log(data.me.profile.backgroundStyling)
     return (
-        <>
-        <Box sx={{ flexGrow: 1 }}>
+        <div>
+        <Box sx={{ flexGrow: 1 }} style={{"backgroundColor":"blue"}}>
             <Grid container spacing={2}>
                 <Grid xs={12} md={6}>
                     <LeftProfile props={data} />
@@ -101,8 +102,7 @@ export default function ProfilePage() {
             </Grid>
             <Media props={data}/>
             <Widget props={data}/>
-
         </Box>
-        </>
+        </div>
     )
 }

@@ -8,7 +8,6 @@ export default function Register(){
     const password = useRef();
     const passwordAgain = useRef();
 
-
 const handleClick = async (e) => {
     e.preventDefault();
     // if(passwordAgain.current.value !== password.current.value){

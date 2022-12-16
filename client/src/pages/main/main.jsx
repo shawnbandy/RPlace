@@ -61,9 +61,10 @@ export default function Login() {
         </div>
         <div className="loginRight">
           <form className="loginBox" onSubmit={handleClick}>
-            <input
+            {/* <input
               placeholder="First Name"
               required
+              ref={firstName}
               className="loginInput"
               type="text"
               name="firstName"
@@ -79,7 +80,7 @@ export default function Login() {
               name="lastName"
               value={formState.lastName}
               onChange={handleChange}
-            />
+            /> */}
             <input
               placeholder="Email"
               required
@@ -101,7 +102,7 @@ export default function Login() {
               value={formState.password}
               onChange={handleChange}
             />
-            <button className="loginButton">Log into Account</button>
+            <button className="loginButton">Login</button>
             <button className="loginRegisterButton" type="submit">
               Sign Up
             </button>

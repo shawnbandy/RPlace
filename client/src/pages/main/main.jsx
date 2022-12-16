@@ -11,8 +11,6 @@ import { Navigate, Link, useNavigate } from 'react-router-dom';
 export default function Login() {
   const email = useRef();
   const password = useRef();
-  const firstName = useRef();
-  const lastName = useRef();
 
   const [loginUser, { err, data }] = useMutation(LOGIN);
   const navigate = useNavigate();
@@ -67,7 +65,7 @@ export default function Login() {
         </div>
         <div className="loginRight">
           {data ? (
-            navigate('/profile')
+            navigate('/home')
           ) : (
             <form className="loginBox" onSubmit={loginClick}>
               <input

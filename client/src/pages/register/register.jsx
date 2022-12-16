@@ -1,18 +1,15 @@
-import axios from 'axios';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './register.css';
-import { useHistory, useNavigate } from 'react-router';
+import { useHistory, useNavigate } from 'react-router-dom';
 import { ADD_USER } from '../../context/mutations';
 import { useMutation } from '@apollo/client';
 import AuthService from '../../context/auth';
 
 export default function Register() {
-  const username = useRef();
   const email = useRef();
   const password = useRef();
   const passwordAgain = useRef();
   const navigate = useNavigate();
-  //const history = useHistory();
   const [formState, setFormState] = useState({
     firstName: '',
     lastName: '',
@@ -129,7 +126,10 @@ export default function Register() {
               <button className="loginButton" type="button" onClick={goLogin}>
                 Log into Account
               </button>
-              <button className="loginRegisterButton" type="submit">
+              <button
+                className="loginRegisterButton"
+                type="submit"
+                onClick={signUpUser}>
                 Sign Up
               </button>
             </form>

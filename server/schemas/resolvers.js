@@ -1,6 +1,6 @@
-const { Message, Post, GraffitiPost, User } = require("../models");
-const { AuthenticationError, ApolloError } = require("apollo-server-express");
-const { signToken } = require("../utils/auth");
+const { Message, Post, GraffitiPost, User } = require('../models');
+const { AuthenticationError, ApolloError } = require('apollo-server-express');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   //TODO User
@@ -13,7 +13,7 @@ const resolvers = {
       return User.find({});
     },
     user: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("friends");
+      return User.findOne({ _id: userId }).populate('friends');
     },
     //*gets all of the user's posts/comments
     userPost: async (parent, { postId }) => {
@@ -21,18 +21,18 @@ const resolvers = {
     },
     //*gets all of the user's graffiti
     userGraffitiPost: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("graffitiPosts");
+      return User.findOne({ _id: userId }).populate('graffitiPosts');
     },
     //*returns all the messages the user is a part of
     userMessage: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("messages");
+      return User.findOne({ _id: userId }).populate('messages');
     },
     userPendingFriend: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("pendingFriends");
+      return User.findOne({ _id: userId }).populate('pendingFriends');
     },
 
     userHomePage: async (parent, { userId }) => {
-      const user = await User.findOne({ userId }).populate("friends");
+      const user = await User.findOne({ userId }).populate('friends');
       const postArr = [];
       return user;
     },
@@ -42,7 +42,7 @@ const resolvers = {
       // if (context.user) {
       //   return User.findOne({ _id: context.user._id }).populate('posts');
       // }
-      const id = "639a57d32d2921e945d7bcf8";
+      const id = '639a57d32d2921e945d7bcf8';
       try {
         const user = await User.findOne({ _id: id });
         return user;
@@ -101,13 +101,13 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("Email address not found");
+        throw new AuthenticationError('Email address not found');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError("Incorrect email/password");
+        throw new AuthenticationError('Incorrect email/password');
       }
 
       const token = signToken(user);

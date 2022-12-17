@@ -96,7 +96,7 @@ export default function Login() {
                 Login
               </button>
               <button
-                className="loginRegisterButton"
+                className="signupButton"
                 type="button"
                 onClick={goRegister}>
                 Sign Up

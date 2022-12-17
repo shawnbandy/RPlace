@@ -59,7 +59,7 @@ body {
 }
 
 .loginBox {
-  height: 250px;
+  height: 240px;
   width: 300px;
   padding: 20px;
   background-color: white;
@@ -94,12 +94,7 @@ body {
   cursor: pointer;
 }
 
-.loginForgot {
-  text-align: center;
-  color: #1775ee;
-}
-
-.loginRegisterButton {
+.signupButton {
   width: 60%;
   align-self: center;
   height: 50px;

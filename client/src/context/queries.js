@@ -12,7 +12,7 @@ export const QUERY_ALL_USERS = gql`
 `;
 
 export const QUERY_SINGLE_USER = gql`
-  query getSingleUser($userId: ID!) {
+  query User($userId: ID!) {
     user(userId: $userId) {
       _id
       email
@@ -32,6 +32,25 @@ export const QUERY_SINGLE_USER = gql`
           commentText
         }
       }
+    }
+  }
+`;
+
+export const QUERY_FIND_USERS = gql`
+  query FindFriend($lastName: String!, $firstName: String!) {
+    findFriend(lastName: $lastName, firstName: $firstName) {
+      _id
+      firstName
+      lastName
+    }
+  }
+`;
+
+export const QUERY_COMMENT_AUTHOR = gql`
+  query User($userId: ID!) {
+    user(userId: $userId) {
+      firstName
+      lastName
     }
   }
 `;
@@ -75,6 +94,19 @@ export const QUERY_ALL_USER_MESSAGE = gql`
   }
 `;
 
+export const QUERY_ALL_FRIENDS_POST = gql`
+  query Me {
+    me {
+      friends {
+        posts {
+          _id
+          postText
+        }
+      }
+    }
+  }
+`;
+
 export const QUERY_ALL_USER_PENDING_FRIENDS = gql`
   query getUserPendingFriends($userId: ID!) {
     userPendingFriend(userId: $userId) {
@@ -83,13 +115,52 @@ export const QUERY_ALL_USER_PENDING_FRIENDS = gql`
   }
 `;
 
+export const QUERY_ALL_USER_POST = gql`
+  query UserAllPost($userId: ID!) {
+    userAllPost(userId: $userId) {
+      _id
+      posts {
+        _id
+        postText
+        comments {
+          commentAuthor
+          commentText
+        }
+      }
+    }
+  }
+`;
+
 export const ME = gql`
-  query me {
+  query Me {
     me {
       _id
       email
       firstName
       lastName
+      friends {
+        _id
+        posts {
+          _id
+          postText
+          comments {
+            commentAuthor
+          }
+        }
+      }
+      graffitiPosts {
+        postText
+        postingUser
+        receivingUser
+      }
+      pendingFriends
+      posts {
+        _id
+        postText
+        comments {
+          commentAuthor
+        }
+      }
       profile {
         aboutMe
         backgroundStyling
@@ -100,28 +171,6 @@ export const ME = gql`
         mediaContainer
         profilePicture
         widgetContainer
-      }
-      friends
-      graffitiPosts {
-        postText
-        postingUser
-        receivingUser
-      }
-      messages {
-        chatters {
-          user
-        }
-        dm {
-          messageAuthor
-          messageContent
-        }
-      }
-      pendingFriends
-      posts {
-        comments {
-          commentText
-          commentAuthor
-        }
       }
     }
   }

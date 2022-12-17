@@ -36,7 +36,6 @@ export default function Share() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPost({ ...post, [name]: value });
-    console.log(post);
   };
 
   return (

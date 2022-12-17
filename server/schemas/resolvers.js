@@ -21,7 +21,7 @@ const resolvers = {
     },
     userAllPost: async (parent, { userId }, context) => {
       console.log('backendAllPost');
-      return User.findOne({ _id: userId });
+      return User.findOne({ _id: userId }).populate('posts');
     },
     userFriendPost: async (parent, { friendIdArray }, context) => {
       console.log('userfriendpost');
@@ -54,6 +54,8 @@ const resolvers = {
       //   return User.findOne({ _id: context.user._id }).populate('posts');
       // }
       console.log('backend Me');
+      console.log(context.user);
+
       try {
         const user = await User.findOne({ _id: context.user._id });
         return user;
@@ -128,6 +130,7 @@ const resolvers = {
     },
 
     addPost: async (parent, { postText }, context) => {
+      console.log('backendaddPost');
       console.log(context.user);
       console.log(postText);
 
@@ -145,7 +148,7 @@ const resolvers = {
           { new: true }
         );
 
-        console.log(user);
+        //console.log('user', user);
 
         return newPost;
       }

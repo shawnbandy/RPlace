@@ -10,43 +10,32 @@ import {
   ME,
   QUERY_SINGLE_USER,
   QUERY_ALL_USER_POST,
+  QUERY_SINGLE_POST,
+  QUERY_ALL_FRIENDS_POST,
 } from '../../context/queries';
 import { PermMedia, Label, Room, EmojiEmotions } from '@material-ui/icons';
 
 export default function Feed({ username }) {
   const [allPosts, setAllPosts] = useState([]);
-  const yourPostId = useQuery(QUERY_ALL_USER_POST, {
+  const [testPosts, setTestPosts] = useState([]);
+  const { loading, data } = useQuery(QUERY_ALL_USER_POST, {
     variables: { userId: AuthService.getProfile().data._id },
   });
-  console.log('file: feed.jsx:21 ~ Feed ~ yourPostId', yourPostId);
+  const { friendLoading, friendData } = useQuery(QUERY_ALL_FRIENDS_POST);
 
-  const yourData = useQuery(ME);
-  console.log('file: feed.jsx:24 ~ Feed ~ yourData', yourData);
-  const yourPosts = yourData.data.me.posts;
-  console.log('file: feed.jsx:26 ~ Feed ~ yourPosts', yourPosts);
-  //console.log('file: feed.jsx:17 ~ Feed ~ you', yourPostId.data.me.friends);
+  if (loading || friendLoading) {
+    return <div>Loading...</div>;
+  }
 
-  // console.log('data', data.userAllPost.posts);
-  // console.log('auth', AuthService.getProfile().data._id);
-
-  const GetAllPosts = async (e) => {
-    //e.preventDefault();
-    //*for loop to go through each of your friends and yourself
-    //*add your friend's postsId, and postText
-    try {
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  //GetAllPosts();
+  console.log(data.userAllPost.posts);
+  console.log('friendData', friendData);
 
   return (
     <div className="feed">
       <div className="feedWrapper">
         <Share />
-        {allPosts.map((p) => (
-          <Post key={p.id} post={p} />
+        {data.userAllPost.posts.map((p) => (
+          <Post key={p._id} post={p} />
         ))}
       </div>
     </div>

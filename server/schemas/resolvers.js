@@ -1,6 +1,6 @@
-const { Message, Post, GraffitiPost, User } = require("../models");
-const { AuthenticationError, ApolloError } = require("apollo-server-express");
-const { signToken } = require("../utils/auth");
+const { Message, Post, GraffitiPost, User } = require('../models');
+const { AuthenticationError, ApolloError } = require('apollo-server-express');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   //TODO User
@@ -13,45 +13,65 @@ const resolvers = {
       return User.find({});
     },
     user: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("friends");
+      console.log('backend user');
+      return User.findOne({ _id: userId });
     },
     //*gets all of the user's posts/comments
     userPost: async (parent, { postId }) => {
       return Post.findOne({ _id: postId });
     },
+    userAllPost: async (parent, { userId }, context) => {
+      console.log('backendAllPost');
+      return User.findOne({ _id: userId }).populate('posts');
+    },
+    userFriendPost: async (parent, { friendIdArray }, context) => {
+      console.log('userfriendpost');
+      let postArr = [];
+      for (let i = 0; i < friendIdArray.length; i++) {
+        let currentFriend = await User.findOne({ _id: friendIdArray[0] });
+      }
+    },
+    findFriend: async (parent, { firstName, lastName }, context) => {
+      return User.find({ firstName: firstName, lastName: lastName });
+    },
     //*gets all of the user's graffiti
     userGraffitiPost: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("graffitiPosts");
+      return User.findOne({ _id: userId }).populate('graffitiPosts');
     },
     //*returns all the messages the user is a part of
     userMessage: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("messages");
+      return User.findOne({ _id: userId }).populate('messages');
     },
     userPendingFriend: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("pendingFriends");
+      return User.findOne({ _id: userId }).populate('pendingFriends');
     },
 
     userHomePage: async (parent, { userId }) => {
-      const user = await User.findOne({ userId }).populate("friends");
+      const user = await User.findOne({ userId }).populate('friends');
       const postArr = [];
       return user;
     },
 
     //*gets the logged in user's posts
     me: async (parent, args, context) => {
-      // console.log("context ", context.user._id);
-      if (context.user) {
+      // if (context.user) {
+      //   return User.findOne({ _id: context.user._id }).populate('posts');
+      // }
+      console.log('backend Me');
+      console.log(context.user);
+
+      try {
         const user = await User.findOne({ _id: context.user._id });
-        console.log("User ", user);
         return user;
+      } catch {
+        throw new AuthenticationError('You need to be logged in!');
       }
-      throw new AuthenticationError("You need to be logged in!");
     },
   },
 
   Mutation: {
     addUser: async (parent, { email, firstName, lastName, password }) => {
-      console.log("backend user");
+      console.log('backend user');
       const user = await User.create({ firstName, lastName, email, password });
       const token = signToken(user);
       return { token, user };
@@ -92,16 +112,17 @@ const resolvers = {
     },
 
     login: async (parent, { email, password }) => {
+      console.log('loginResolv', email, password);
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("Email address not found");
+        throw new AuthenticationError('Email address not found');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError("Incorrect email/password");
+        throw new AuthenticationError('Incorrect email/password');
       }
 
       const token = signToken(user);
@@ -110,16 +131,25 @@ const resolvers = {
     },
 
     addPost: async (parent, { postText }, context) => {
+      console.log('backendaddPost');
+      console.log(context.user);
+      console.log(postText);
+
       if (context.user) {
         const newPost = await Post.create({
+          userId: context.user._id,
           postText: postText,
         });
 
-        await User.findOneAndUpdate(
+        console.log('newpost', newPost);
+
+        const user = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { posts: newPost._id } },
           { new: true }
         );
+
+        //console.log('user', user);
 
         return newPost;
       }

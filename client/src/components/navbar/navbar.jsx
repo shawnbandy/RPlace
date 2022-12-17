@@ -15,63 +15,67 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+import { useRef, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { QUERY_FIND_USERS } from '../../context/queries';
+import SearchFriend from '../friends/searchFriend';
 
-import {
-  NavLink
-} from "react-router-dom"; 
+import { NavLink } from 'react-router-dom';
 
 // Sets styling for the search bar inside of the Navbar (the example given by Material UI documentation)
 const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  }));
-  
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }));
-  
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: '12ch',
-        '&:focus': {
-          width: '20ch',
-        },
-      },
-    },
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
 }));
 
-const searchBar = (<Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>);
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
+
+const searchBar = (
+  <Search>
+    <SearchIconWrapper>
+      <SearchIcon />
+    </SearchIconWrapper>
+    <StyledInputBase
+      placeholder="Search…"
+      inputProps={{ 'aria-label': 'search' }}
+    />
+  </Search>
+);
 
 const pages = ['Home', 'Friends', 'Games', 'Profile', searchBar];
 // const settings_loggedin = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -80,6 +84,16 @@ const settings = ['Login', 'SignUp'];
 function NavbarComponent() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [friendName, setFriendName] = useState({
+    friendName: '',
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFriendName({
+      ...friendName,
+      [name]: value,
+    });
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -96,12 +110,18 @@ function NavbarComponent() {
   };
 
   const redirectPage = (page) => {
-    window.location.replace(page)
-  }
+    window.location.replace(page);
+  };
 
+  const findFriend = async (e) => {
+    e.preventDefault();
+    console.log(friendName.friendName);
+    let name = friendName.friendName.split(' ');
+    return SearchFriend(name);
+  };
 
   return (
-    <AppBar style={{"position":"fixed"}}>
+    <AppBar style={{ position: 'fixed' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -118,10 +138,17 @@ function NavbarComponent() {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
-            }}
-          >
+            }}>
             ЯPlace
           </Typography>
+
+          <div>
+            <input
+              name="friendName"
+              value={friendName.friendName}
+              onChange={handleChange}></input>
+            <button onClick={findFriend}>Submit</button>
+          </div>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -130,8 +157,7 @@ function NavbarComponent() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
-            >
+              color="inherit">
               <MenuIcon />
             </IconButton>
             <Menu
@@ -150,10 +176,14 @@ function NavbarComponent() {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: 'block', md: 'none' },
-              }}
-            >
+              }}>
               {pages.map((page) => (
-                <MenuItem key={page} onClick={()=>{handleCloseNavMenu();redirectPage(page);}}>
+                <MenuItem
+                  key={page}
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    redirectPage(page);
+                  }}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -174,23 +204,24 @@ function NavbarComponent() {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
-            }}
-          >
+            }}>
             ЯPlace
           </Typography>
-          
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={()=>{handleCloseNavMenu();redirectPage(page);}}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
+                onClick={() => {
+                  handleCloseNavMenu();
+                  redirectPage(page);
+                }}
+                sx={{ my: 2, color: 'white', display: 'block' }}>
                 {page}
               </Button>
             ))}
           </Box>
-          
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -211,17 +242,17 @@ function NavbarComponent() {
                 horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
+              onClose={handleCloseUserMenu}>
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={()=>{handleCloseUserMenu();redirectPage(setting);}}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    redirectPage(setting);
+                  }}>
                   <Typography textAlign="center">{setting}</Typography>
-                  
                 </MenuItem>
               ))}
-              
-                
-              
             </Menu>
           </Box>
         </Toolbar>

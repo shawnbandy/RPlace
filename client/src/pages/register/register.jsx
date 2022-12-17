@@ -39,7 +39,7 @@ export default function Register() {
       });
 
       AuthService.login(data.addUser.token);
-      navigate('/login');
+      navigate('/home');
     } catch (err) {
       console.error(err);
     }

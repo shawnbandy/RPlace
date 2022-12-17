@@ -16,6 +16,7 @@ import Profile from './pages/profile/profile';
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
+  console.log('🚀 ~ file: App.js:19 ~ authLink ~ token', token);
   return {
     headers: {
       ...headers,

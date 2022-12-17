@@ -7,7 +7,7 @@ const typeDefs = gql`
     lastName: String!
     email: String!
     password: String!
-    friends: [String]
+    friends: [Friend]
     posts: [Post]
     profile: Profile
     graffitiPosts: [GraffitiPost]
@@ -36,7 +36,13 @@ const typeDefs = gql`
     password: String!
   }
 
+  type Friend {
+    _id: ID!
+    posts: [Post]
+  }
+
   type Post {
+    _id: ID!
     postText: String
     comments: [Comment]
   }
@@ -80,14 +86,16 @@ const typeDefs = gql`
     userPendingFriend(userId: ID!): User
     userHomePage(userId: ID!): User
     me: User
+    userAllPost(userId: ID!): User
+    userFriendPost(friendIdArray: [ID!]): [Post]
   }
 
   type Mutation {
     addUser(
-      email: String!,
-      firstName: String!,
-      lastName: String!,
-      password: String!,
+      email: String!
+      firstName: String!
+      lastName: String!
+      password: String!
     ): Auth
     updateUser(
       firstName: String!

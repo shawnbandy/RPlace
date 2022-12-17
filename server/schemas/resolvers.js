@@ -13,11 +13,22 @@ const resolvers = {
       return User.find({});
     },
     user: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate('friends');
+      return User.findOne({ _id: userId });
     },
     //*gets all of the user's posts/comments
     userPost: async (parent, { postId }) => {
       return Post.findOne({ _id: postId });
+    },
+    userAllPost: async (parent, { userId }, context) => {
+      console.log('backendAllPost');
+      return User.findOne({ _id: userId });
+    },
+    userFriendPost: async (parent, { friendIdArray }, context) => {
+      console.log('userfriendpost');
+      let postArr = [];
+      for (let i = 0; i < friendIdArray.length; i++) {
+        let currentFriend = await User.findOne({ _id: friendIdArray[0] });
+      }
     },
     //*gets all of the user's graffiti
     userGraffitiPost: async (parent, { userId }) => {
@@ -42,9 +53,9 @@ const resolvers = {
       // if (context.user) {
       //   return User.findOne({ _id: context.user._id }).populate('posts');
       // }
-      const id = '639a57d32d2921e945d7bcf8';
+      console.log('backend Me');
       try {
-        const user = await User.findOne({ _id: id });
+        const user = await User.findOne({ _id: context.user._id });
         return user;
       } catch (e) {
         (e) => console.log(e);
@@ -98,6 +109,7 @@ const resolvers = {
     },
 
     login: async (parent, { email, password }) => {
+      console.log('loginResolv', email, password);
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -116,16 +128,24 @@ const resolvers = {
     },
 
     addPost: async (parent, { postText }, context) => {
+      console.log(context.user);
+      console.log(postText);
+
       if (context.user) {
         const newPost = await Post.create({
+          userId: context.user._id,
           postText: postText,
         });
 
-        await User.findOneAndUpdate(
+        console.log('newpost', newPost);
+
+        const user = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { posts: newPost._id } },
           { new: true }
         );
+
+        console.log(user);
 
         return newPost;
       }

@@ -85,7 +85,7 @@ export default function Post({ post }) {
           </div>
           <div className="postBottomRight">
             <span className="postCommentText" onClick={showCommentForm}>
-              {post.comments.length} comments
+              {post.comments.length} Comments
             </span>
             <div className="">
               <input
@@ -95,13 +95,15 @@ export default function Post({ post }) {
                 name="commentText"
                 value={comment.commentText}
                 onChange={handleChange}></input>
-              <button onClick={submitComment} id={post._id}>
-                this will be submit btn
+              <button className="postButton" onClick={submitComment} id={post._id}>
+                Send
               </button>
-              <div>
+              <div className='commentPosts'>
                 {post.comments.map((c) => (
-                  <Comments key={c._id} comment={c} />
+                  <Comments key={c._id} comment={c}/>
+                  
                 ))}
+                
               </div>
             </div>
           </div>

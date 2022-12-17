@@ -17,8 +17,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { useRef, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { QUERY_FIND_USERS } from '../../context/queries';
+import {
+  QUERY_FIND_USERS,
+  QUERY_ALL_USER_PENDING_FRIENDS,
+} from '../../context/queries';
 import SearchFriend from '../friends/searchFriend';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
+import AuthService from '../../context/auth';
+import Notification from './notifications';
 
 import { NavLink } from 'react-router-dom';
 
@@ -84,9 +90,11 @@ const settings = ['Login', 'SignUp'];
 function NavbarComponent() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorNotif, setAnchorNotif] = React.useState(null);
   const [friendName, setFriendName] = useState({
     friendName: '',
   });
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFriendName({
@@ -94,12 +102,29 @@ function NavbarComponent() {
       [name]: value,
     });
   };
+  const { loading, data } = useQuery(QUERY_ALL_USER_PENDING_FRIENDS, {
+    variables: {
+      userId: AuthService.getProfile().data._id,
+    },
+  });
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  console.log('data', data.userPendingFriend.pendingFriends);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+  };
+
+  const handleOpenNotification = (e) => {
+    setAnchorNotif(e.currentTarget);
+  };
+  const handleCloseNotification = (e) => {
+    setAnchorNotif(null);
   };
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -117,7 +142,8 @@ function NavbarComponent() {
     e.preventDefault();
     console.log(friendName.friendName);
     let name = friendName.friendName.split(' ');
-    return SearchFriend(name);
+    localStorage.setItem('lastSearchFriend', friendName.friendName);
+    navigate('/search');
   };
 
   return (
@@ -253,6 +279,36 @@ function NavbarComponent() {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
+            </Menu>
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenNotification} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp">
+                  {data.userPendingFriend.pendingFriends.length}
+                </Avatar>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorNotif}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorNotif)}
+              onClose={handleCloseNotification}>
+              <MenuItem>
+                {data.userPendingFriend.pendingFriends.map((user) => (
+                  <Notification key={user} userId={user} />
+                ))}
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

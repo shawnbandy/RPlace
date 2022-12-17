@@ -205,6 +205,7 @@ const resolvers = {
     //?later, we can just check to see if the context.user.id is on any other pending lists to populate those
     sendPendingFriend: async (parent, { receiverId }, context) => {
       //*context user is the sender of the request
+      console.log('backend sendPend');
       if (context.user && receiverId) {
         const user = User.findOneAndUpdate(
           { _id: receiverId },
@@ -229,6 +230,8 @@ const resolvers = {
 
     //*accept a friend= add them to the friend array, remove them from the pending friend request
     addFriend: async (parent, { requesterId }, context) => {
+      console.log('add Friend Backend');
+      console.log(requesterId);
       if (context.user) {
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },

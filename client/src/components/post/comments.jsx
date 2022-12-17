@@ -6,7 +6,7 @@ import { QUERY_COMMENT_AUTHOR } from '../../context/queries';
 import { useQuery } from '@apollo/client';
 
 export default function Comments({ comment }) {
-  console.log('comment', comment.commentAuthor);
+  //console.log('comment', comment.commentAuthor);
   const { loading, data } = useQuery(QUERY_COMMENT_AUTHOR, {
     variables: { userId: comment.commentAuthor },
   });
@@ -15,7 +15,7 @@ export default function Comments({ comment }) {
     return <div>Loading...</div>;
   }
 
-  console.log('datadata', data.user);
+  //console.log('datadata', data.user);
 
   return (
     <div>

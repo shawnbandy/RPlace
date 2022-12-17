@@ -88,6 +88,7 @@ const typeDefs = gql`
     me: User
     userAllPost(userId: ID!): User
     userFriendPost(friendIdArray: [ID!]): [Post]
+    findFriend(firstName: String!, lastName: String!): [User]
   }
 
   type Mutation {

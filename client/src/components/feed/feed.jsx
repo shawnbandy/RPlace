@@ -27,8 +27,8 @@ export default function Feed({ username }) {
     return <div>Loading...</div>;
   }
 
-  console.log(data.userAllPost.posts);
-  console.log('friendData', friendData);
+  //console.log(data.userAllPost.posts);
+  //console.log('friendData', friendData);
 
   return (
     <div className="feed">

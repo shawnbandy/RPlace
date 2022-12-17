@@ -15,6 +15,10 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+import { useRef, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { QUERY_FIND_USERS } from '../../context/queries';
+import SearchFriend from '../friends/searchFriend';
 
 import { NavLink } from 'react-router-dom';
 
@@ -80,6 +84,16 @@ const settings = ['Login', 'SignUp'];
 function NavbarComponent() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [friendName, setFriendName] = useState({
+    friendName: '',
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFriendName({
+      ...friendName,
+      [name]: value,
+    });
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -97,6 +111,13 @@ function NavbarComponent() {
 
   const redirectPage = (page) => {
     window.location.replace(page);
+  };
+
+  const findFriend = async (e) => {
+    e.preventDefault();
+    console.log(friendName.friendName);
+    let name = friendName.friendName.split(' ');
+    return SearchFriend(name);
   };
 
   return (
@@ -120,6 +141,14 @@ function NavbarComponent() {
             }}>
             ЯPlace
           </Typography>
+
+          <div>
+            <input
+              name="friendName"
+              value={friendName.friendName}
+              onChange={handleChange}></input>
+            <button onClick={findFriend}>Submit</button>
+          </div>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton

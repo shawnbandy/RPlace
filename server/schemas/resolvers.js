@@ -31,6 +31,9 @@ const resolvers = {
         let currentFriend = await User.findOne({ _id: friendIdArray[0] });
       }
     },
+    findFriend: async (parent, { firstName, lastName }, context) => {
+      return User.find({ firstName: firstName, lastName: lastName });
+    },
     //*gets all of the user's graffiti
     userGraffitiPost: async (parent, { userId }) => {
       return User.findOne({ _id: userId }).populate('graffitiPosts');

@@ -4,7 +4,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 // import NavbarComponent from "./components/navbar/navbar";
 import Login from "./pages/main/main";
-// import Register from "./pages/register/register";
+import Register from "./pages/register/register";
 import Home from "./pages/home/home";
 import Profile from "./pages/profile/profile";
 
@@ -25,7 +25,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
 
-          {/* <Route path="/register" element={<Register />} /> */}
+          <Route path="/register" element={<Register />} />
 
           {/* where all posts are rendered */}
           {/* <Route path="/home" element={<Home />} /> */}

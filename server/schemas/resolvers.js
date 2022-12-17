@@ -13,6 +13,7 @@ const resolvers = {
       return User.find({});
     },
     user: async (parent, { userId }) => {
+      console.log('backend user');
       return User.findOne({ _id: userId });
     },
     //*gets all of the user's posts/comments

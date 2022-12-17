@@ -12,7 +12,7 @@ export const QUERY_ALL_USERS = gql`
 `;
 
 export const QUERY_SINGLE_USER = gql`
-  query getSingleUser($userId: ID!) {
+  query User($userId: ID!) {
     user(userId: $userId) {
       _id
       email
@@ -32,6 +32,15 @@ export const QUERY_SINGLE_USER = gql`
           commentText
         }
       }
+    }
+  }
+`;
+
+export const QUERY_COMMENT_AUTHOR = gql`
+  query User($userId: ID!) {
+    user(userId: $userId) {
+      firstName
+      lastName
     }
   }
 `;
@@ -103,6 +112,10 @@ export const QUERY_ALL_USER_POST = gql`
       posts {
         _id
         postText
+        comments {
+          commentAuthor
+          commentText
+        }
       }
     }
   }

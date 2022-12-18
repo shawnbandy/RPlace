@@ -169,10 +169,8 @@ export const ME = gql`
       profile {
         aboutMe
         backgroundStyling
-        details {
-          age
-          status
-        }
+        age
+        status
         mediaContainer
         profilePicture
         widgetContainer

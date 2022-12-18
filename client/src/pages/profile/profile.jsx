@@ -10,14 +10,16 @@ import { useMutation, useQuery } from '@apollo/client';
 import { ME } from '../../context/queries';
 import { colors } from '@mui/material';
 // import { ME } from '../src/context/mutations';
+import NavbarComponent from "../../components/navbar/navbar";
 
 function LeftProfile(props) {
+    console.log('left prof', props.props)
 
     return  (
         <>
         <Grid container spacing={2}>
             <Grid xs={12} md={4}>
-                <img alt="User" src={props.props.me.profile.profilePicture} />
+                <img alt="User" src={props.props.profilePicture} />
             </Grid>
             <br />
             <Grid xs={12} md={8}>
@@ -25,13 +27,10 @@ function LeftProfile(props) {
                     <h3>{props.userName}</h3>
                     <List>
                         <ListItem>
-                            <ListItemText primary="Age" secondary={props.props.me.profile.details.age} />
+                            <ListItemText primary="Age" secondary={props.props.age} />
                         </ListItem>
-                        {/* <ListItem>
-                            <ListItemText primary="Height" secondary={props.props.me.profile.details.height} />
-                        </ListItem> */}
                         <ListItem>
-                            <ListItemText primary="Status" secondary={props.props.me.profile.details.status} />
+                            <ListItemText primary="Status" secondary={props.props.status} />
                         </ListItem>
                     </List>
                 </Paper>
@@ -55,7 +54,7 @@ function LeftProfile(props) {
                 <br/>
                 <Paper>
                     <h6>About Me:</h6>
-                    <p>{props.props.me.profile.aboutMe}</p>
+                    <p>{props.props.aboutMe}</p>
                 </Paper>
             </Grid>
         </Grid>
@@ -72,14 +71,12 @@ function RightProfile(props) {
 }
 
 function Media(props) {
-    console.log(props.props.me.profile.mediaContainer)
-    return <div dangerouslySetInnerHTML={{__html:props.props.me.profile.mediaContainer}}>
+    return <div dangerouslySetInnerHTML={{__html:props.props.mediaContainer}}>
     </div>
 }
 
 function Widget(props) {
-    console.log(props.props.me.profile.widgetContainer)
-    return <div dangerouslySetInnerHTML={{__html:props.props.me.profile.widgetContainer}}>
+    return <div dangerouslySetInnerHTML={{__html:props.props.widgetContainer}}>
     </div>
 }
 
@@ -87,21 +84,22 @@ export default function ProfilePage() {
     const { loading, error, data } = useQuery(ME);
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
-    console.log(data)
-    console.log(data.me.profile.backgroundStyling)
+    console.log(data.me.profile)
+    const profile = data.me.profile
     return (
         <div>
+        <NavbarComponent />
         <Box sx={{ flexGrow: 1 }} style={{"backgroundColor":"blue"}}>
             <Grid container spacing={2}>
                 <Grid xs={12} md={6}>
-                    <LeftProfile props={data} />
+                    <LeftProfile props={profile} />
                 </Grid>
                 <Grid xs={12} md={6}>
-                    <RightProfile props={data}/>
+                    <RightProfile props={profile}/>
                 </Grid>
             </Grid>
-            <Media props={data}/>
-            <Widget props={data}/>
+            <Media props={profile}/>
+            <Widget props={profile}/>
         </Box>
         </div>
     )

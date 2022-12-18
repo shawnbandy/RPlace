@@ -40,7 +40,7 @@ function Friends(props) {
     )
 }
 
-export default function RightBar() {
+function RightBar() {
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -136,7 +136,7 @@ export default function RightBar() {
 
   return (
     <div>
-      {['right'].map((anchor) => (
+      {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}><MenuIcon /></Button>
           <SwipeableDrawer
@@ -152,3 +152,5 @@ export default function RightBar() {
     </div>
   );
 }
+
+export default RightBar;

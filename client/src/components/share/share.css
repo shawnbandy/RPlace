@@ -35,11 +35,7 @@
     margin: 20px;
   }
   
-  .shareBottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+
   
   .shareOptions{
       display: flex;
@@ -69,9 +65,10 @@
       border-radius: 5px;
       background-color: green;
       font-weight: 500;
-      margin-right: 20px;
+      margin-left: 1000px;
       cursor: pointer;
       color: white;
+
   }
   
   .shareImgContainer{

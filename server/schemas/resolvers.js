@@ -14,7 +14,7 @@ const resolvers = {
     },
     user: async (parent, { userId }) => {
       console.log("backend user");
-      return User.findOne({ _id: userId });
+      return await User.findOne({ _id: userId });
     },
     //*gets all of the user's posts/comments
     userPost: async (parent, { postId }) => {
@@ -24,11 +24,19 @@ const resolvers = {
       console.log("backendAllPost");
       return User.findOne({ _id: userId }).populate("posts");
     },
-    userFriendPost: async (parent, { friendIdArray }, context) => {
+
+    userFriendPost: async (parent, { userId }) => {
       console.log("userfriendpost");
-      let postArr = [];
-      for (let i = 0; i < friendIdArray.length; i++) {
-        let currentFriend = await User.findOne({ _id: friendIdArray[0] });
+
+      try {
+        const user = await User.findOne({ _id: userId })
+          .populate("friends")
+          .populate("posts");
+        console.log("user", user);
+        console.log("returning");
+        return user;
+      } catch (err) {
+        console.log(err);
       }
     },
     findFriend: async (parent, { firstName, lastName }, context) => {
@@ -109,7 +117,7 @@ const resolvers = {
     },
 
     login: async (parent, { email, password }) => {
-      console.log("loginResolv", email, password);
+      console.log("loginResolve", email, password);
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -123,6 +131,7 @@ const resolvers = {
       }
 
       const token = signToken(user);
+      console.log("file: resolvers.js:134 ~ login: ~ token", token);
 
       return { token, user };
     },
@@ -202,6 +211,7 @@ const resolvers = {
     //?later, we can just check to see if the context.user.id is on any other pending lists to populate those
     sendPendingFriend: async (parent, { receiverId }, context) => {
       //*context user is the sender of the request
+      console.log("backend sendPend");
       if (context.user && receiverId) {
         const user = User.findOneAndUpdate(
           { _id: receiverId },
@@ -215,7 +225,7 @@ const resolvers = {
     deletePendingFriend: async (parent, { requestId }, context) => {
       if (context.user._id) {
         //*removes the sent friend request from your pending friends
-        const user = User.findOneAndUpdate(
+        const user = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { pendingFriends: requestId } },
           { new: true }
@@ -226,15 +236,25 @@ const resolvers = {
 
     //*accept a friend= add them to the friend array, remove them from the pending friend request
     addFriend: async (parent, { requesterId }, context) => {
+      console.log("add Friend Backend");
+      console.log(requesterId);
+      console.log(context.user._id);
       if (context.user) {
-        const user = await User.findOneAndUpdate(
+        const requester = await User.findOne({ _id: requesterId });
+
+        const userRemove = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { friends: requesterId } },
-          { $pull: { pendingFriends: requesterId } },
+          { $pull: { pendingFriends: requester._id } },
           { new: true }
         );
 
-        return user;
+        const userAdd = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { friends: requester } },
+          { new: true }
+        );
+
+        return userAdd;
       }
     },
 

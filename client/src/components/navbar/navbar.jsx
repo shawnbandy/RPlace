@@ -101,7 +101,7 @@ function NavbarComponent() {
 
 
   return (
-    <AppBar style={{"position":"fixed"}}>
+    <AppBar style={{"position":"static"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -215,7 +215,6 @@ function NavbarComponent() {
                 key={searchBar}
                 onClick={()=>{handleCloseNavMenu();}}
                 onChange={handleSearch}
-                on
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {searchBar}

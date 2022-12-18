@@ -32,7 +32,7 @@ const resolvers = {
         const user = await User.findOne({ _id: userId })
           .populate('friends')
           .populate('posts');
-        console.log('user', user.friends[0].posts);
+        console.log('user', user);
         console.log('returning');
         return user;
       } catch (err) {

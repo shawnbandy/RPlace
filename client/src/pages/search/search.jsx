@@ -18,21 +18,22 @@ export default function Search() {
   console.log(q);
   // todo replace hard coded varibles with useParams()
   // todo replace button functions
-  const { loading, error, data } = useQuery(QUERY_FIND_USERS, {
-    variables: { firstName: 'Mac', lastName: 'Greene' },
-  });
-  // const lastSearched = localStorage.getItem('lastSearchFriend');
-  // const lastSearchedSplit = lastSearched.split(' ');
-  // console.log(
-  //   'file: search.jsx:19 ~ Search ~ lastSearchedSplit',
-  //   lastSearchedSplit
-  // );
   // const { loading, error, data } = useQuery(QUERY_FIND_USERS, {
-  //   variables: {
-  //     firstName: lastSearchedSplit[0],
-  //     lastName: lastSearchedSplit[1],
-  //   },
+  //   variables: { firstName: 'Shawn', lastName: 'Canavan' },
   // });
+  const lastSearched = localStorage.getItem('lastSearchFriend');
+  console.log('file: search.jsx:25 ~ Search ~ lastSearched', lastSearched);
+  const lastSearchedSplit = lastSearched.split(',');
+  console.log(
+    'file: search.jsx:19 ~ Search ~ lastSearchedSplit',
+    lastSearchedSplit
+  );
+  const { loading, error, data } = useQuery(QUERY_FIND_USERS, {
+    variables: {
+      firstName: lastSearchedSplit[0],
+      lastName: lastSearchedSplit[1],
+    },
+  });
 
   console.log(data);
 

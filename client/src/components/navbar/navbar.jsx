@@ -95,13 +95,13 @@ function NavbarComponent() {
     friendName: '',
   });
   const navigate = useNavigate();
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFriendName({
-      ...friendName,
-      [name]: value,
-    });
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFriendName({
+  //     ...friendName,
+  //     [name]: value,
+  //   });
+  // };
   const { loading, data } = useQuery(QUERY_ALL_USER_PENDING_FRIENDS, {
     variables: {
       userId: AuthService.getProfile().data._id,
@@ -142,11 +142,14 @@ function NavbarComponent() {
   };
 
   const findFriend = async (e) => {
-    e.preventDefault();
-    console.log(friendName.friendName);
-    let name = friendName.friendName.split(' ');
-    localStorage.setItem('lastSearchFriend', friendName.friendName);
-    navigate('/search');
+    //e.preventDefault();
+    //localStorage.removeItem('lastSearchFriend');
+    console.log('--------------------------', searchValue);
+    let name = searchValue.split(' ');
+    console.log('file: navbar.jsx:149 ~ findFriend ~ name', name);
+    localStorage.setItem('lastSearchFriend', name);
+    console.log('_______', window.location.href);
+    redirectPage('/search');
   };
 
   return (
@@ -290,8 +293,9 @@ function NavbarComponent() {
               key={pages[3]}
               onClick={() => {
                 handleCloseNavMenu();
+                findFriend();
                 // !MAC SEA4RCH BAR THING
-                redirectPage(pages[3] + '/?q=' + searchValue);
+                //redirectPage(pages[3] + '/?q=' + searchValue);
               }}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               {pages[3]}

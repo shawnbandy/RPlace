@@ -1,12 +1,12 @@
-import "./main.css";
-import { useContext, useRef } from "react";
+import './main.css';
+import { useContext, useRef } from 'react';
 
 // import { loginCall } from "../../" //apicall
-import AuthService from "../../context/auth"; //authcontext
-import React, { useState } from "react";
-import { LOGIN } from "../../context/mutations";
-import { useMutation } from "@apollo/client";
-import { Navigate, Link, useNavigate } from "react-router-dom";
+import AuthService from '../../context/auth'; //authcontext
+import React, { useState } from 'react';
+import { LOGIN } from '../../context/mutations';
+import { useMutation } from '@apollo/client';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const email = useRef();
@@ -17,32 +17,30 @@ export default function Login() {
 
   //const { isFetching, dispatch } = useContext(AuthContext);
   const [formState, setFormState] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const loginClick = async (e) => {
     e.preventDefault();
-    console.log(formState);
 
     try {
-      console.log("login", formState);
+      console.log('login', formState);
       const { data } = await loginUser({
         variables: {
           email: formState.email,
           password: formState.password,
         },
       });
-      console.log("data", data.login.token);
+      console.log('data', data);
       AuthService.login(data.login.token);
-      navigate("/home");
     } catch (err) {
       console.log(err);
     }
   };
 
   const goRegister = async (e) => {
-    navigate("/register");
+    navigate('/register');
   };
 
   const handleChange = (e) => {
@@ -64,43 +62,35 @@ export default function Login() {
           </span>
         </div>
         <div className="loginRight">
-            <form className="loginBox" onSubmit={loginClick}>
-              <input
-                placeholder="Email"
-                required
-                ref={email}
-                className="loginInput"
-                type="text"
-                name="email"
-                value={formState.email}
-                onChange={handleChange}
-              />
-              <input
-                placeholder="Password"
-                required
-                ref={password}
-                className="loginInput"
-                type="password"
-                minLength="6"
-                name="password"
-                value={formState.password}
-                onChange={handleChange}
-              />
-              <button
-                className="loginButton"
-                type="submit"
-                onClick={loginClick}
-              >
-                Login
-              </button>
-              <button
-                className="signupButton"
-                type="button"
-                onClick={goRegister}
-              >
-                Sign Up
-              </button>
-            </form>
+          <form className="loginBox" onSubmit={loginClick}>
+            <input
+              placeholder="Email"
+              required
+              ref={email}
+              className="loginInput"
+              type="text"
+              name="email"
+              value={formState.email}
+              onChange={handleChange}
+            />
+            <input
+              placeholder="Password"
+              required
+              ref={password}
+              className="loginInput"
+              type="password"
+              minLength="6"
+              name="password"
+              value={formState.password}
+              onChange={handleChange}
+            />
+            <button className="loginButton" type="submit" onClick={loginClick}>
+              Login
+            </button>
+            <button className="signupButton" type="button" onClick={goRegister}>
+              Sign Up
+            </button>
+          </form>
           {err && (
             <div className="my-3 p-3 bg-danger text-white">{err.message}</div>
           )}

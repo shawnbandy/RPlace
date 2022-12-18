@@ -49,7 +49,11 @@ export default function Feed({ username }) {
     return objArr;
   };
 
-  //let testArr = putAllPost(friendData.userFriendPost.friends);
+  let testArr = [];
+  // if (friendData.userFriendPost.friends) {
+  //   testArr = putAllPost(friendData.userFriendPost.friends);
+  // }
+
   //console.log('file: feed.jsx:54 ~ Feed ~ testArr', testArr);
   //console.log('friendData', friendData.userFriendPost.friends);
 

@@ -84,7 +84,7 @@ const searchBar = (
 );
 
 const pages = ['Home', 'Profile', 'Friends', 'Search'];
-const settings = ['Notifications', 'Settings', 'Signout'];
+const settings = ['Notifications', 'Settings'];
 
 function NavbarComponent() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -244,7 +244,7 @@ function NavbarComponent() {
               key={pages[0]}
               onClick={() => {
                 handleCloseNavMenu();
-                redirectPage(pages[0]);
+                redirectPage('/home');
               }}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               {pages[0]}
@@ -253,7 +253,7 @@ function NavbarComponent() {
               key={pages[1]}
               onClick={() => {
                 handleCloseNavMenu();
-                redirectPage(pages[1]);
+                redirectPage('/profile');
               }}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               {pages[1]}
@@ -262,10 +262,19 @@ function NavbarComponent() {
               key={pages[2]}
               onClick={() => {
                 handleCloseNavMenu();
-                redirectPage(pages[2]);
+                redirectPage('/friends');
               }}
               sx={{ my: 2, color: 'white', display: 'block' }}>
               {pages[2]}
+            </Button>
+            <Button
+              onClick={() => {
+                handleCloseNavMenu();
+                AuthService.logout();
+                redirectPage('/login');
+              }}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              SignOut
             </Button>
             <Button
               key={searchBar}
@@ -281,6 +290,7 @@ function NavbarComponent() {
               key={pages[3]}
               onClick={() => {
                 handleCloseNavMenu();
+                // !MAC SEA4RCH BAR THING
                 redirectPage(pages[3] + '/?q=' + searchValue);
               }}
               sx={{ my: 2, color: 'white', display: 'block' }}>

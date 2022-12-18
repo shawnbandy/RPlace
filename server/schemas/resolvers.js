@@ -1,6 +1,6 @@
-const { Message, Post, GraffitiPost, User } = require("../models");
-const { AuthenticationError, ApolloError } = require("apollo-server-express");
-const { signToken } = require("../utils/auth");
+const { Message, Post, GraffitiPost, User } = require('../models');
+const { AuthenticationError, ApolloError } = require('apollo-server-express');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   //TODO User
@@ -13,22 +13,30 @@ const resolvers = {
       return User.find({});
     },
     user: async (parent, { userId }) => {
-      console.log("backend user");
-      return User.findOne({ _id: userId });
+      console.log('backend user');
+      return await User.findOne({ _id: userId });
     },
     //*gets all of the user's posts/comments
     userPost: async (parent, { postId }) => {
       return Post.findOne({ _id: postId });
     },
     userAllPost: async (parent, { userId }, context) => {
-      console.log("backendAllPost");
-      return User.findOne({ _id: userId }).populate("posts");
+      console.log('backendAllPost');
+      return User.findOne({ _id: userId }).populate('posts');
     },
-    userFriendPost: async (parent, { friendIdArray }, context) => {
-      console.log("userfriendpost");
-      let postArr = [];
-      for (let i = 0; i < friendIdArray.length; i++) {
-        let currentFriend = await User.findOne({ _id: friendIdArray[0] });
+
+    userFriendPost: async (parent, { userId }) => {
+      console.log('userfriendpost');
+
+      try {
+        const user = await User.findOne({ _id: userId })
+          .populate('friends')
+          .populate('posts');
+        console.log('user', user.friends[0].posts);
+        console.log('returning');
+        return user;
+      } catch (err) {
+        console.log(err);
       }
     },
     findFriend: async (parent, { firstName, lastName }, context) => {
@@ -38,18 +46,18 @@ const resolvers = {
     },
     //*gets all of the user's graffiti
     userGraffitiPost: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("graffitiPosts");
+      return User.findOne({ _id: userId }).populate('graffitiPosts');
     },
     //*returns all the messages the user is a part of
     userMessage: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("messages");
+      return User.findOne({ _id: userId }).populate('messages');
     },
     userPendingFriend: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("pendingFriends");
+      return User.findOne({ _id: userId }).populate('pendingFriends');
     },
 
     userHomePage: async (parent, { userId }) => {
-      const user = await User.findOne({ userId }).populate("friends");
+      const user = await User.findOne({ userId }).populate('friends');
       const postArr = [];
       return user;
     },
@@ -58,17 +66,17 @@ const resolvers = {
     me: async (parent, args, context) => {
       try {
         const user = await User.findOne({ _id: context.user._id });
-        console.log("user ", user);
+        console.log('user ', user);
         return user;
       } catch {
-        throw new AuthenticationError("You need to be logged in!");
+        throw new AuthenticationError('You need to be logged in!');
       }
     },
   },
 
   Mutation: {
     addUser: async (parent, { email, firstName, lastName, password }) => {
-      console.log("backend user");
+      console.log('backend user');
       const user = await User.create({ firstName, lastName, email, password });
       const token = signToken(user);
       return { token, user };
@@ -109,26 +117,27 @@ const resolvers = {
     },
 
     login: async (parent, { email, password }) => {
-      console.log("loginResolv", email, password);
+      console.log('loginResolv', email, password);
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("Email address not found");
+        throw new AuthenticationError('Email address not found');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError("Incorrect email/password");
+        throw new AuthenticationError('Incorrect email/password');
       }
 
       const token = signToken(user);
+      console.log('file: resolvers.js:134 ~ login: ~ token', token);
 
       return { token, user };
     },
 
     addPost: async (parent, { postText }, context) => {
-      console.log("backendaddPost");
+      console.log('backendaddPost');
       console.log(context.user);
       console.log(postText);
 
@@ -138,7 +147,7 @@ const resolvers = {
           postText: postText,
         });
 
-        console.log("newpost", newPost);
+        console.log('newpost', newPost);
 
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -216,7 +225,7 @@ const resolvers = {
     deletePendingFriend: async (parent, { requestId }, context) => {
       if (context.user._id) {
         //*removes the sent friend request from your pending friends
-        const user = User.findOneAndUpdate(
+        const user = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { pendingFriends: requestId } },
           { new: true }
@@ -229,15 +238,23 @@ const resolvers = {
     addFriend: async (parent, { requesterId }, context) => {
       console.log('add Friend Backend');
       console.log(requesterId);
+      console.log(context.user._id);
       if (context.user) {
-        const user = await User.findOneAndUpdate(
+        const requester = await User.findOne({ _id: requesterId });
+
+        const userRemove = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { friends: requesterId } },
-          { $pull: { pendingFriends: requesterId } },
+          { $pull: { pendingFriends: requester._id } },
           { new: true }
         );
 
-        return user;
+        const userAdd = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { friends: requester } },
+          { new: true }
+        );
+
+        return userAdd;
       }
     },
 
@@ -356,7 +373,7 @@ const resolvers = {
           { mediaContainer: mediaContainer },
           { widgetContainer: widgetContainer }
         );
-        console.log("upate profile settings resolver -> user ", user);
+        console.log('upate profile settings resolver -> user ', user);
         return updatedUser;
       }
     },

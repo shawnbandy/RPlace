@@ -351,36 +351,6 @@ function NavbarComponent() {
               </MenuItem>
             </Menu>
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenNotification} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp">
-                  {data.userPendingFriend.pendingFriends.length}
-                </Avatar>
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorNotif}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorNotif)}
-              onClose={handleCloseNotification}>
-              <MenuItem>
-                {data.userPendingFriend.pendingFriends.map((user) => (
-                  <Notification key={user} userId={user} />
-                ))}
-              </MenuItem>
-            </Menu>
-          </Box>
         </Toolbar>
       </Container>
     </AppBar>

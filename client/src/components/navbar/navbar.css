@@ -1,11 +1,5 @@
 .rplogo {
-    height: 70px;
+    height: 60px;
     margin: -10px;
     margin-top: -7px;
 }
-
-@media screen and (max-width: 600px) {
-    .rplogo {
-      margin: -15px;
-    }
-  }

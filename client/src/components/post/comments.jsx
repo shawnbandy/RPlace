@@ -21,7 +21,7 @@ export default function Comments({ comment }) {
     <div>
       <div>{comment.commentText}</div>
       <div>
-        {data.user.firstName} {data.user.lastName}
+        By {data.user.firstName} {data.user.lastName}
       </div>
     </div>
   );

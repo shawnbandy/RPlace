@@ -45,6 +45,7 @@ function App() {
 
           {/* dedicated login route */}
           <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
 
           <Route path="/register" element={<Register />} />
 

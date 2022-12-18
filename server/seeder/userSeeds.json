@@ -11,10 +11,8 @@
         "backgroundStyling": "background-color:blue;",
         "profilePicture": "https://avatars.githubusercontent.com/u/108307643?v=4",
         "aboutMe": "CWheelsRun",
-        "details": {
-          "age": "28",
-          "status": "single"
-        },
+        "age": "28",
+        "status": "single",
         "mediaContainer": "<iframe style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/track/5hE3IhK4WVa6ktfZhJpGK8?utm_source=generator\" width=\"100%\" height=\"152\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>",
         "widgetContainer": "<iframe src=\"https://www.w3schools.com\" title=\"W3Schools Free Online Web Tutorials\"></iframe>"
       },
@@ -42,10 +40,8 @@
       "backgroundStyling": "background-color:blue;",
       "profilePicture": "https://avatars.githubusercontent.com/u/33014789?v=4",
       "aboutMe": "M Greene",
-      "details": {
-        "age": "26",
-        "status": "single"
-      },
+      "age": "26",
+      "status": "single",
       "mediaContainer": "<iframe style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/track/5hE3IhK4WVa6ktfZhJpGK8?utm_source=generator\" width=\"100%\" height=\"152\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
     },
     "messages": []

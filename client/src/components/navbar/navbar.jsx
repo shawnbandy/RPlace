@@ -83,14 +83,14 @@ const searchBar = (
   </Search>
 );
 
-const pages = ['Home', 'Friends', 'Games', 'Profile', searchBar];
-// const settings_loggedin = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const settings = ['Login', 'SignUp'];
+const pages = ['Home', 'Profile', 'Friends', 'Search'];
+const settings = ['Notifications', 'Settings', 'Signout'];
 
 function NavbarComponent() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorNotif, setAnchorNotif] = React.useState(null);
+  const [searchValue, setSearchValue] = React.useState('');
   const [friendName, setFriendName] = useState({
     friendName: '',
   });
@@ -129,13 +129,16 @@ function NavbarComponent() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   const redirectPage = (page) => {
     window.location.replace(page);
+  };
+  const handleSearch = (event) => {
+    const { name, value } = event.target;
+    setSearchValue(value);
+    console.log(searchValue);
   };
 
   const findFriend = async (e) => {
@@ -167,14 +170,6 @@ function NavbarComponent() {
             }}>
             ЯPlace
           </Typography>
-
-          <div>
-            <input
-              name="friendName"
-              value={friendName.friendName}
-              onChange={handleChange}></input>
-            <button onClick={findFriend}>Submit</button>
-          </div>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -235,17 +230,62 @@ function NavbarComponent() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {/* {pages.map((page) => (
               <Button
                 key={page}
-                onClick={() => {
-                  handleCloseNavMenu();
-                  redirectPage(page);
-                }}
-                sx={{ my: 2, color: 'white', display: 'block' }}>
+                onClick={()=>{handleCloseNavMenu();redirectPage(page);}}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
                 {page}
               </Button>
-            ))}
+              
+            ))} */}
+            <Button
+              key={pages[0]}
+              onClick={() => {
+                handleCloseNavMenu();
+                redirectPage(pages[0]);
+              }}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              {pages[0]}
+            </Button>
+            <Button
+              key={pages[1]}
+              onClick={() => {
+                handleCloseNavMenu();
+                redirectPage(pages[1]);
+              }}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              {pages[1]}
+            </Button>
+            <Button
+              key={pages[2]}
+              onClick={() => {
+                handleCloseNavMenu();
+                redirectPage(pages[2]);
+              }}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              {pages[2]}
+            </Button>
+            <Button
+              key={searchBar}
+              onClick={() => {
+                handleCloseNavMenu();
+              }}
+              onChange={handleSearch}
+              on
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              {searchBar}
+            </Button>
+            <Button
+              key={pages[3]}
+              onClick={() => {
+                handleCloseNavMenu();
+                redirectPage(pages[3] + '/?q=' + searchValue);
+              }}
+              sx={{ my: 2, color: 'white', display: 'block' }}>
+              {pages[3]}
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -279,6 +319,36 @@ function NavbarComponent() {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
+            </Menu>
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenNotification} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp">
+                  {data.userPendingFriend.pendingFriends.length}
+                </Avatar>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorNotif}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorNotif)}
+              onClose={handleCloseNotification}>
+              <MenuItem>
+                {data.userPendingFriend.pendingFriends.map((user) => (
+                  <Notification key={user} userId={user} />
+                ))}
+              </MenuItem>
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 0 }}>

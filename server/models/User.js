@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
-const profileSchema = require('./Profile.js');
+const { Schema, model } = require("mongoose");
+const bcrypt = require("bcrypt");
+const profileSchema = require("./Profile.js");
 
 const userSchema = new Schema({
   firstName: {
@@ -31,15 +31,15 @@ const userSchema = new Schema({
   posts: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Post',
+      ref: "Post",
     },
   ],
 
   //*this includes all your friends posts and comments
   friends: [
     {
-      type: String,
-      required: false,
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
   ],
 
@@ -58,7 +58,7 @@ const userSchema = new Schema({
   graffitiPosts: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'graffitiPost',
+      ref: "graffitiPost",
     },
   ],
 
@@ -66,13 +66,13 @@ const userSchema = new Schema({
   messages: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Message',
+      ref: "Message",
     },
   ],
 });
 
-userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
@@ -84,6 +84,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-const User = model('User', userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;

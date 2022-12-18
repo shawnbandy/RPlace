@@ -11,20 +11,19 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import { gql } from "@apollo/client";
 // import { ME } from '../src/context/mutations';
-import NavbarComponent from "../../components/navbar/navbar";
 
 function LeftProfile(props) {
     console.log('left prof', props.props)
 
     return  (
         <>
-        <Grid container spacing={2}>
-            <Grid xs={12} md={4}>
+        <Grid display="flex" justifyContent="space-evenly" container spacing={2}>
+            <Grid>
                 <img alt="User" src={props.props.profilePicture} height={300} width={300}/>
             </Grid>
-            <br />
-            <Grid xs={12} md={8}>
+            <Grid>
                 <Paper>
                     <h3>{props.userName}</h3>
                     <List>
@@ -39,7 +38,7 @@ function LeftProfile(props) {
             </Grid>
         </Grid>
         <br/>
-        <Grid container spacing={2}>
+        <Grid display="flex" justifyContent="space-evenly" container spacing={2}>
             <Grid>
                 <Paper>
                     <h6>Top Friends:</h6>
@@ -63,10 +62,12 @@ function LeftProfile(props) {
 function RightProfile(props) {
     return(
         <>
-        <Grid container spacing={2}>
+        <Grid display="flex" justifyContent="space-evenly" container spacing={2}>
             <Grid>
                 <iframe title='Profile IFrame' src={props.webPlugin} height={300} width={150} ></iframe>
             </Grid>
+        </Grid>
+        <Grid display="flex" justifyContent="space-evenly" container spacing={2}>
             <Grid>
                 <Paper>
                     <h6>Wall Graffiti!</h6>
@@ -83,16 +84,17 @@ function RightProfile(props) {
     )
 }
 
-console.log(ME)
+console.log(QUERY_ALL_USER_POST)
 
 function Posts(props) {
-    const postContent = props.props.posttext
     const { loading, error, data } = useQuery(QUERY_ALL_USER_POST);
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
+    const postArray = data.posts.postText
+    const postContent = [postArray]
     console.log(data)
     return(
-            {postContent}.map(postContent => 
+            postContent.map(postContent => 
             <>
                 <ListItem alignItems="flex-start">
                     <ListItemAvatar>
@@ -153,7 +155,7 @@ export default function Profile() {
             <Grid>
                 <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                     <Posts
-                        props = {posts && profile}
+                        props = {profile}
                     />
                 </List>
             </Grid>

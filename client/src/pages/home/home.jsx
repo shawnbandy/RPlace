@@ -6,7 +6,6 @@ import "./home.css"
 export default function Home() {
   return (
     <>
-      <Navbar />
       <div className="homeContainer">
       <Rightbar />
         <Feed />

@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
   ApolloClient,
@@ -10,7 +10,6 @@ import { setContext } from "@apollo/client/link/context";
 
 import NoNav from "./components/NoNav";
 import WithNav from "./components/WithNav";
-import NavbarComponent from "./components/navbar/navbar";
 import Login from "./pages/main/main";
 import Register from "./pages/register/register";
 import Home from "./pages/home/home";

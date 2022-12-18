@@ -16,6 +16,7 @@ const typeDefs = gql`
   }
 
   type Profile {
+    _id: ID!
     backgroundStyling: String
     profilePicture: String
     aboutMe: String
@@ -110,12 +111,12 @@ const typeDefs = gql`
     deleteFriend(friendId: String!): User
     deleteGraffiti(graffitiId: String!): GraffitiPost
     UpdateProfileSettings(
-      profilePicture: String!
-      aboutMe: String!
-      age: String!
-      status: String!
-      mediaContainer: String!
-      widgetContainer: String!
+      profilePicture: String
+      aboutMe: String
+      age: String
+      status: String
+      mediaContainer: String
+      widgetContainer: String
     ): Profile
   }
 `;

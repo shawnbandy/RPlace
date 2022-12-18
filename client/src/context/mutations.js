@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const ADD_COMMENT = gql`
   mutation AddComment($postId: String!, $commentText: String!) {
@@ -165,6 +165,34 @@ export const UPDATE_USER = gql`
       lastName
       email
       password
+    }
+  }
+`;
+
+// todo updaste mutation to only accept defined varirables from settings form submit
+export const UPDATE_PROFILE_SETTINGS = gql`
+  mutation UpdateProfileSettings(
+    $profilePicture: String
+    $aboutMe: String
+    $age: String
+    $status: String
+    $mediaContainer: String
+    $widgetContainer: String
+  ) {
+    updateProfileSettings(
+      profilePicture: $profilePicture
+      aboutMe: $aboutMe
+      age: $age
+      status: $status
+      mediaContainer: $mediaContainer
+      widgetContainer: $widgetContainer
+    ) {
+      aboutMe
+      age
+      mediaContainer
+      profilePicture
+      status
+      widgetContainer
     }
   }
 `;

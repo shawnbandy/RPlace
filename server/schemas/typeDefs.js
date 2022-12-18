@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type User {
@@ -7,7 +7,7 @@ const typeDefs = gql`
     lastName: String!
     email: String!
     password: String!
-    friends: [String]
+    friends: [User]
     posts: [Post]
     profile: Profile
     graffitiPosts: [GraffitiPost]
@@ -16,17 +16,13 @@ const typeDefs = gql`
   }
 
   type Profile {
-    backgroundStyling: String!
-    profilePicture: String!
-    aboutMe: String!
-    details: Details
-    mediaContainer: String!
-    widgetContainer: String!
-  }
-
-  type Details {
-    age: String!
-    status: String!
+    backgroundStyling: String
+    profilePicture: String
+    aboutMe: String
+    age: String
+    status: String
+    mediaContainer: String
+    widgetContainer: String
   }
 
   input MakeUserInput {
@@ -37,6 +33,7 @@ const typeDefs = gql`
   }
 
   type Post {
+    _id: ID!
     postText: String
     comments: [Comment]
   }
@@ -80,14 +77,17 @@ const typeDefs = gql`
     userPendingFriend(userId: ID!): User
     userHomePage(userId: ID!): User
     me: User
+    userAllPost(userId: ID!): User
+    userFriendPost(friendIdArray: [ID!]): [Post]
+    findFriend(firstName: String!, lastName: String!): [User]
   }
 
   type Mutation {
     addUser(
-      email: String!,
-      firstName: String!,
-      lastName: String!,
-      password: String!,
+      email: String!
+      firstName: String!
+      lastName: String!
+      password: String!
     ): Auth
     updateUser(
       firstName: String!
@@ -109,6 +109,14 @@ const typeDefs = gql`
     deletePendingFriend(requestId: String!): User
     deleteFriend(friendId: String!): User
     deleteGraffiti(graffitiId: String!): GraffitiPost
+    UpdateProfileSettings(
+      profilePicture: String!
+      aboutMe: String!
+      age: String!
+      status: String!
+      mediaContainer: String!
+      widgetContainer: String!
+    ): Profile
   }
 `;
 

@@ -5,16 +5,14 @@
     "email": "corey@rplace.com",
     "password": "123456789",
     "posts": [], 
-    "friends": ["hunter@rplace.com", "mac@rplace.com"],
+    "friends": [],
     "pendingFriends": [],
     "profile": {
         "backgroundStyling": "background-color:blue;",
         "profilePicture": "https://avatars.githubusercontent.com/u/108307643?v=4",
         "aboutMe": "CWheelsRun",
-        "details": {
-          "age": "28",
-          "status": "single"
-        },
+        "age": "28",
+        "status": "single",
         "mediaContainer": "<iframe style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/track/5hE3IhK4WVa6ktfZhJpGK8?utm_source=generator\" width=\"100%\" height=\"152\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>",
         "widgetContainer": "<iframe src=\"https://www.w3schools.com\" title=\"W3Schools Free Online Web Tutorials\"></iframe>"
       },
@@ -26,7 +24,7 @@
     "email": "hunter@rplace.com",
     "password": "123456789",
     "posts": [], 
-    "friends": ["corey@rplace.com"],
+    "friends": [],
     "pendingFriends": [],
     "messages": []
   },
@@ -36,8 +34,16 @@
     "email": "mac@rplace.com",
     "password": "123456789",
     "posts": [], 
-    "friends": ["corey@rplace.com"],
+    "friends": [],
     "pendingFriends": [],
+    "profile": {
+      "backgroundStyling": "background-color:blue;",
+      "profilePicture": "https://avatars.githubusercontent.com/u/33014789?v=4",
+      "aboutMe": "M Greene",
+      "age": "26",
+      "status": "single",
+      "mediaContainer": "<iframe style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/track/5hE3IhK4WVa6ktfZhJpGK8?utm_source=generator\" width=\"100%\" height=\"152\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
+    },
     "messages": []
   },
   {
@@ -46,7 +52,7 @@
     "email": "shawn@rplace.com",
     "password": "123456789",
     "posts": [], 
-    "friends": ["terry@rplace.com"],
+    "friends": [],
     "pendingFriends": [],
     "messages": []
   },
@@ -56,7 +62,7 @@
     "email": "terry@rplace.com",
     "password": "123456789",
     "posts": [], 
-    "friends": ["shawn@rplace.com"],
+    "friends": [],
     "pendingFriends": [],
     "messages": []
   }

@@ -26,16 +26,16 @@ export default function Login() {
     console.log(formState);
 
     try {
-      console.log('login');
+      console.log('login', formState);
       const { data } = await loginUser({
         variables: {
           email: formState.email,
           password: formState.password,
         },
       });
-      console.log('data', data.loginUser);
-      AuthService.login(data.loginUser.token);
-      navigate('/profile');
+      console.log('data', data.login.token);
+      AuthService.login(data.login.token);
+      navigate('/home');
     } catch (err) {
       console.log(err);
     }

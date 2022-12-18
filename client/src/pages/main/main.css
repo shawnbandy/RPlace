@@ -8,6 +8,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   background-size: 300% 300%;
   background-image: linear-gradient(
     -45deg,
@@ -46,22 +47,22 @@ body {
 }
 
 .loginLogo {
-  font-size: 80px;
-  font-weight: 800;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 70px;
   color: #240079;
-  margin-bottom: 20px;
 }
 
 .loginDesc {
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 200px;
+  margin-top: -50px;
+  margin-bottom: 100px;
 }
 
 .loginBox {
   height: 240px;
-  width: 300px;
-  padding: 20px;
+  width: 280px;
+  padding: 15px;
   background-color: white;
   border-radius: 10px;
   display: flex;
@@ -116,12 +117,19 @@ body {
 
   .loginBox {
     margin: auto;
-    width: 300px;
+  }
+
+  .loginLogo {
+    margin-top: -50px;
   }
 
   .loginDesc {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .loginBox {
+    width: 90%;
   }
 }

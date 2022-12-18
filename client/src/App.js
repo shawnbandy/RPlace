@@ -14,6 +14,7 @@ import Register from "./pages/register/register";
 import Home from "./pages/home/home";
 import Profile from "./pages/profile/profile";
 import Search from "./pages/search/search";
+import Settings from "./pages/settings/settings";
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
@@ -60,6 +61,9 @@ function App() {
 
           {/* search for friends */}
           <Route path="/search" element={<Search />} />
+
+          {/* settings */}
+          <Route path="/settings" element={<Settings />} />
 
           {/* user messages */}
           {/* <Route path="/messages" element={<Messages />} /> */}

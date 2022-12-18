@@ -22,18 +22,18 @@ const profileSchema = new Schema({
     trim: true,
   },
 
-  // specific qualities to display on page
-  details: {
-    age: {
-      type: String,
-      unique: false,
-      trim: true,
-    },
-    status: {
-      type: String,
-      unique: false,
-      trim: true,
-    },
+  // age of user
+  age: {
+    type: String,
+    unique: false,
+    trim: true,
+  },
+
+  // relationship status
+  status: {
+    type: String,
+    unique: false,
+    trim: true,
   },
 
   // html w inline styling for media e.g. spotify iframe

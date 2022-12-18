@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type User {
@@ -7,7 +7,7 @@ const typeDefs = gql`
     lastName: String!
     email: String!
     password: String!
-    friends: [Friend]
+    friends: [User]
     posts: [Post]
     profile: Profile
     graffitiPosts: [GraffitiPost]
@@ -16,17 +16,13 @@ const typeDefs = gql`
   }
 
   type Profile {
-    backgroundStyling: String!
-    profilePicture: String!
-    aboutMe: String!
-    details: Details
-    mediaContainer: String!
-    widgetContainer: String!
-  }
-
-  type Details {
-    age: String!
-    status: String!
+    backgroundStyling: String
+    profilePicture: String
+    aboutMe: String
+    age: String
+    status: String
+    mediaContainer: String
+    widgetContainer: String
   }
 
   input MakeUserInput {
@@ -34,11 +30,6 @@ const typeDefs = gql`
     lastName: String!
     email: String!
     password: String!
-  }
-
-  type Friend {
-    _id: ID!
-    posts: [Post]
   }
 
   type Post {
@@ -118,6 +109,14 @@ const typeDefs = gql`
     deletePendingFriend(requestId: String!): User
     deleteFriend(friendId: String!): User
     deleteGraffiti(graffitiId: String!): GraffitiPost
+    UpdateProfileSettings(
+      profilePicture: String!
+      aboutMe: String!
+      age: String!
+      status: String!
+      mediaContainer: String!
+      widgetContainer: String!
+    ): Profile
   }
 `;
 

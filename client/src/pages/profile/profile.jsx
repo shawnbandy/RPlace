@@ -7,9 +7,32 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import { useMutation, useQuery } from '@apollo/client';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
 import { ME } from '../../context/queries';
 import { colors } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 // import { ME } from '../src/context/mutations';
+
+function UserPosts() {
+    const { loading, error, data } = useQuery(ME);
+
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
+  return (
+    <select name='user_posts'>
+      {data.me.posts.map((user_posts) => (
+        <option key={user_posts._id} value={user_posts.postText}>
+          {user_posts.postText}
+        </option>
+      ))}
+    </select>
+  );
+};
+
+console.log(UserPosts());
 
 function LeftProfile(props) {
 
@@ -66,10 +89,56 @@ function LeftProfile(props) {
 function RightProfile(props) {
     return(
         <>
-        
+        <Grid container spacing={2}>
+            <Grid>
+                <iframe title='Profile IFrame' src={props.webPlugin} height={1000} width={500} ></iframe>
+            </Grid>
+            <Grid>
+                <Paper>
+                    <h6>Wall Graffiti!</h6>
+                    <br/>
+                    <List>
+                        <ListItem>{props.graffiti1}</ListItem>
+                        <ListItem>{props.graffiti2}</ListItem>
+                        <ListItem>{props.graffiti3}</ListItem>
+                    </List>
+                </Paper>
+            </Grid>
+        </Grid>
         </>
     )
 }
+
+// function Posts(props) {
+//     return(
+//         <>
+//         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+//             <ListItem alignItems="flex-start">
+//                 <ListItemAvatar>
+//                 <Avatar alt="User Image" src={props.props.me.profile.profilePicture} />
+//                 </ListItemAvatar>
+//                 <ListItemText
+//                 primary={props.userName}
+//                 secondary={
+//                     <React.Fragment>
+//                     <Typography
+//                         sx={{ display: 'inline' }}
+//                         component="span"
+//                         variant="body2"
+//                         color="text.primary"
+//                     >
+//                         Ali Connors
+//                     </Typography>
+//                     {props.userPost}
+//                     </React.Fragment>
+//                 }
+//                 />
+//             </ListItem>
+//             <Divider variant="inset" component="li" />
+//         </List>
+//         </>
+//     )
+// }
 
 function Media(props) {
     console.log(props.props.me.profile.mediaContainer)
@@ -83,7 +152,7 @@ function Widget(props) {
     </div>
 }
 
-export default function ProfilePage() {
+export default function Profile() {
     const { loading, error, data } = useQuery(ME);
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;

@@ -13,6 +13,7 @@ export default function Settings() {
     const [status,setStatus] = useState()
     const [media,setMedia] = useState()
     const [widget,setWidget] = useState()
+    const [form, setForm] = useState()
 
     // handle input change
     const handleChangeProfilePicture = (e) => {
@@ -43,15 +44,17 @@ export default function Settings() {
     // mutation for updating data
     const [UpdateProfileSettings,{ error_mutation }] = useMutation(UPDATE_PROFILE_SETTINGS) 
 
-    // todo filter form data to only include defined values
-    // todo repair mutation to properly accept/update form data
+
     const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-    console.log('form data: ', profilePicture, aboutMe, age, status, media, widget)
-      const { data } = await UpdateProfileSettings({
-        variables: { profilePicture, aboutMe, age, status, media, widget },
+        const form_build = { "profilePicture": profilePicture, "aboutMe": aboutMe, "age": age, "status": status, "media": media, "widget": widget}
+        console.log("form build ", form_build)
+        
+        const { error, data } = await UpdateProfileSettings({
+        variables: { ...form_build },
       });
+
       window.location.replace('/Profile');
     } catch (err) {
       console.error(err);
@@ -64,6 +67,7 @@ export default function Settings() {
     if (error) return `Error! ${error.message}`;
     const profile = data.me.profile
     console.log(profile)
+
 
     return (
         <div>

@@ -340,21 +340,44 @@ const resolvers = {
       { profilePicture, aboutMe, age, status, mediaContainer, widgetContainer },
       context
     ) => {
-      // console.log("context", context.user);
-      const user = await User.findOne({ _id: context.user._id });
-      // console.log("user ", user);
+      console.log("update prof settings resolver 1");
+      // console.log(context);
+      // console.log(context.user);
+
+      const {
+        profilePictureCurrent,
+        aboutMeCurrent,
+        ageCurrent,
+        statusCurrent,
+        mediaContainerCurrent,
+        widgetContainerCurrent,
+      } = await User.findOne({ _id: context.user._id });
+
+      profilePicture ? profilePicture : profilePictureCurrent;
+      aboutMe ? aboutMe : aboutMeCurrent;
+      age ? age : ageCurrent;
+      status ? status : statusCurrent;
+      mediaContainer ? mediaContainer : mediaContainerCurrent;
+      widgetContainer ? widgetContainer : widgetContainerCurrent;
+      console.log("age: ", age);
+      console.log("status: ", status);
       if (context.user) {
-        const updatedUser = await User.findByIdAndUpdate(
+        console.log(context.user._id);
+        const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { profilePicture: profilePicture },
-          { aboutMe: aboutMe },
-          { age: age },
-          { status: status },
-          { mediaContainer: mediaContainer },
-          { widgetContainer: widgetContainer }
+          {
+            profile: {
+              // aboutMe: aboutMe,
+              age: age,
+              status: status,
+              // mediaContainer: mediaContainer,
+              // widgetContainer: widgetContainer,
+            },
+          },
+          { new: true }
         );
-        console.log("upate profile settings resolver -> user ", user);
-        return updatedUser;
+        console.log(updatedUser.profile);
+        return updatedUser.profile;
       }
     },
   },

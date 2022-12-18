@@ -109,7 +109,7 @@ const resolvers = {
     },
 
     login: async (parent, { email, password }) => {
-      console.log("loginResolv", email, password);
+      console.log("loginResolve", email, password);
       const user = await User.findOne({ email });
 
       if (!user) {

@@ -78,7 +78,7 @@ const typeDefs = gql`
     userHomePage(userId: ID!): User
     me: User
     userAllPost(userId: ID!): User
-    userFriendPost(friendIdArray: [ID!]): [Post]
+    userFriendPost(userId: ID!): User
     findFriend(firstName: String!, lastName: String!): [User]
   }
 
@@ -110,12 +110,12 @@ const typeDefs = gql`
     deleteFriend(friendId: String!): User
     deleteGraffiti(graffitiId: String!): GraffitiPost
     UpdateProfileSettings(
-      profilePicture: String!
-      aboutMe: String!
-      age: String!
-      status: String!
-      mediaContainer: String!
-      widgetContainer: String!
+      profilePicture: String
+      aboutMe: String
+      age: String
+      status: String
+      mediaContainer: String
+      widgetContainer: String
     ): Profile
   }
 `;

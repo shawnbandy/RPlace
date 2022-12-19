@@ -12,6 +12,7 @@ export default function Settings() {
     const [status,setStatus] = useState()
     const [media,setMedia] = useState()
     const [widget,setWidget] = useState()
+    const [form, setForm] = useState()
 
     // handle input change
     const handleChangeProfilePicture = (e) => {
@@ -42,15 +43,17 @@ export default function Settings() {
     // mutation for updating data
     const [UpdateProfileSettings,{ error_mutation }] = useMutation(UPDATE_PROFILE_SETTINGS) 
 
-    // todo filter form data to only include defined values
-    // todo repair mutation to properly accept/update form data
+
     const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-    console.log('form data: ', profilePicture, aboutMe, age, status, media, widget)
-      const { data } = await UpdateProfileSettings({
-        variables: { profilePicture, aboutMe, age, status, media, widget },
+        const form_build = { "profilePicture": profilePicture, "aboutMe": aboutMe, "age": age, "status": status, "mediaContainer": media, "widgetContainer": widget}
+        console.log("form build ", form_build)
+        
+        const { error, data } = await UpdateProfileSettings({
+        variables: { ...form_build },
       });
+
       window.location.replace('/Profile');
     } catch (err) {
       console.error(err);
@@ -64,6 +67,7 @@ export default function Settings() {
     const profile = data.me.profile
     console.log(profile)
 
+
     return (
         <div>
         <Box
@@ -75,6 +79,7 @@ export default function Settings() {
             autoComplete="off"
             className="settingsContainer"
         >
+
             <TextField defaultValue={profile.profilePicture} value={profilePicture} onChange={handleChangeProfilePicture} id="outlined-basic" label="Profile Picture" variant="outlined" />
             <TextField defaultValue={profile.aboutMe} value={aboutMe} onChange={handleChangeAboutMe} id="outlined-basic" label="About Me" variant="outlined"/>
             <TextField defaultValue={profile.age} value={age} onChange={handleChangeAge} id="outlined-basic" label="Age" variant="outlined" />

@@ -14,7 +14,7 @@ export const ADD_COMMENT = gql`
 export const ADD_FRIEND = gql`
   mutation AddFriend($requesterId: String!) {
     addFriend(requesterId: $requesterId) {
-      friends
+      _id
     }
   }
 `;
@@ -119,7 +119,7 @@ export const DELETE_USER = gql`
 `;
 
 export const LOGIN = gql`
-  mutation Login($email: String!, $password: String!) {
+  mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
       user {
@@ -172,25 +172,26 @@ export const UPDATE_USER = gql`
 // todo updaste mutation to only accept defined varirables from settings form submit
 export const UPDATE_PROFILE_SETTINGS = gql`
   mutation UpdateProfileSettings(
-    $profilePicture: String
-    $aboutMe: String
     $age: String
+    $aboutMe: String
     $status: String
     $mediaContainer: String
     $widgetContainer: String
+    $profilePicture: String
   ) {
-    updateProfileSettings(
-      profilePicture: $profilePicture
-      aboutMe: $aboutMe
+    UpdateProfileSettings(
       age: $age
+      aboutMe: $aboutMe
       status: $status
       mediaContainer: $mediaContainer
       widgetContainer: $widgetContainer
+      profilePicture: $profilePicture
     ) {
       aboutMe
       age
-      mediaContainer
+      backgroundStyling
       profilePicture
+      mediaContainer
       status
       widgetContainer
     }

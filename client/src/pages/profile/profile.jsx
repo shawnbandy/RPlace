@@ -172,10 +172,6 @@ function Feed(props) {
   );
 }
 
-function PostStatus() {
-  return <></>;
-}
-
 function Media(props) {
   return (
     <div dangerouslySetInnerHTML={{ __html: props.props.mediaContainer }}></div>
@@ -229,7 +225,7 @@ function RightBar() {
     <div>
       {['right'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}></Button>
+          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon/></Button>
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}

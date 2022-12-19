@@ -406,7 +406,17 @@ const resolvers = {
     // todo revise resolver to only update defined variables
     UpdateProfileSettings: async (
       parent,
-      { profilePicture, aboutMe, age, status, mediaContainer, widgetContainer },
+      {
+        profilePicture,
+        aboutMe,
+        age,
+        status,
+        friend1,
+        friend2,
+        friend3,
+        mediaContainer,
+        widgetContainer,
+      },
       context
     ) => {
       const user = await User.findOne({ _id: context.user._id });
@@ -416,6 +426,9 @@ const resolvers = {
       const aboutMeCurrent = profile.aboutMe;
       const ageCurrent = profile.age;
       const statusCurrent = profile.status;
+      const friend1Current = profile.friend1;
+      const friend2Current = profile.friend2;
+      const friend3Current = profile.friend3;
       const mediaContainerCurrent = profile.mediaContainer;
       const widgetContainerCurrent = profile.widgetContainer;
 
@@ -436,6 +449,15 @@ const resolvers = {
       if (status === null || status === undefined) {
         status = statusCurrent;
       }
+      if (friend1 === null || friend1 === undefined) {
+        friend1 = friend1Current;
+      }
+      if (friend2 === null || friend2 === undefined) {
+        friend2 = friend2Current;
+      }
+      if (friend3 === null || friend3 === undefined) {
+        friend3 = friend3Current;
+      }
       if (mediaContainer === null || mediaContainer === undefined) {
         mediaContainer = mediaContainerCurrent;
       }
@@ -453,9 +475,13 @@ const resolvers = {
           { _id: context.user._id },
           {
             profile: {
+              profilePicture: profilePicture,
               aboutMe: aboutMe,
               age: age,
               status: status,
+              friend1: friend1,
+              friend2: friend2,
+              friend3: friend3,
               mediaContainer: mediaContainer,
               widgetContainer: widgetContainer,
             },

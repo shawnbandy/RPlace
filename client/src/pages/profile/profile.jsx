@@ -24,12 +24,13 @@ import TextField from '@mui/material/TextField';
 function LeftProfile(props) {
   return (
     <>
-      <Grid container display="flex" justifyContent="center" spacing={2}>
+      <Grid container display="flex" justifyContent="center" spacing={1}>
         <Grid sm={12}>
           <Avatar
             alt="User"
+            className="profilepic"
             src={props.props.profilePicture}
-            sx={{ width: 250, height: 250 }}
+            sx={{ width: 150, height: 150 }}
           />
         </Grid>
         <Grid sm={12}>
@@ -57,7 +58,7 @@ function LeftProfile(props) {
             <ol>
               <li>{props.props.friend1}</li>
               <li>{props.props.friend2}</li>
-              <li>{props.props.friend3d}</li>
+              <li>{props.props.friend3}</li>
               <Divider />
             </ol>
           </Box>

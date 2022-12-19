@@ -47,8 +47,8 @@ This is a full-stack, single-page React application making use of MongoDB, Mongo
     - Make sure Node.js & MongoDB is downloaded and installed following these instructions
     - Type the command 'npm install' to install all project dependencies
     - Type the command 'npm run build' to flesh out all necessary components in the client folder
-    - Type the command 'npm run develop' to initiate all server files and client source files to build and run the app
-## Alternatively, access our deployed application via Heroku: [ЯPlace](https://)
+    - Type the command 'npm run develop' to initiate  run the app
+### Alternatively, access our deployed application via Heroku: [ЯPlace](https://)
 
 ## Usage
 

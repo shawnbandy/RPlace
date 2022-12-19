@@ -63,13 +63,30 @@ export default function Feed({ username }) {
   //console.log(data.userAllPost.posts);
   //console.log('friendData', friendData);
 
+  const noFriends = () => {
+    return (
+      <div>
+        <h1>get some friends. lol</h1>
+      </div>
+    );
+  };
+
+  const someFriends = (array) => {
+    return (
+      <div>
+        <h1>hooray! if you have friends you should be seeing this</h1>
+      </div>
+    );
+    {
+      friendData.userAllPost.posts.map((p) => <Post key={p._id} post={p} />);
+    }
+  };
+
   return (
     <div className="feed">
       <div className="feedWrapper">
         <Share />
-        {friendData.userAllPost.posts.map((p) => (
-          <Post key={p._id} post={p} />
-        ))}
+        {friendData.userAllData ? someFriends() : noFriends()}
       </div>
     </div>
   );

@@ -52,11 +52,10 @@ function App() {
 
             {/* dedicated login route */}
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Route>
           <Route element={<WithNav />}>
             <Route path="/home" element={<Home />} />
-
-            <Route path="/register" element={<Register />} />
 
             {/* where all posts are rendered */}
             <Route path="/home" element={<Home />} />

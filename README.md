@@ -48,23 +48,30 @@ This is a full-stack, single-page React application making use of MongoDB, Mongo
     - Type the command 'npm install' to install all project dependencies
     - Type the command 'npm run build' to flesh out all necessary components in the client folder
     - Type the command 'npm run develop' to initiate  run the app
-### Alternatively, access our deployed application via Heroku: [ЯPlace](https://)
+### Alternatively, access our deployed application via Heroku: [ЯPlace](https://rplace1.herokuapp.com/)
 
 ## Usage
 
-### Proceed to Sign Up as a first time user and create an account
-![Screenshot](./public/assets/)
-### Once you've logged in, you will be navigated to your home page. This houses a feed of all your friends posts collected in one place.
-![Screenshot](./public/assets/)
-### Your top nav bar allows you to move about the site, clicking on our logo brings you back home to this page. The search bar allows you to look for other users (once searched, you can view their profile or add them as a friend).
-![Screenshot](./public/assets/)
-### The Profile button brings you to your personal profile page. To begin populating and personalizing your profile, click on Settings on the nav bar to customize the elements and styles you will see.
-![Screenshot](./public/assets/)
-### The Friends button on the nav bar brings you to a list of all your friends on the site.
-![Screenshot](./public/assets/)
-### While on others profiles, you can post on their wall and check out the unique cusomizations they may have chosen for their page.
-![Screenshot](./public/assets/)
-### Clicking Sign Out on the top nav bar will end your session on the site and return you to the login page.
+    - Proceed to Sign Up as a first time user and create an account
+
+    - Once you've logged in, you will be navigated to your home page. This houses a feed
+    of all your friends posts collected in one place.
+
+    - Your top nav bar allows you to move about the site, clicking on our logo brings you
+    back home to this page. The search bar allows you to look for other users (once searched,
+    you can view their profile or add them as a friend).
+
+    - The Profile button brings you to your personal profile page. To begin populating and
+    personalizing your profile, click on Settings on the nav bar to customize the elements
+    and styles you will see.
+
+    - The Friends button on the nav bar brings you to a list of all your friends on the site.
+
+    - While on others profiles, you can post on their wall and check out the unique customizations
+    they may have chosen for their page.
+
+    - Clicking Sign Out on the top nav bar will end your session on the site and return you
+    to the login page.
 
 ## Breakdown
 

@@ -276,6 +276,11 @@ export default function Profile() {
             <Post />
 
             <Feed />
+            
+            <Media props={profile}/>
+              
+            <Widget props={profile}/>
+
           </Grid>
           <RightBar />
         </Grid>

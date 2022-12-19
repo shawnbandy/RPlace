@@ -404,6 +404,7 @@ const resolvers = {
           { _id: context.user._id },
           {
             profile: {
+              profilePicture: profilePicture,
               aboutMe: aboutMe,
               age: age,
               status: status,

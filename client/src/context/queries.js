@@ -61,6 +61,20 @@ export const QUERY_FIND_USERS = gql`
   }
 `;
 
+export const QUERY_ALL_FRIENDS = gql`
+  query Query($userId: ID!) {
+    userHomePage(userId: $userId) {
+      _id
+      friends {
+        _id
+        firstName
+        lastName
+        email
+      }
+    }
+  }
+`;
+
 export const QUERY_COMMENT_AUTHOR = gql`
   query User($userId: ID!) {
     user(userId: $userId) {

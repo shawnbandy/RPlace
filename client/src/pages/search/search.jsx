@@ -1,52 +1,72 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-
-import Navbar from '../../components/navbar/navbar';
-import SearchCard from './searchCard';
-import './search.css';
-import { useMutation, useQuery } from '@apollo/client';
-import { QUERY_FIND_USERS } from '../../context/queries';
-import { useParams } from 'react-router-dom';
-
-export default function Search() {
-  let { q } = useParams();
-  console.log(q);
-  // todo replace hard coded varibles with useParams()
-  // todo replace button functions
-  // const { loading, error, data } = useQuery(QUERY_FIND_USERS, {
-  //   variables: { firstName: 'Shawn', lastName: 'Canavan' },
+import Post from '../../components/post/post';
+import Share from '../../components/share/share';
+import { Posts } from '../../dummyData';
+import { useMutation } from '@apollo/client';
+import React, { useState } from 'react';
+import { useQuery } from '@apollo/client';
+import AuthService from '../../context/auth';
+import {
+  ME,
+  QUERY_SINGLE_USER,
+  QUERY_ALL_USER_POST,
+  QUERY_SINGLE_POST,
+  QUERY_ALL_FRIENDS_POST,
+} from '../../context/queries';
+import { PermMedia, Label, Room, EmojiEmotions } from '@material-ui/icons';
+ 
+export default function Feed({ username }) {
+  const [allPosts, setAllPosts] = useState([]);
+  const [testPosts, setTestPosts] = useState([]);
+  // const { loading, data: yourData } = useQuery(QUERY_ALL_USER_POST, {
+  //   variables: { userId: AuthService.getProfile().data._id },
   // });
-  // const lastSearched = localStorage.getItem('lastSearchFriend');
-  // console.log('file: search.jsx:25 ~ Search ~ lastSearched', lastSearched);
-  // const lastSearchedSplit = lastSearched.split(',');
-  // console.log(
-  //   'file: search.jsx:19 ~ Search ~ lastSearchedSplit',
-  //   lastSearchedSplit
-  // );
-  // const { loading, error, data } = useQuery(QUERY_FIND_USERS, {
-  //   variables: {
-  //     firstName: lastSearchedSplit[0],
-  //     lastName: lastSearchedSplit[1],
-  //   },
-  // });
-
-  // console.log(data);
-
-  // if (loading) return 'Loading...';
-  // if (error) return `Error! ${error.message}`;
-  // console.log('SEARCH USER DATA RETURN: ', data.findFriend);
-
+  const { loading: friendLoading, data: friendData } = useQuery(
+    QUERY_ALL_FRIENDS_POST,
+    {
+      variables: { userId: AuthService.getProfile().data._id },
+    }
+  );
+ 
+  //console.log(friendLoading);
+  if (friendLoading) {
+    return <div>Loading...</div>;
+  }
+ 
+  let testArr = [];
+  //console.log('file: feed.jsx:22 ~ Feed ~ data', yourData);
+  // if (friendData.userFriendPost.friends) {
+  //   testArr = putAllPost(friendData.userFriendPost.friends);
+  // }
+ 
+  //console.log('file: feed.jsx:54 ~ Feed ~ testArr', testArr);
+  //console.log('friendData', friendData.userFriendPost.friends);
+ 
+  console.log(friendData.userFriendPost);
+ 
+  //console.log(data.userAllPost.posts);
+  //console.log('friendData', friendData);
+ 
+  const noFriends = () => {
+    return (
+      <div>
+        <h1>get some friends. lol</h1>
+      </div>
+    );
+  };
+ 
+  const someFriends = (array) => {
+    console.log('----------------', array);
+    return array.map((p) => <Post key={p._id} post={p} />);
+  };
+ 
   return (
-    <div className="searchContainer">
-      <Navbar />
-      {/* {data.findFriend.map((user) => (
-        <SearchCard key={user._id} user={user} />
-      ))} */}
+    <div className="feed">
+      <div className="feedWrapper">
+        <Share />
+        {friendData.userFriendPost
+          ? someFriends(friendData.userFriendPost)
+          : noFriends()}
+      </div>
     </div>
   );
 }

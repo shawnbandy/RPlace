@@ -22,18 +22,61 @@ import {
   QUERY_FIND_USERS,
   QUERY_ALL_USER_PENDING_FRIENDS,
 } from "../../context/queries";
-import SearchFriend from "../friends/searchFriend";
+import SearchFriend from "../friends/searchFriends";
 import { Navigate, Link, useNavigate } from "react-router-dom";
 import AuthService from "../../context/auth";
 import Notification from "./notifications";
 
 import { NavLink } from "react-router-dom";
 
-const pages = ["Profile", "Friends", "Search", "Settings", "Sign Out"];
+// Sets styling for the search bar inside of the Navbar (the example given by Material UI documentation)
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("xs")]: {
+    marginLeft: theme.spacing(1),
+    width: "15ch",
+  },
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(0)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("xs")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
+
+const searchBar = (
+  <Search>
+    <StyledInputBase
+      placeholder="Search…"
+      inputProps={{ "aria-label": "search" }}
+    />
+  </Search>
+);
+
+const pages = ["Profile", "Friends", "Settings", "Sign Out"];
 
 function NavbarComponent() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorNotif, setAnchorNotif] = React.useState(null);
+  const [searchValue, setSearchValue] = React.useState("");
   const { loading, data } = useQuery(QUERY_ALL_USER_PENDING_FRIENDS, {
     variables: {
       userId: AuthService.getProfile().data._id,
@@ -60,6 +103,22 @@ function NavbarComponent() {
   const redirectPage = (page) => {
     window.location.replace(page);
   };
+  const handleSearch = (event) => {
+    const { name, value } = event.target;
+    setSearchValue(value);
+    console.log(searchValue);
+  };
+
+  const findFriend = async (e) => {
+    //e.preventDefault();
+    //localStorage.removeItem('lastSearchFriend');
+    console.log("--------------------------", searchValue);
+    let name = searchValue.split(" ");
+    console.log("file: navbar.jsx:149 ~ findFriend ~ name", name);
+    localStorage.setItem("lastSearchFriend", name);
+    console.log("_______", window.location.href);
+    redirectPage("/search");
+  };
 
   return (
     <AppBar
@@ -84,7 +143,7 @@ function NavbarComponent() {
             sx={{
               ml: -0.5,
               mr: 3,
-              display: { xs: "none", sm: "flex" },
+              display: { xs: "none", md: "flex" },
               fontSize: "1.5rem",
               fontFamily: "monospace",
               letterSpacing: ".2rem",
@@ -94,15 +153,32 @@ function NavbarComponent() {
           >
             lace
           </Typography>
+          <Button
+            key={searchBar}
+            onChange={handleSearch}
+            sx={{ my: .5, mx: -1, color: "white", display: "block" }}
+          >
+            {searchBar}
+          </Button>
+          <Button
+              key={pages[2]}
+              onClick={() => {
+                findFriend();
+                // !MAC SEA4RCH BAR THING
+                //redirectPage(pages[3] + '/?q=' + searchValue);
+              }}
+              sx={{ mx: -2, color: 'white', display: 'block', fontSize: "1.5rem" }}>
+              🔎︎
+            </Button>
           <Box
             sx={{
               flexGrow: 1,
               position: "absolute",
               right: 0,
-              display: { xs: "flex", sm: "none" },
+              display: { xs: "flex", md: "none" },
             }}
           >
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 0, mx: -1 }}>
               <IconButton
                 className="notifications"
                 onClick={handleOpenNotification}
@@ -179,29 +255,9 @@ function NavbarComponent() {
               flexGrow: 1,
               position: "absolute",
               right: 0,
-              display: { xs: "none", sm: "flex" },
+              display: { xs: "none", md: "flex" },
             }}
           >
-            <Button
-              key={pages[0]}
-              onClick={() => {
-                handleCloseNavMenu();
-                redirectPage(pages[0]);
-              }}
-              sx={{ my: 1, color: "white" }}
-            >
-              {pages[0]}
-            </Button>
-            <Button
-              key={pages[1]}
-              onClick={() => {
-                handleCloseNavMenu();
-                redirectPage(pages[1]);
-              }}
-              sx={{ my: 1, color: "white" }}
-            >
-              {pages[1]}
-            </Button>
             <Box sx={{ flexGrow: 0 }}>
               <IconButton
                 className="notifications"
@@ -234,12 +290,32 @@ function NavbarComponent() {
               </Menu>
             </Box>
             <Button
+              key={pages[0]}
+              onClick={() => {
+                handleCloseNavMenu();
+                redirectPage(pages[0]);
+              }}
+              sx={{ my: 1, color: "white", fontSize: ".7rem" }}
+            >
+              {pages[0]}
+            </Button>
+            <Button
+              key={pages[1]}
+              onClick={() => {
+                handleCloseNavMenu();
+                redirectPage(pages[1]);
+              }}
+              sx={{ my: 1, color: "white", fontSize: ".7rem" }}
+            >
+              {pages[1]}
+            </Button>
+            <Button
               key={pages[2]}
               onClick={() => {
                 handleCloseNavMenu();
                 redirectPage(pages[2]);
               }}
-              sx={{ my: 1, color: "white" }}
+              sx={{ my: 1, color: "white", fontSize: ".7rem" }}
             >
               {pages[2]}
             </Button>
@@ -247,21 +323,12 @@ function NavbarComponent() {
               key={pages[3]}
               onClick={() => {
                 handleCloseNavMenu();
-                redirectPage(pages[3]);
+                AuthService.logout();
+                redirectPage("/login");
               }}
-              sx={{ my: 1, color: "white" }}
+              sx={{ my: 1, color: "white", fontSize: ".7rem" }}
             >
               {pages[3]}
-            </Button>
-            <Button
-              key={pages[4]}
-              onClick={() => {
-                handleCloseNavMenu();
-                redirectPage(pages[4]);
-              }}
-              sx={{ my: 1, color: "white" }}
-            >
-              {pages[4]}
             </Button>
           </Box>
         </Toolbar>

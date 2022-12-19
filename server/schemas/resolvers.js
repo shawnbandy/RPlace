@@ -86,9 +86,15 @@ const resolvers = {
       return User.findOne({ _id: userId }).populate('pendingFriends');
     },
 
+    // userFriends: async (parent, { userId }) => {
+    //   const you = User.findOne({ _id: userId });
+    // },
+
     userHomePage: async (parent, { userId }) => {
-      const user = await User.findOne({ userId }).populate('friends');
-      const postArr = [];
+      const user = await User.findOne({ _id: userId }).populate('friends');
+
+      console.log(user);
+
       return user;
     },
 

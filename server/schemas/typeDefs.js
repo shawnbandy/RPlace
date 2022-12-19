@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server-express");
+const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type User {
@@ -71,6 +71,14 @@ const typeDefs = gql`
     user: User
   }
 
+  type fuck {
+    _id: ID!
+    firstName: String
+    lastName: String
+    postText: String
+    comments: [Comment]
+  }
+
   type Query {
     allUser: [User]
     user(userId: ID!): User
@@ -81,7 +89,7 @@ const typeDefs = gql`
     userHomePage(userId: ID!): User
     me: User
     userAllPost(userId: ID!): User
-    userFriendPost(userId: ID!): User
+    userFriendPost(userId: ID!): [fuck]
     findFriend(firstName: String!, lastName: String!): [User]
   }
 

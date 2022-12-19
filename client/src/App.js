@@ -50,21 +50,19 @@ function App() {
             {/* default route - redirect to login */}
             <Route path="/" element={<Login />} />
 
-
             {/* dedicated login route */}
             <Route path="/login" element={<Login />} />
 
             <Route path="/register" element={<Register />} />
           </Route>
-          <Route element={<WithNav/>}>
-
-
-
+          <Route element={<WithNav />}>
             {/* specific posts with comments */}
             {/* <Route path="/home/:id" element={<Home />} /> */}
 
             {/* user profile */}
             <Route path="/profile" element={<Profile />} />
+
+            <Route path="/home" element={<Home />} />
 
             {/* search for friends */}
             <Route path="/search" element={<Search />} />
@@ -81,7 +79,7 @@ function App() {
                   element={<NotFound />}
                 /> */}
           </Route>
-       </Routes>
+        </Routes>
       </Router>
     </ApolloProvider>
   );

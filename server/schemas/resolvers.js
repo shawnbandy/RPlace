@@ -360,43 +360,59 @@ const resolvers = {
       { profilePicture, aboutMe, age, status, mediaContainer, widgetContainer },
       context
     ) => {
-      console.log("update prof settings resolver 1");
-      // console.log(context);
-      // console.log(context.user);
+      const user = await User.findOne({ _id: context.user._id });
+      const profile = user.profile;
 
-      const {
-        profilePictureCurrent,
-        aboutMeCurrent,
-        ageCurrent,
-        statusCurrent,
-        mediaContainerCurrent,
-        widgetContainerCurrent,
-      } = await User.findOne({ _id: context.user._id });
+      const profilePictureCurrent = profile.profilePicture;
+      const aboutMeCurrent = profile.aboutMe;
+      const ageCurrent = profile.age;
+      const statusCurrent = profile.status;
+      const mediaContainerCurrent = profile.mediaContainer;
+      const widgetContainerCurrent = profile.widgetContainer;
 
-      profilePicture ? profilePicture : profilePictureCurrent;
-      aboutMe ? aboutMe : aboutMeCurrent;
-      age ? age : ageCurrent;
-      status ? status : statusCurrent;
-      mediaContainer ? mediaContainer : mediaContainerCurrent;
-      widgetContainer ? widgetContainer : widgetContainerCurrent;
-      console.log("age: ", age);
-      console.log("status: ", status);
+      console.log("age current", ageCurrent);
+      console.log("aboutMe current", aboutMeCurrent);
+      console.log("mediaContainerCurrent  current", mediaContainerCurrent);
+      console.log("widgetContainerCurrent  current", widgetContainerCurrent);
+
+      if (profilePicture === null || profilePicture === undefined) {
+        profilePicture = profilePictureCurrent;
+      }
+      if (aboutMe === null || aboutMe === undefined) {
+        aboutMe = aboutMeCurrent;
+      }
+      if (age === null || age === undefined) {
+        age = ageCurrent;
+      }
+      if (status === null || status === undefined) {
+        status = statusCurrent;
+      }
+      if (mediaContainer === null || mediaContainer === undefined) {
+        mediaContainer = mediaContainerCurrent;
+      }
+      if (widgetContainer === null || widgetContainer === undefined) {
+        widgetContainer = widgetContainerCurrent;
+      }
+
+      console.log("age new", age);
+      console.log("aboutMe ", aboutMe);
+      console.log("mediaContainerCurrent ", mediaContainer);
+      console.log("widgetContainerCurrent ", widgetContainer);
+
       if (context.user) {
-        console.log(context.user._id);
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           {
             profile: {
-              // aboutMe: aboutMe,
+              aboutMe: aboutMe,
               age: age,
               status: status,
-              // mediaContainer: mediaContainer,
-              // widgetContainer: widgetContainer,
+              mediaContainer: mediaContainer,
+              widgetContainer: widgetContainer,
             },
           },
           { new: true }
         );
-        console.log(updatedUser.profile);
         return updatedUser.profile;
       }
     },

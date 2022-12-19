@@ -10,9 +10,11 @@ export default function Settings() {
     const [aboutMe, setAboutMe] = useState()
     const [age,setAge] = useState()
     const [status,setStatus] = useState()
+    const [friend1, setFriend1] = useState()
+    const [friend2, setFriend2] = useState()
+    const [friend3, setFriend3] = useState()
     const [media,setMedia] = useState()
     const [widget,setWidget] = useState()
-    const [form, setForm] = useState()
 
     // handle input change
     const handleChangeProfilePicture = (e) => {
@@ -30,6 +32,18 @@ export default function Settings() {
     const handleChangeStatus = (e) => {
         const { value } = e.target;
         setStatus(value)
+    }
+    const handleChangeFriend1 = (e) => {
+        const { value } = e.target;
+        setFriend1(value)
+    }
+    const handleChangeFriend2 = (e) => {
+        const { value } = e.target;
+        setFriend2(value)
+    }
+    const handleChangeFriend3 = (e) => {
+        const { value } = e.target;
+        setFriend3(value)
     }
     const handleChangeMedia = (e) => {
         const { value } = e.target;
@@ -84,6 +98,9 @@ export default function Settings() {
             <TextField defaultValue={profile.aboutMe} value={aboutMe} onChange={handleChangeAboutMe} id="outlined-basic" label="About Me" variant="outlined"/>
             <TextField defaultValue={profile.age} value={age} onChange={handleChangeAge} id="outlined-basic" label="Age" variant="outlined" />
             <TextField defaultValue={profile.status} value={status} onChange={handleChangeStatus} id="outlined-basic" label="Status" variant="outlined" />
+            <TextField defaultValue={profile.friend1} value={friend1} onChange={handleChangeFriend1} id="outlined-basic" label="Friend 1" variant="outlined" />
+            <TextField defaultValue={profile.friend2} value={friend2} onChange={handleChangeFriend2} id="outlined-basic" label="Friend 2" variant="outlined" />
+            <TextField defaultValue={profile.friend3} value={friend3} onChange={handleChangeFriend3} id="outlined-basic" label="Friend 3" variant="outlined" />
             <TextField defaultValue={profile.mediaContainer} value={media} onChange={handleChangeMedia} id="outlined-basic" label="Media" variant="outlined" />
             <TextField defaultValue={profile.widgetContainer} value={widget} onChange={handleChangeWidget} id="outlined-basic" label="Widget" variant="outlined" />
             <Button onClick={handleFormSubmit} variant="outlined">Upload</Button>    

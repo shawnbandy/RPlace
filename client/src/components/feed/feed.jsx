@@ -33,22 +33,6 @@ export default function Feed({ username }) {
     return <div>Loading...</div>;
   }
 
-  const putAllPost = (arr) => {
-    let objArr = [];
-    console.log('arr', arr);
-    for (let i = 0; i < arr.length; i++) {
-      console.log('arrI', arr[i]);
-      for (let j = 0; j < 4; j++) {
-        console.log('arrJ', arr[i].posts[j]);
-        objArr.push({
-          _id: arr[i].posts[j]._id,
-          postText: arr[i].posts[j].postText,
-        });
-      }
-    }
-    return objArr;
-  };
-
   let testArr = [];
   //console.log('file: feed.jsx:22 ~ Feed ~ data', yourData);
   // if (friendData.userFriendPost.friends) {
@@ -58,7 +42,7 @@ export default function Feed({ username }) {
   //console.log('file: feed.jsx:54 ~ Feed ~ testArr', testArr);
   //console.log('friendData', friendData.userFriendPost.friends);
 
-  console.log(friendData);
+  console.log(friendData.userFriendPost);
 
   //console.log(data.userAllPost.posts);
   //console.log('friendData', friendData);
@@ -72,21 +56,21 @@ export default function Feed({ username }) {
   };
 
   const someFriends = (array) => {
-    return (
-      <div>
-        <h1>hooray! if you have friends you should be seeing this</h1>
-      </div>
-    );
-    {
-      friendData.userAllPost.posts.map((p) => <Post key={p._id} post={p} />);
-    }
+    console.log('----------------', array);
+    let shuffled = array
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+    return shuffled.map((p) => <Post key={p._id} post={p} />);
   };
 
   return (
     <div className="feed">
       <div className="feedWrapper">
         <Share />
-        {friendData.userAllData ? someFriends() : noFriends()}
+        {friendData.userFriendPost
+          ? someFriends(friendData.userFriendPost)
+          : noFriends()}
       </div>
     </div>
   );

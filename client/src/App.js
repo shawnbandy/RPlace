@@ -62,6 +62,8 @@ function App() {
             {/* user profile */}
             <Route path="/profile" element={<Profile />} />
 
+            <Route path="/home" element={<Home />} />
+
             {/* search for friends */}
             <Route path="/search" element={<Search />} />
 

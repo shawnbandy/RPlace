@@ -5,11 +5,14 @@ import { useMutation } from '@apollo/client';
 import { ADD_COMMENT } from '../../context/mutations';
 import Comments from './comments';
 import { useQuery } from '@apollo/client';
-import { ME, QUERY_ALL_USER_POST } from '../../context/queries';
+import {
+  ME,
+  QUERY_ALL_USER_POST,
+  QUERY_ALL_COMMENTS_FOR_POST,
+} from '../../context/queries';
 import AuthService from '../../context/auth';
 
 import { Users } from '../../dummyData';
-
 
 // A function I worked on to pull the user image from the logged in profile
 
@@ -33,6 +36,18 @@ export default function Post({ post }) {
   });
 
   const [addComment, { err, data }] = useMutation(ADD_COMMENT);
+
+  const { loading, data: commentData } = useQuery(QUERY_ALL_COMMENTS_FOR_POST, {
+    variables: {
+      postId: post._id,
+    },
+  });
+
+  if (loading) {
+    return <div>Loading lmao</div>;
+  }
+
+  console.log('COMMENT DATA', commentData);
 
   const submitComment = async (e) => {
     e.preventDefault();
@@ -76,10 +91,10 @@ export default function Post({ post }) {
             <img
               className="postProfileImg"
               // src={Users.filter((u) => u.id === post.userId)[0].profilePicture}
-              alt=''
+              alt=""
             />
             <span className="postUsername">
-              {/* {Users.filter((u) => u.id === post.userId)[0].username} */}
+              By: {post.firstName} {post.lastName}
             </span>
             {/* <span className="postDate">{post.date}</span> */}
           </div>
@@ -102,7 +117,7 @@ export default function Post({ post }) {
           </div>
           <div className="postBottomRight">
             <span className="postCommentText" onClick={showCommentForm}>
-              {post.comments.length} Comments
+              {/* {post.comments.length} Comments */}
             </span>
             <div className="">
               <input
@@ -112,15 +127,16 @@ export default function Post({ post }) {
                 name="commentText"
                 value={comment.commentText}
                 onChange={handleChange}></input>
-              <button className="postButton" onClick={submitComment} id={post._id}>
+              <button
+                className="postButton"
+                onClick={submitComment}
+                id={post._id}>
                 Send
               </button>
-              <div className='commentPosts'>
-                {post.comments.map((c) => (
-                  <Comments key={c._id} comment={c}/>
-                  
+              <div className="commentPosts">
+                {commentData.userPost.comments?.map((c) => (
+                  <Comments key={c._id} comment={c} />
                 ))}
-                
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
-const { Message, Post, GraffitiPost, User } = require("../models");
-const { AuthenticationError, ApolloError } = require("apollo-server-express");
-const { signToken } = require("../utils/auth");
+const { Message, Post, GraffitiPost, User } = require('../models');
+const { AuthenticationError, ApolloError } = require('apollo-server-express');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   //TODO User
@@ -13,7 +13,7 @@ const resolvers = {
       return User.find({});
     },
     user: async (parent, { userId }) => {
-      console.log("backend user");
+      console.log('backend user');
       return await User.findOne({ _id: userId });
     },
     //*gets all of the user's posts/comments
@@ -21,24 +21,54 @@ const resolvers = {
       return Post.findOne({ _id: postId });
     },
     userAllPost: async (parent, { userId }, context) => {
-      console.log("backendAllPost");
-      return User.findOne({ _id: userId }).populate("posts");
+      console.log('backendAllPost');
+      return User.findOne({ _id: userId }).populate('posts');
     },
 
     userFriendPost: async (parent, { userId }) => {
-      console.log("userfriendpost");
+      console.log('userfriendpost');
+
+      let returningPost = [];
 
       try {
         const user = await User.findOne({ _id: userId })
-          .populate("friends")
-          .populate("posts");
-        console.log("user", user);
-        console.log("returning");
-        return user;
+          .populate('friends')
+          .populate('posts');
+        //console.log('user', user.friends);
+
+        for (let i = 0; i < user.friends.length; i++) {
+          if (user.friends[i].posts.length < 5) {
+            for (let j = 0; j < user.friends[i].posts.length; j++) {
+              const post = await Post.findOne({
+                _id: user.friends[i].posts[j],
+              });
+              console.log(post);
+              post.firstName = user.friends[i].firstName;
+              post.lastName = user.friends[i].lastName;
+              post.posts = user.friends[i].posts;
+              returningPost.push(post);
+            }
+          } else {
+            for (
+              let k = user.friends[i].posts.length - 1;
+              k > user.friends[i].posts.length - 5;
+              k--
+            ) {
+              const post = await Post.findOne({
+                _id: user.friends[i].posts[k],
+              });
+              returningPost.push(post);
+            }
+          }
+        }
+
+        //console.log('post---------', returningPost[0]);
+        return returningPost;
       } catch (err) {
         console.log(err);
       }
     },
+
     findFriend: async (parent, { firstName, lastName }, context) => {
       const user = User.find({ firstName: firstName, lastName: lastName });
       console.log(user);
@@ -46,18 +76,18 @@ const resolvers = {
     },
     //*gets all of the user's graffiti
     userGraffitiPost: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("graffitiPosts");
+      return User.findOne({ _id: userId }).populate('graffitiPosts');
     },
     //*returns all the messages the user is a part of
     userMessage: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("messages");
+      return User.findOne({ _id: userId }).populate('messages');
     },
     userPendingFriend: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate("pendingFriends");
+      return User.findOne({ _id: userId }).populate('pendingFriends');
     },
 
     userHomePage: async (parent, { userId }) => {
-      const user = await User.findOne({ userId }).populate("friends");
+      const user = await User.findOne({ userId }).populate('friends');
       const postArr = [];
       return user;
     },
@@ -66,18 +96,31 @@ const resolvers = {
     me: async (parent, args, context) => {
       try {
         const user = await User.findOne({ _id: context.user._id });
-        console.log("user ", user);
+        console.log('user ', user);
         return user;
       } catch {
-        throw new AuthenticationError("You need to be logged in!");
+        throw new AuthenticationError('You need to be logged in!');
       }
     },
   },
 
   Mutation: {
     addUser: async (parent, { email, firstName, lastName, password }) => {
-      console.log("backend user");
-      const user = await User.create({ firstName, lastName, email, password });
+      console.log('backend user');
+      const user = await User.create({
+        firstName,
+        lastName,
+        email,
+        password,
+        profile: {
+          profilePicture: '',
+          aboutMe: 'New here!',
+          age: '21',
+          status: 'New here!',
+          mediaContainer: '',
+          widgetContainer: '',
+        },
+      });
       const token = signToken(user);
       return { token, user };
     },
@@ -117,27 +160,27 @@ const resolvers = {
     },
 
     login: async (parent, { email, password }) => {
-      console.log("loginResolve", email, password);
+      console.log('loginResolve', email, password);
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("Email address not found");
+        throw new AuthenticationError('Email address not found');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError("Incorrect email/password");
+        throw new AuthenticationError('Incorrect email/password');
       }
 
       const token = signToken(user);
-      console.log("file: resolvers.js:134 ~ login: ~ token", token);
+      console.log('file: resolvers.js:134 ~ login: ~ token', token);
 
       return { token, user };
     },
 
     addPost: async (parent, { postText }, context) => {
-      console.log("backendaddPost");
+      console.log('backendaddPost');
       console.log(context.user);
       console.log(postText);
 
@@ -147,7 +190,7 @@ const resolvers = {
           postText: postText,
         });
 
-        console.log("newpost", newPost);
+        console.log('newpost', newPost);
 
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -211,7 +254,7 @@ const resolvers = {
     //?later, we can just check to see if the context.user.id is on any other pending lists to populate those
     sendPendingFriend: async (parent, { receiverId }, context) => {
       //*context user is the sender of the request
-      console.log("backend sendPend");
+      console.log('backend sendPend');
       if (context.user && receiverId) {
         const user = User.findOneAndUpdate(
           { _id: receiverId },
@@ -236,25 +279,31 @@ const resolvers = {
 
     //*accept a friend= add them to the friend array, remove them from the pending friend request
     addFriend: async (parent, { requesterId }, context) => {
-      console.log("add Friend Backend");
+      console.log('add Friend Backend');
       console.log(requesterId);
       console.log(context.user._id);
       if (context.user) {
         const requester = await User.findOne({ _id: requesterId });
 
-        const userRemove = await User.findOneAndUpdate(
+        const requesterRemoveFromUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { pendingFriends: requester._id } },
           { new: true }
         );
 
-        const userAdd = await User.findOneAndUpdate(
+        const requesterAddedToUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { friends: requester } },
           { new: true }
         );
 
-        return userAdd;
+        const userAddedToRequester = await User.findOneAndUpdate(
+          { _id: requesterId },
+          { $addToSet: { friends: context.user._id } },
+          { new: true }
+        );
+
+        return requesterAddedToUser;
       }
     },
 
@@ -357,7 +406,17 @@ const resolvers = {
     // todo revise resolver to only update defined variables
     UpdateProfileSettings: async (
       parent,
-      { profilePicture, aboutMe, age, status, mediaContainer, widgetContainer },
+      {
+        profilePicture,
+        aboutMe,
+        age,
+        status,
+        friend1,
+        friend2,
+        friend3,
+        mediaContainer,
+        widgetContainer,
+      },
       context
     ) => {
       const user = await User.findOne({ _id: context.user._id });
@@ -367,13 +426,16 @@ const resolvers = {
       const aboutMeCurrent = profile.aboutMe;
       const ageCurrent = profile.age;
       const statusCurrent = profile.status;
+      const friend1Current = profile.friend1;
+      const friend2Current = profile.friend2;
+      const friend3Current = profile.friend3;
       const mediaContainerCurrent = profile.mediaContainer;
       const widgetContainerCurrent = profile.widgetContainer;
 
-      console.log("age current", ageCurrent);
-      console.log("aboutMe current", aboutMeCurrent);
-      console.log("mediaContainerCurrent  current", mediaContainerCurrent);
-      console.log("widgetContainerCurrent  current", widgetContainerCurrent);
+      console.log('age current', ageCurrent);
+      console.log('aboutMe current', aboutMeCurrent);
+      console.log('mediaContainerCurrent  current', mediaContainerCurrent);
+      console.log('widgetContainerCurrent  current', widgetContainerCurrent);
 
       if (profilePicture === null || profilePicture === undefined) {
         profilePicture = profilePictureCurrent;
@@ -387,6 +449,15 @@ const resolvers = {
       if (status === null || status === undefined) {
         status = statusCurrent;
       }
+      if (friend1 === null || friend1 === undefined) {
+        friend1 = friend1Current;
+      }
+      if (friend2 === null || friend2 === undefined) {
+        friend2 = friend2Current;
+      }
+      if (friend3 === null || friend3 === undefined) {
+        friend3 = friend3Current;
+      }
       if (mediaContainer === null || mediaContainer === undefined) {
         mediaContainer = mediaContainerCurrent;
       }
@@ -394,19 +465,23 @@ const resolvers = {
         widgetContainer = widgetContainerCurrent;
       }
 
-      console.log("age new", age);
-      console.log("aboutMe ", aboutMe);
-      console.log("mediaContainerCurrent ", mediaContainer);
-      console.log("widgetContainerCurrent ", widgetContainer);
+      console.log('age new', age);
+      console.log('aboutMe ', aboutMe);
+      console.log('mediaContainerCurrent ', mediaContainer);
+      console.log('widgetContainerCurrent ', widgetContainer);
 
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           {
             profile: {
+              profilePicture: profilePicture,
               aboutMe: aboutMe,
               age: age,
               status: status,
+              friend1: friend1,
+              friend2: friend2,
+              friend3: friend3,
               mediaContainer: mediaContainer,
               widgetContainer: widgetContainer,
             },

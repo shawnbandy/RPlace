@@ -21,6 +21,9 @@ const typeDefs = gql`
     aboutMe: String
     age: String
     status: String
+    friend1: String
+    friend2: String
+    friend3: String
     mediaContainer: String
     widgetContainer: String
   }
@@ -114,6 +117,9 @@ const typeDefs = gql`
       aboutMe: String
       age: String
       status: String
+      friend1: String
+      friend2: String
+      friend3: String
       mediaContainer: String
       widgetContainer: String
     ): Profile

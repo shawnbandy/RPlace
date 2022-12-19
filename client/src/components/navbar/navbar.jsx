@@ -41,7 +41,7 @@ const Search = styled("div")(({ theme }) => ({
   width: "100%",
   [theme.breakpoints.up("xs")]: {
     marginLeft: theme.spacing(1),
-    width: "15ch",
+    width: "18ch",
   },
 }));
 
@@ -67,11 +67,18 @@ const searchBar = (
     <StyledInputBase
       placeholder="Search…"
       inputProps={{ "aria-label": "search" }}
+      sx={{
+        my: 0.5,
+        mx: -1,
+        color: "white",
+        display: "block",
+        fontSize: ".9rem",
+      }}
     />
   </Search>
 );
 
-const pages = ["Profile", "Friends", "Settings", "Sign Out"];
+const pages = ["Profile", "Friends", "Settings"];
 
 function NavbarComponent() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -156,20 +163,26 @@ function NavbarComponent() {
           <Button
             key={searchBar}
             onChange={handleSearch}
-            sx={{ my: .5, mx: -1, color: "white", display: "block" }}
+            sx={{ my: 0.5, mx: -1.5, color: "white", display: "block" }}
           >
             {searchBar}
           </Button>
           <Button
-              key={pages[2]}
-              onClick={() => {
-                findFriend();
-                // !MAC SEA4RCH BAR THING
-                //redirectPage(pages[3] + '/?q=' + searchValue);
-              }}
-              sx={{ mx: -2, color: 'white', display: 'block', fontSize: "1.5rem" }}>
-              🔎︎
-            </Button>
+            key={pages[2]}
+            onClick={() => {
+              findFriend();
+              // !MAC SEA4RCH BAR THING
+              //redirectPage(pages[3] + '/?q=' + searchValue);
+            }}
+            sx={{
+              mx: -2,
+              color: "white",
+              display: "block",
+              fontSize: "1.5rem",
+            }}
+          >
+            🔎︎
+          </Button>
           <Box
             sx={{
               flexGrow: 1,
@@ -248,6 +261,15 @@ function NavbarComponent() {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
+              <MenuItem
+                onClick={() => {
+                  handleCloseNavMenu();
+                  AuthService.logout();
+                  redirectPage("/login");
+                }}
+              >
+                <Typography textAlign="center">Sign Out</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <Box
@@ -320,7 +342,6 @@ function NavbarComponent() {
               {pages[2]}
             </Button>
             <Button
-              key={pages[3]}
               onClick={() => {
                 handleCloseNavMenu();
                 AuthService.logout();
@@ -328,7 +349,7 @@ function NavbarComponent() {
               }}
               sx={{ my: 1, color: "white", fontSize: ".7rem" }}
             >
-              {pages[3]}
+              Sign Out
             </Button>
           </Box>
         </Toolbar>

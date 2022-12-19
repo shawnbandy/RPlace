@@ -48,7 +48,7 @@ export default function Settings() {
     const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-        const form_build = { "profilePicture": profilePicture, "aboutMe": aboutMe, "age": age, "status": status, "media": media, "widget": widget}
+        const form_build = { "profilePicture": profilePicture, "aboutMe": aboutMe, "age": age, "status": status, "mediaContainer": media, "widgetContainer": widget}
         console.log("form build ", form_build)
         
         const { error, data } = await UpdateProfileSettings({
@@ -80,7 +80,7 @@ export default function Settings() {
             autoComplete="off"
             className="settingsContainer"
         >
-            <Navbar/>
+            {/* <Navbar/> */}
             <TextField defaultValue={profile.profilePicture} value={profilePicture} onChange={handleChangeProfilePicture} id="outlined-basic" label="Profile Picture" variant="outlined" />
             <TextField defaultValue={profile.aboutMe} value={aboutMe} onChange={handleChangeAboutMe} id="outlined-basic" label="About Me" variant="outlined"/>
             <TextField defaultValue={profile.age} value={age} onChange={handleChangeAge} id="outlined-basic" label="Age" variant="outlined" />

@@ -30,7 +30,6 @@ export default function Friend() {
 
   return (
     <div className="searchContainer">
-      <Navbar />
       {data.userHomePage.friends.map((user) => (
         <FriendCard key={user._id} user={user} />
       ))}

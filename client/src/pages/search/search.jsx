@@ -43,7 +43,6 @@ export default function Search() {
 
   return (
     <div className="searchContainer">
-      <Navbar />
       {data.findFriend.map((user) => (
         <SearchCard key={user._id} user={user} />
       ))}

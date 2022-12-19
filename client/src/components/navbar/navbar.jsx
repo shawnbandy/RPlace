@@ -48,7 +48,7 @@ const Search = styled('div')(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: theme.spacing(.5, 1, .5, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(0)})`,
     transition: theme.transitions.create('width'),
@@ -68,7 +68,7 @@ const searchBar = (
       placeholder="Search…"
       inputProps={{ "aria-label": "search" }}
       sx={{
-        my: 0.5,
+        my: 0,
         mx: -1,
         color: "white",
         display: "block",
@@ -131,9 +131,9 @@ function NavbarComponent() {
   return (
     <AppBar
       style={{
-        position: 'fixed',
-        height: '62px',
-        'background-color': '#560027',
+        position: 'static',
+        height: '64px',
+        'backgroundColor': '#560027',
       }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -174,7 +174,7 @@ function NavbarComponent() {
               //redirectPage(pages[3] + '/?q=' + searchValue);
             }}
             sx={{
-              mx: -2,
+              mx: -1.5,
               color: "white",
               display: "block",
               fontSize: "1.5rem",

@@ -21,32 +21,32 @@ export default function Search() {
   // const { loading, error, data } = useQuery(QUERY_FIND_USERS, {
   //   variables: { firstName: 'Shawn', lastName: 'Canavan' },
   // });
-  const lastSearched = localStorage.getItem('lastSearchFriend');
-  console.log('file: search.jsx:25 ~ Search ~ lastSearched', lastSearched);
-  const lastSearchedSplit = lastSearched.split(',');
-  console.log(
-    'file: search.jsx:19 ~ Search ~ lastSearchedSplit',
-    lastSearchedSplit
-  );
-  const { loading, error, data } = useQuery(QUERY_FIND_USERS, {
-    variables: {
-      firstName: lastSearchedSplit[0],
-      lastName: lastSearchedSplit[1],
-    },
-  });
+  // const lastSearched = localStorage.getItem('lastSearchFriend');
+  // console.log('file: search.jsx:25 ~ Search ~ lastSearched', lastSearched);
+  // const lastSearchedSplit = lastSearched.split(',');
+  // console.log(
+  //   'file: search.jsx:19 ~ Search ~ lastSearchedSplit',
+  //   lastSearchedSplit
+  // );
+  // const { loading, error, data } = useQuery(QUERY_FIND_USERS, {
+  //   variables: {
+  //     firstName: lastSearchedSplit[0],
+  //     lastName: lastSearchedSplit[1],
+  //   },
+  // });
 
-  console.log(data);
+  // console.log(data);
 
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-  console.log('SEARCH USER DATA RETURN: ', data.findFriend);
+  // if (loading) return 'Loading...';
+  // if (error) return `Error! ${error.message}`;
+  // console.log('SEARCH USER DATA RETURN: ', data.findFriend);
 
   return (
     <div className="searchContainer">
       <Navbar />
-      {data.findFriend.map((user) => (
+      {/* {data.findFriend.map((user) => (
         <SearchCard key={user._id} user={user} />
-      ))}
+      ))} */}
     </div>
   );
 }

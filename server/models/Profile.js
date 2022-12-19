@@ -36,6 +36,21 @@ const profileSchema = new Schema({
     trim: true,
   },
 
+  friend1: {
+    type: String,
+    unique: false,
+    trim: true,
+  },
+  friend2: {
+    type: String,
+    unique: false,
+    trim: true,
+  },
+  friend3: {
+    type: String,
+    unique: false,
+    trim: true,
+  },
   // html w inline styling for media e.g. spotify iframe
   mediaContainer: {
     type: String,

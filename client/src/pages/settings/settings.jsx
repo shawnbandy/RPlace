@@ -61,7 +61,7 @@ export default function Settings() {
     const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-        const form_build = { "profilePicture": profilePicture, "aboutMe": aboutMe, "age": age, "status": status, "mediaContainer": media, "widgetContainer": widget}
+        const form_build = { "profilePicture": profilePicture, "aboutMe": aboutMe, "age": age, "status": status, "friend1":friend1,"friend2":friend2,"friend3":friend3, "mediaContainer": media, "widgetContainer": widget}
         console.log("form build ", form_build)
         
         const { error, data } = await UpdateProfileSettings({

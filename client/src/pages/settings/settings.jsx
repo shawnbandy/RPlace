@@ -1,5 +1,4 @@
 import {TextField, Box, Button} from '@mui/material';
-import Navbar from "../../components/navbar/navbar";
 import { useMutation, useQuery } from '@apollo/client';
 import { ME } from '../../context/queries';
 import { UPDATE_PROFILE_SETTINGS } from '../../context/mutations';
@@ -80,7 +79,7 @@ export default function Settings() {
             autoComplete="off"
             className="settingsContainer"
         >
-            {/* <Navbar/> */}
+
             <TextField defaultValue={profile.profilePicture} value={profilePicture} onChange={handleChangeProfilePicture} id="outlined-basic" label="Profile Picture" variant="outlined" />
             <TextField defaultValue={profile.aboutMe} value={aboutMe} onChange={handleChangeAboutMe} id="outlined-basic" label="About Me" variant="outlined"/>
             <TextField defaultValue={profile.age} value={age} onChange={handleChangeAge} id="outlined-basic" label="Age" variant="outlined" />

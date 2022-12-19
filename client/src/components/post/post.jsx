@@ -4,8 +4,25 @@ import React, { useRef, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_COMMENT } from '../../context/mutations';
 import Comments from './comments';
+import { useQuery } from '@apollo/client';
+import { ME, QUERY_ALL_USER_POST } from '../../context/queries';
+import AuthService from '../../context/auth';
 
 import { Users } from '../../dummyData';
+
+
+// A function I worked on to pull the user image from the logged in profile
+
+// function UserImage() {
+//   const { loading, error, data } = useQuery(ME, {
+//     variables: { userId: AuthService.getProfile().data._id },
+//   });
+//   if (loading) return 'Loading...';
+//   if (error) return `Error! ${error.message}`;
+//   console.log(data)
+//   const profilePicture = data.me.profile.profilePicture
+//   return data.me.profile.profilePicture;
+// }
 
 export default function Post({ post }) {
   //console.log('post in js', post);
@@ -59,7 +76,7 @@ export default function Post({ post }) {
             <img
               className="postProfileImg"
               // src={Users.filter((u) => u.id === post.userId)[0].profilePicture}
-              alt=""
+              alt=''
             />
             <span className="postUsername">
               {/* {Users.filter((u) => u.id === post.userId)[0].username} */}

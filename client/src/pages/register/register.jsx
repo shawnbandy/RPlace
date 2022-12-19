@@ -113,7 +113,7 @@ export default function Register() {
                 onChange={handleChange}
               />
               <input
-                placeholder="Password"
+                placeholder="Re-Type Password"
                 required
                 ref={passwordAgain}
                 className="loginInput"

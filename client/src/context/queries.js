@@ -46,6 +46,36 @@ export const QUERY_SINGLE_USER = gql`
   }
 `;
 
+export const QUERY_PROFILE = gql`
+  query Query($userId: ID!) {
+    user(userId: $userId) {
+      _id
+      firstName
+      lastName
+      profile {
+        aboutMe
+        age
+        backgroundStyling
+        friend1
+        friend2
+        friend3
+        mediaContainer
+        profilePicture
+        status
+        widgetContainer
+      }
+      posts {
+        _id
+        postText
+        comments {
+          commentAuthor
+          commentText
+        }
+      }
+    }
+  }
+`;
+
 export const QUERY_FIND_USERS = gql`
   query FindFriend($lastName: String!, $firstName: String!) {
     findFriend(lastName: $lastName, firstName: $firstName) {

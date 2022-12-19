@@ -14,6 +14,7 @@ import Login from './pages/main/main';
 import Register from './pages/register/register';
 import Home from './pages/home/home';
 import Profile from './pages/profile/profile';
+import ProfileId from './pages/profile/profileId';
 import Search from './pages/search/search';
 import Settings from './pages/settings/settings';
 import Friend from './pages/friends/friends';
@@ -62,6 +63,8 @@ function App() {
 
             {/* user profile */}
             <Route path="/profile" element={<Profile />} />
+
+            <Route path="/profile/:id" element={<ProfileId />} />
 
             <Route path="/home" element={<Home />} />
 

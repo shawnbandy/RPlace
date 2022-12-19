@@ -55,9 +55,9 @@ function LeftProfile(props) {
           <Box>
             <h2>Top Friends:</h2>
             <ol>
-              <li>{props.firstFriend}</li>
-              <li>{props.secondFriend}</li>
-              <li>{props.thirdFriend}</li>
+              <li>{props.props.friend1}</li>
+              <li>{props.props.friend2}</li>
+              <li>{props.props.friend3d}</li>
               <Divider />
             </ol>
           </Box>

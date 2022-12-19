@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const QUERY_ALL_USERS = gql`
   {
@@ -190,6 +190,9 @@ export const ME = gql`
         backgroundStyling
         age
         status
+        friend1
+        friend2
+        friend3
         mediaContainer
         profilePicture
         widgetContainer

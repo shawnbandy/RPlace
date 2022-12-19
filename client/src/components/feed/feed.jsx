@@ -57,7 +57,11 @@ export default function Feed({ username }) {
 
   const someFriends = (array) => {
     console.log('----------------', array);
-    return array.map((p) => <Post key={p._id} post={p} />);
+    let shuffled = array
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+    return shuffled.map((p) => <Post key={p._id} post={p} />);
   };
 
   return (

@@ -172,20 +172,26 @@ export const UPDATE_USER = gql`
 // todo updaste mutation to only accept defined varirables from settings form submit
 export const UPDATE_PROFILE_SETTINGS = gql`
   mutation UpdateProfileSettings(
+    $profilePicture: String
     $age: String
     $aboutMe: String
     $status: String
+    $friend1: String
+    $friend2: String
+    $friend3: String
     $mediaContainer: String
     $widgetContainer: String
-    $profilePicture: String
   ) {
     UpdateProfileSettings(
+      profilePicture: $profilePicture
       age: $age
       aboutMe: $aboutMe
       status: $status
+      friend1: $friend1
+      friend2: $friend2
+      friend3: $friend3
       mediaContainer: $mediaContainer
       widgetContainer: $widgetContainer
-      profilePicture: $profilePicture
     ) {
       aboutMe
       age
@@ -193,6 +199,9 @@ export const UPDATE_PROFILE_SETTINGS = gql`
       profilePicture
       mediaContainer
       status
+      friend1
+      friend2
+      friend3
       widgetContainer
     }
   }

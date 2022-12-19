@@ -92,14 +92,14 @@ function RightProfile(props) {
   );
 }
 
-function GraffitiPosts(props) {
+function Post(props) {
   // const postArray = props.props.postText;
   const postContent = [];
   const { loading, data } = useQuery(QUERY_ALL_USER_POST, {
     variables: { userId: AuthService.getProfile().data._id },
   });
 
-  console.log('data???', data);
+  return <div>GRAFFITI</div>;
   return data.userAllPost.posts.map((postContent) => (
     <>
       <ListItem alignItems="flex-start">
@@ -135,28 +135,40 @@ function Feed(props) {
   const { loading, data } = useQuery(QUERY_ALL_USER_POST, {
     variables: { userId: AuthService.getProfile().data._id },
   });
+  const { loading: meLoad, data: meData } = useQuery(ME, {
+    variables: { userId: AuthService.getProfile().data._id },
+  });
 
-  console.log('data???', data);
-  return data.userAllPost.posts.map((postContent) => (
-    <>
-      <ListItem alignItems="flex-start">
-        <ListItemText
-          primary={postContent.postText}
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"></Typography>
-              {postContent.comments}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-    </>
-  ));
+  if (loading || meLoad) {
+    return <div>Loading...</div>;
+  }
+  console.log('data???', meData);
+  return (
+    <div>
+      <h3>
+        {meData.me.firstName} {meData.me.lastName}'s Posts
+      </h3>
+      {data.userAllPost.posts.map((postContent) => (
+        <>
+          <ListItem alignItems="flex-start">
+            <ListItemText
+              primary={postContent.postText}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    sx={{ display: 'inline' }}
+                    component="span"
+                    variant="body2"
+                    color="text.primary"></Typography>
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+          <Divider variant="inset" component="li" />
+        </>
+      ))}
+    </div>
+  );
 }
 
 function PostStatus() {
@@ -260,7 +272,8 @@ export default function Profile() {
             />
           </Grid>
           <Grid xs={16} md={13} sx={{ padding: '13px' }}>
-            {/* <GraffitiPosts /> */}
+            <Post />
+
             <Feed />
           </Grid>
           <RightBar />

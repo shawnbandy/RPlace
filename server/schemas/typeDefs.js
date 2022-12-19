@@ -90,6 +90,7 @@ const typeDefs = gql`
     me: User
     userAllPost(userId: ID!): User
     userFriendPost(userId: ID!): [fuck]
+    userFriendPage(userId: ID!): User
     findFriend(firstName: String!, lastName: String!): [User]
   }
 

@@ -7,7 +7,12 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import { useQuery } from '@apollo/client';
-import { ME, QUERY_ALL_USER_POST } from '../../context/queries';
+import {
+  ME,
+  QUERY_ALL_USER_POST,
+  QUERY_SINGLE_USER,
+  QUERY_PROFILE,
+} from '../../context/queries';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
@@ -17,6 +22,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Button from '@mui/material/Button';
 import MenuIcon from '@mui/icons-material/Menu';
 import TextField from '@mui/material/TextField';
+import { useParams } from 'react-router-dom';
 //import Feed from '../../components/feed/feed';
 
 // import { ME } from '../src/context/mutations';
@@ -55,9 +61,9 @@ function LeftProfile(props) {
           <Box>
             <h2>Top Friends:</h2>
             <ol>
-              <li>{props.props.friend1}</li>
-              <li>{props.props.friend2}</li>
-              <li>{props.props.friend3d}</li>
+              <li>{props.firstFriend}</li>
+              <li>{props.secondFriend}</li>
+              <li>{props.thirdFriend}</li>
               <Divider />
             </ol>
           </Box>
@@ -253,14 +259,16 @@ function RightBar() {
   );
 }
 
-export default function Profile() {
-  const { loading, error, data } = useQuery(ME, {
-    variables: { userId: AuthService.getProfile().data._id },
+export default function ProfileId() {
+  const { id } = useParams();
+  console.log(id);
+  const { loading, error, data } = useQuery(QUERY_PROFILE, {
+    variables: { userId: id },
   });
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
-  console.log(data.me.firstName);
-  const profile = data.me.profile;
+  console.log('-------------', data.user.profile);
+  const profile = data.user.profile;
   return (
     <div className="profile">
       <Box sx={{ flexGrow: 1 }}>
@@ -268,7 +276,7 @@ export default function Profile() {
           <Grid xs={16} md={3} sx={{ borderRight: '1px solid black' }}>
             <LeftProfile
               props={profile}
-              userName={data.me.firstName + ' ' + data.me.lastName}
+              userName={data.user.firstName + ' ' + data.user.lastName}
             />
           </Grid>
           <Grid xs={16} md={13} sx={{ padding: '13px' }}>

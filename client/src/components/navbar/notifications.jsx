@@ -12,6 +12,8 @@ export default function Notification({ userId }) {
   const [deletePending, { err, dData }] = useMutation(DELETE_PENDING_FRIEND);
   const [addFriend, { aErr, aData }] = useMutation(ADD_FRIEND);
 
+  const [disabled, setDisabled] = useState(false);
+
   if (loading) {
     return <div>loading..</div>;
   }
@@ -21,6 +23,7 @@ export default function Notification({ userId }) {
   const denyFriend = async (e) => {
     e.preventDefault();
     console.log(e.target);
+    setDisabled(true);
     try {
       const { dData } = await deletePending({
         variables: {
@@ -34,6 +37,8 @@ export default function Notification({ userId }) {
 
   const acceptFriend = async (e) => {
     e.preventDefault();
+    setDisabled(true);
+
     try {
       const { aData } = await addFriend({
         variables: {
@@ -50,12 +55,12 @@ export default function Notification({ userId }) {
       <span>
         {data.user.firstName} {data.user.lastName}
       </span>
-      <span onClick={acceptFriend} id={data.user._id}>
+      <button onClick={acceptFriend} id={data.user._id} disabled={disabled}>
         ✅
-      </span>
-      <span onClick={denyFriend} id={data.user._id}>
+      </button>
+      <button onClick={denyFriend} id={data.user._id} disabled={disabled}>
         ❌
-      </span>
+      </button>
     </Typography>
   );
 }

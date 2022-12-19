@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const QUERY_ALL_USERS = gql`
   {
@@ -46,6 +46,36 @@ export const QUERY_SINGLE_USER = gql`
   }
 `;
 
+export const QUERY_PROFILE = gql`
+  query Query($userId: ID!) {
+    user(userId: $userId) {
+      _id
+      firstName
+      lastName
+      profile {
+        aboutMe
+        age
+        backgroundStyling
+        friend1
+        friend2
+        friend3
+        mediaContainer
+        profilePicture
+        status
+        widgetContainer
+      }
+      posts {
+        _id
+        postText
+        comments {
+          commentAuthor
+          commentText
+        }
+      }
+    }
+  }
+`;
+
 export const QUERY_FIND_USERS = gql`
   query FindFriend($lastName: String!, $firstName: String!) {
     findFriend(lastName: $lastName, firstName: $firstName) {
@@ -56,6 +86,20 @@ export const QUERY_FIND_USERS = gql`
       profile {
         profilePicture
         aboutMe
+      }
+    }
+  }
+`;
+
+export const QUERY_ALL_FRIENDS = gql`
+  query Query($userId: ID!) {
+    userHomePage(userId: $userId) {
+      _id
+      friends {
+        _id
+        firstName
+        lastName
+        email
       }
     }
   }
@@ -190,6 +234,9 @@ export const ME = gql`
         backgroundStyling
         age
         status
+        friend1
+        friend2
+        friend3
         mediaContainer
         profilePicture
         widgetContainer

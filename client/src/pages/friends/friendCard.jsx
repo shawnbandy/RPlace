@@ -8,8 +8,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useMutation, useQuery } from '@apollo/client';
 import { SEND_PENDING_FRIEND } from '../../context/mutations';
+import { Link } from 'react-router-dom';
 
-export default function SearchCard({ user }) {
+export default function FriendCard({ user }) {
   console.log('user', user);
 
   const [sendRqst, { err, data }] = useMutation(SEND_PENDING_FRIEND);
@@ -29,6 +30,19 @@ export default function SearchCard({ user }) {
     }
   };
 
+  const goToProfile = (e) => {
+    e.preventDefault();
+    console.log(e.target.id);
+
+    return (
+      <Link
+        to={{
+          pathname: `profile/${e.target.id}`,
+        }}
+      />
+    );
+  };
+
   return (
     <div>
       <Card sx={{ maxWidth: 600 }} key={user._id}>
@@ -44,18 +58,18 @@ export default function SearchCard({ user }) {
             {user.firstName} {user.lastName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {/* {user.profile.aboutMe} */}
+            {user.email}
           </Typography>
         </CardContent>
         <CardActions>
-          <Button
-            size="small"
-            id={user._id}
-            onClick={sendFriendRequest}
-            disabled={disabled}>
-            Add Friend
+          <Button id={user._id} size="small" onClick={goToProfile}>
+            <Link
+              to={{
+                pathname: `/profile/${user._id}`,
+              }}>
+              View Profile
+            </Link>
           </Button>
-          <Button size="small">View Profile</Button>
         </CardActions>
       </Card>
     </div>

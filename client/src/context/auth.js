@@ -8,7 +8,7 @@ class AuthService {
   loggedIn() {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken();
-    return !!token && !this.isTokenExpired(token);
+    return token && !this.isTokenExpired(token) ? true : false;
   }
 
   isTokenExpired(token) {
@@ -31,6 +31,7 @@ class AuthService {
     // Saves user token to localStorage
     console.log('token', idToken);
     localStorage.setItem('id_token', idToken);
+    window.location.assign('/home');
   }
 
   logout() {

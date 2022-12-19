@@ -61,7 +61,7 @@ function App() {
 
 
             {/* specific posts with comments */}
-            {/* <Route path="/home/:id" element={<Home />} /> */}
+            <Route path="/home" element={<Home />} />
 
             {/* user profile */}
             <Route path="/profile" element={<Profile />} />
